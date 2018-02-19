@@ -19,6 +19,9 @@
             - curl
         cli_dest: '{{ jenkins_dest }}/jenkins-cli.jar' # Jenkins CLI destination
         updates_dest: '{{ jenkins_dest }}/updates_jenkins.json' # Jenkins updates file
+      packages:
+        - git
+        - curl
       # packages:
       #   - npm
       #   - debconf-utils
@@ -73,14 +76,16 @@
 
     # Install Jenkins dependencies
     - name: Install dependencies
-      sudo: yes
       apt: pkg={{ item }} state=installed
-      with_items: jenkins.deb.dependencies
+      with_items: 
+        - git
+        - curl
+      become: yes
 
     # Install Jenkins
     - name: Install Jenkins
-      sudo: yes
       apt: pkg=jenkins state=latest update_cache=yes cache_valid_time=86400
+      become: true
 
     # - name: Install Jenkins server
     #   apt: name=jenkins state=installed
@@ -90,45 +95,46 @@
     # If Jenkins is installed or updated, wait for pulling the Jenkins CLI
     - name: "{{ startup_delay_s | default(20) }}s delay while starting Jenkins"
       wait_for: port=8080 delay={{ startup_delay_s | default(20) }}
+      become: true
 
     # Create Jenkins CLI destination directory
     - name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-      sudo: yes
       action: file path={{ jenkins_dest }} state=directory
+      become: true
 
     # Get Jenkins CLI from localhost
     - name: Get Jenkins CLI
-      sudo: yes
       action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
+      become: true
 
     # Get latest Jenkins update file
     - name: Get Jenkins updates
-      sudo: yes
       action: get_url url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440
       register: jenkins_updates
+      become: true
 
     # Jenkins Update-center
     - name: Update-center Jenkins
-      sudo: yes
       action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
       when: jenkins_updates.changed
       notify:
         - 'Restart Jenkins'
+      become: true
 
     - name: List plugins
-      sudo: yes
       action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | cut -f 1 -d ' '
       when: plugins is defined
       register: plugins_installed
+      become: true
 
     # Install/update Jenkins plugins
     - name: Install/update plugins
-      sudo: yes
       action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ item }}
       when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
       with_items: plugins
       notify:
         - 'Restart Jenkins'
+      become: true
 
     - name: List plugins to be updated
       sudo: yes
@@ -136,11 +142,11 @@
       register: plugins_updates
 
     - name: Update plugins
-      sudo: yes
       action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ plugins_updates.stdout }}
       when: plugins_updates.stdout != ''
       notify:
         - 'Restart Jenkins'
+      become: true
 
     ######Configure Jenkins
   #   - name: Configure Jenkins Port
@@ -171,3 +177,9 @@
     #   service:
     #     name: jenkins
     #     state: restarted
+
+  handlers:
+    # Safe-restart Jenkins
+    - name: Restart Jenkins
+      sudo: yes
+      command: java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 safe-restart
