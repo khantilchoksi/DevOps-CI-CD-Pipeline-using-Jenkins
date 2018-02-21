@@ -1,0 +1,6 @@
+#Ignoring Private SSH Keys of VMs
+*.key
+*.ssh/
+*.cache/
+*.vagrant/
+
