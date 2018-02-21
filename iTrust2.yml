@@ -1,0 +1,117 @@
+---
+- hosts: all
+  remote_user: root
+  sudo: yes
+
+   vars_prompt:
+   - name: "git_username"
+     prompt: "Enter your github username"
+     private: no
+   - name: "git_password"
+     prompt: "Enter your github password"
+     private: yes
+  tasks:
+   - name: Install git
+     apt: pkg=git state=present
+     become: yes
+
+#Step for MANUAL Checking
+  - name: Cloning Git Repo
+    git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/engr-csc326-staff/iTrust2-v2.git dest=/home/vagrant
+
+ #Environment SETUP
+
+# 1. Java to sources
+  - name: Adding openjdk 8 to sources
+    apt_repository:
+      repo: ppa:openjdk-r/ppa
+      state: present
+#
+# # 2. Updating apt-get
+  - name: Run the equivalent of "apt-get update" as a separate step
+    apt: update_cache=yes
+#
+# # 3. Install Java
+  - name: Install Java jdk
+    apt: pkg=openjdk-8-jdk state=present
+# #
+# # # 4. Install Maven
+  - name: Install maven
+    apt: pkg=maven state=present
+# #
+# # 5. Install Mysql and dependencies
+#   - name: Installing mysql and other dependencies
+#     apt: name={{ item }} state=present
+#     with_items:
+#       - mysql-server
+#       - libmysql-java
+#       - mysql-workbench
+#     register: mysql_installation
+#
+# #6. Lowercase the tables
+#   - name: Enable MySQL with table names - lowercase
+#     become: yes
+#     ini_file: >
+#       dest=/etc/mysql/my.cnf
+#       section=mysqld
+#       option=lower_case_table_names
+#       value=1
+#       backup=yes
+#
+#   - name: Mysql | Set root password
+#     debconf: name='mysql-server' question='mysql-server/root_password' value='abc' vtype='password'
+# #
+#   - name: Mysql | Set root repassword
+#     debconf: name='mysql-server' question='mysql-server/root_password_again' value='abc' vtype='password'
+#
+# # 7. Restarting the mysql service
+#   - name: Restarting mysql service
+#     become: yes
+#     service:
+#       name: mysql
+#       state: restarted
+#     when: mysql_installation.changed
+#
+# # 8. Call script
+#   - name: Maven package
+#     script: maven.sh
+
+# 9. Downloading Tomcat
+  - name: Download Tomcat
+    get_url: url=http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M26/bin/apache-tomcat-9.0.0.M26.tar.gz dest=/opt/
+    register: tomcat_installation
+
+# 10. Create /tomcat9 directory
+  - name: make tomcat9 dir
+    file:
+      path: /opt/tomcat9
+      state: directory
+      mode: 0755
+    when: tomcat_installation.changed
+
+# 11. Unarchive the download
+  - name: Unarchive Tomcat
+    unarchive: src=/opt/apache-tomcat-9.0.0.M26.tar.gz dest=/opt/tomcat9 remote_src=True
+
+# 12. Configuring the tomcat envio variables
+  - name: Configure tomcat environment variables
+    script: tomcat-config.sh
+    when: tomcat_installation.changed
+
+# 13. Configure users
+  - name: Configure Tomcat users
+    template: src=tomcat-users.xml dest=/opt/tomcat9/apache-tomcat-9.0.0.M26/conf/
+    when: tomcat_installation.changed
+
+# 14. Change the war file name and copy it to WEBAPPS folder
+  - copy:
+      src: /home/vagrant/iTrust-v23/iTrust/iTrust2/target/iTrust-23.0.0.war
+      dest: /opt/tomcat9/apache-tomcat-9.0.0.M26/webapps/iTrust.war
+      remote_src: yes
+    when: tomcat_installation.changed
+
+# 15. Execute tomcat server
+  - name: Start tomcat using startup.sh
+    command: nohup /opt/tomcat9/apache-tomcat-9.0.0.M26/bin/startup.sh
+    become: true
+    when: tomcat_installation.changed
