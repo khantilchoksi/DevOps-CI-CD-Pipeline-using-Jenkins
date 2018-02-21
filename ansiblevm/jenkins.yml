@@ -1,5 +1,6 @@
 ---
 - hosts: jenkins
+  become: true
   vars:
     jenkins_path: /var/lib/jenkins
     jenkins_username: admin
@@ -127,23 +128,37 @@
       # register: jenkins_plugins
       # become: true
 
-    - name: Install Jenkin Plugins
-      jenkins_plugin:
-        name: "{{ item }}"
-        params: "{{ jenkins_params }}"
-        url_password: "{{jenkins_password}}"
-        url: "http://localhost:8080"
-      with_items:
-        - github
-        - maven-plugin
-        - jacoco
-        - junit
-        - test-stability
-        - postbuildscript
-        - build-timeout
-        - postbuild-task
-        - ws-cleanup
-        - jenkins-job-builder
+    # - name: Install packages for node machine
+    #   apt: pkg="{{item}}" state=present update_cache=true
+    #   with_items: 
+    #     - npm
+    #     - python-dev
+    #     - python-pip
+    #     - python-setuptools
+    #     - python-lxml
+    #     - vim
+    #   become: true
+
+    - pip:
+        name: jenkins-job-builder
+
+    # - name: Install Jenkin Plugins
+    #   jenkins_plugin:
+    #     name: "{{ item }}"
+    #     params: "{{ jenkins_params }}"
+    #     url_password: "{{jenkins_password}}"
+    #     url: "http://localhost:8080"
+    #   with_items:
+    #     - github
+    #     - maven-plugin
+    #     - jacoco
+    #     - junit
+    #     - test-stability
+    #     - postbuildscript
+    #     - build-timeout
+    #     - postbuild-task
+    #     - ws-cleanup
+    #     - jenkins-job-builder
         
 
     - name: Restarting Jenkins
