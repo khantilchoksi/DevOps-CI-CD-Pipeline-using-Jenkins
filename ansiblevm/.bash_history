@@ -95,3 +95,23 @@ ansible-playbook jenkins.yml -i inventory
 ansible-playbook jenkins.yml -i inventory 
 ansible-playbook jenkins.yml -i inventory 
 exit
+ls
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ifconfig
+ls
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory 
+ansible-playbook jenkins.yml -i inventory -vvvv
+vagrant halt
+exit

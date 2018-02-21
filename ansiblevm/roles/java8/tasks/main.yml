@@ -8,6 +8,10 @@
   apt_repository: repo='ppa:webupd8team/java'
   become: yes
 
+- name: Update APT-GET
+  shell: apt-get update
+  become: true
+
 - name: Agree to Oracle license
   debconf: name={{ jdk_version }} question=shared/accepted-oracle-license-v1-1 vtype=select value=true
   become: yes
@@ -15,3 +19,7 @@
 - name: Install java 8
   apt: name={{ jdk_version }} state=latest update-cache=yes force=yes
   become: yes
+
+- name: Update apt-get
+  action: apt update_cache=yes
+  become: true

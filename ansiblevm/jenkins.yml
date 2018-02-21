@@ -1,185 +1,161 @@
 ---
 - hosts: jenkins
   vars:
-      jenkins_dest: /opt/jenkins
-      jenkins_lib: /var/lib/jenkins
-      jenkins_user: admin
-      jenkins_password: admin
-      jenkins_url: http://192.168.8.10:8080
-      jenkins_params:
-        url_username: "{{jenkins_user}}"
-        url_password: "{{jenkins_password}}"
-        url: "{{jenkins_url}}"
-        validate_certs: no
-      jenkins:
-        deb:
-          repo: 'deb http://pkg.jenkins-ci.org/debian binary/' # Jenkins repository
-          dependencies: # Jenkins dependencies
-            - git
-            - curl
-        cli_dest: '{{ jenkins_dest }}/jenkins-cli.jar' # Jenkins CLI destination
-        updates_dest: '{{ jenkins_dest }}/updates_jenkins.json' # Jenkins updates file
-      packages:
-        - git
-        - curl
-      # packages:
-      #   - npm
-      #   - debconf-utils
-      #   - git
-      #   - gcc
-      #   - make
-      #   - python-dev
-      #   - python-pip
-      #   - python-setuptools
-      #   - python-lxml
-      #   - vim
-      #   - libffi-dev
-      #   - libssl-dev
-      #   - libxml2-dev 
-      #   - libxslt1-dev 
-      #   - libjpeg8-dev 
-      #   - zlib1g-dev
-    
+    jenkins_path: /var/lib/jenkins
+    jenkins_username: admin
+    jenkins_password: admin
+    jenkins_url: http://localhost:8080
+    jenkins_params:
+      url_username: "admin"
+      url: "{{jenkins_url}}"
+      validate_certs: no
+    # packages:
+    #   - npm
+    #   - debconf-utils
+    #   - git
+    #   - gcc
+    #   - make
+    #   - python-dev
+    #   - python-pip
+    #   - python-setuptools
+    #   - python-lxml
+    #   - vim
+    #   - libffi-dev
+    #   - libssl-dev
+    #   - libxml2-dev 
+    #   - libxslt1-dev 
+    #   - libjpeg8-dev 
+    #   - zlib1g-dev
+
   # roles:
   #   - java8
-
-
+  
   tasks:
-    # - name: Install packages and dependencies
-    #   apt: name={{ item }} update_cache={{ update_apt_cache }} state=installed
-    #   with_items:
-    #     - default-jdk
-    #     - libfontconfig
-    #     - libffi-dev
-    #     - libncurses5-dev
+    # - name: Install Maven
+    #   apt: pkg=maven state=present
     #   become: true
 
-    - name: Add the Jenkins public GPG key to the apt repo
-      apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
-      become: true
-
-    # # Add Jenkins repository key
-    # - name: Add jenkins apt-key
-    #   sudo: yes
-    #   apt_key: data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
-
-    # Add Jenkins repository
-    - name: Add Jenkins repository
-      apt_repository: repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
-      become: true
-
-    # - name: Add Jenkins to the trusted sources list
-    #   apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
-    #                 update_cache={{ update_apt_cache }}
-    #                 state=present
+    # - name: Adding Apt Key For Jenkins
+    #   apt_key:
+    #     url: "https://jenkins-ci.org/debian/jenkins-ci.org.key"
+    #     state: present
+    #     validate_certs: no
     #   become: true
 
-    # Install Jenkins dependencies
-    - name: Install dependencies
-      apt: pkg={{ item }} state=installed
-      with_items: 
-        - git
-        - curl
-      become: yes
+    # - name: Check For Jenkins List    
+    #   stat: path=/etc/apt/sources.list.d/jenkins.list
+    #   register: jenkins_list
 
-    # Install Jenkins
-    - name: Install Jenkins
-      apt: pkg=jenkins state=latest update_cache=yes cache_valid_time=86400
-      become: true
-
-    # - name: Install Jenkins server
-    #   apt: name=jenkins state=installed
+    # - name: Adding Jenkins Source List
+    #   shell: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+    #   when: not jenkins_list.stat.exists
+    #   become: true
+    
+    # - name: Installing Jenkins
+    #   apt:
+    #     name: jenkins     
+    #     state: present
+    #     update_cache: yes
+    #   register: jenkins_install
     #   become: true
 
-    # Handle plugins
-    # If Jenkins is installed or updated, wait for pulling the Jenkins CLI
-    - name: "{{ startup_delay_s | default(20) }}s delay while starting Jenkins"
-      wait_for: port=8080 delay={{ startup_delay_s | default(20) }}
-      become: true
-
-    # Create Jenkins CLI destination directory
-    - name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-      action: file path={{ jenkins_dest }} state=directory
-      become: true
-
-    # Get Jenkins CLI from localhost
-    - name: Get Jenkins CLI
-      action: get_url url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest={{ jenkins.cli_dest }} mode=0440
-      become: true
-
-    # Get latest Jenkins update file
-    - name: Get Jenkins updates
-      action: get_url url=http://updates.jenkins-ci.org/update-center.json dest={{ jenkins.updates_dest }} thirsty=yes mode=0440
-      register: jenkins_updates
-      become: true
-
-    # Jenkins Update-center
-    - name: Update-center Jenkins
-      action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
-      when: jenkins_updates.changed
-      notify:
-        - 'Restart Jenkins'
-      become: true
-
-    - name: List plugins
-      action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | cut -f 1 -d ' '
-      when: plugins is defined
-      register: plugins_installed
-      become: true
-
-    # Install/update Jenkins plugins
-    - name: Install/update plugins
-      action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ item }}
-      when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
-      with_items: plugins
-      notify:
-        - 'Restart Jenkins'
-      become: true
-
-    - name: List plugins to be updated
-      sudo: yes
-      action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | grep ')$' | cut -f 1 -d ' ' | sed ':a;N;$!ba;s/\n/ /g'
-      register: plugins_updates
-
-    - name: Update plugins
-      action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ plugins_updates.stdout }}
-      when: plugins_updates.stdout != ''
-      notify:
-        - 'Restart Jenkins'
-      become: true
-
-    ######Configure Jenkins
-  #   - name: Configure Jenkins Port
-  #   sudo: yes
-  #   when: port is defined
-  #   lineinfile: dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT={{port}}
-
-  # - name: Configure Jenkins Prefix
-  #   sudo: yes
-  #   when: prefix is defined
-  #   lineinfile: dest=/etc/default/jenkins regexp=^PREFIX= line=PREFIX={{prefix}}
-
-  # - name: Configure Jenkins E-mail
-  #   sudo: yes
-  #   when: email is defined
-  #   template: src=hudson.tasks.Mailer.xml.j2 dest={{ jenkins_lib }}/hudson.tasks.Mailer.xml owner=jenkins group=jenkins mode=0644
-
-
-    ###### End of Configure Jenkins
-
-    # # Safe-restart Jenkins
-    # - name: Restart Jenkins
-    #   sudo: yes
-    #   command: java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 safe-restart
-
-    # #OR Restarting Jenkins
     # - name: Restarting Jenkins
     #   service:
     #     name: jenkins
     #     state: restarted
+    #   become: true
 
-  handlers:
-    # Safe-restart Jenkins
-    - name: Restart Jenkins
-      sudo: yes
-      command: java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 safe-restart
+    # - name: Wait while re-starting Jenkins
+    #   wait_for: 
+    #     port: 8080 
+    #     delay: 20
+    
+    # - name: Create Directory For Groovy Script - Jenkins
+    #   file:
+    #     path: "{{jenkins_path}}/init.groovy.d"
+    #     state: directory
+    #     mode: 0755
+    #   register: groovy_dir
+    #   become: true
+
+    # - name: Copying Groovy Script For Deafult Jenkins User(ADMIN) Creation
+    #   template:
+    #     force: yes
+    #     src: "/home/vagrant/templates/jenkins_user.groovy.j2"
+    #     dest: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
+    #     mode: 0755
+    #   become: true
+
+    # - name: Restarting Jenkins
+    #   service:
+    #     name: jenkins
+    #     state: restarted
+    #   become: true
+
+    # - name: Wait while re-starting Jenkins
+    #   wait_for: 
+    #     port: 8080 
+    #     delay: 20
+
+    # - name: Removing Groovy Script so it doesn't create furthermore user
+    #   file:
+    #     path: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
+    #     state: absent
+    #   become: true
+
+    # - name: Getting Jenkins CLI Jar
+    #   get_url:
+    #     url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
+    #     dest: "/home/vagrant/"
+    #     mode: 0755
+    #   become: true
+      #when: groovy_dir.changed
+
+    #- name: Install Jenkin Plugins 
+      # jenkins_plugin:
+      #   name: "{{ item }}"
+      #   params: "{{ jenkins_params }}"
+      # with_items:
+      #   - maven-plugin
+      #   - github
+      #   - jacoco
+      #   - junit
+      #   - test-stability
+      #   - postbuildscript
+      #   - build-timeout
+      #   - postbuild-task
+      # register: jenkins_plugins
+      # become: true
+
+    - name: Install Jenkin Plugins
+      jenkins_plugin:
+        name: "{{ item }}"
+        params: "{{ jenkins_params }}"
+        url_password: "{{jenkins_password}}"
+        url: "http://localhost:8080"
+      with_items:
+        - github
+        - maven-plugin
+        - jacoco
+        - junit
+        - test-stability
+        - postbuildscript
+        - build-timeout
+        - postbuild-task
+        - ws-cleanup
+        - jenkins-job-builder
+        
+
+    - name: Restarting Jenkins
+      service:
+        name: jenkins
+        state: restarted
+      become: true
+
+    - name: Checking Jenkins State
+      service:
+        name: jenkins
+        state: started
+      become: true
+
+    
