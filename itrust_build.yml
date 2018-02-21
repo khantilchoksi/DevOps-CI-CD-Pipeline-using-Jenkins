@@ -1,0 +1,63 @@
+---
+- hosts: jenkins
+  vars:
+  - jenkins_ip: "localhost"  
+  - jenkins_port: 8080
+  - jenkins_username: "admin"
+    
+  vars_prompt:
+  - name: "jenkins_password"
+    prompt: "Enter jenkins password"
+
+ 
+  tasks:
+
+  - name: download the jenkins-cli.jar file
+    shell: 'wget http://{{ jenkins_ip }}:{{ jenkins_port }}/jnlpJars/jenkins-cli.jar'
+    become: true
+
+  - name: download api token
+    shell: "curl --silent --basic http://{{ jenkins_username }}:{{ jenkins_password }}@{{ jenkins_ip }}:{{ jenkins_port }}/me/configure | hxselect '#apiToken' | sed 's/.*value=\"\([^\"]*\)\".*/\1\n/g'"
+    register: api_token
+    become: true
+
+  - name: insert the api token into .ini file
+    lineinfile:
+      path: /jenkins_jobs.ini
+      line: "password: {{ api_token }}"
+    become: true
+
+  - name: copy jenkins_jobs.ini file to jenkins server
+    template:
+      src: /home/vagrant/jenkins_jobs.ini
+      dest: /home/vagrant/jenkins_jobs.ini
+    become: true
+
+  - name: create jobs folder if it doesn't exit
+      file:
+        path: "/home/vagrant/jobs"
+        state: directory
+      become: true
+
+
+  - name: copy jenkins job builder script
+    template:
+      src: /home/vagrant/jenkins_job.yml
+      dest: /home/vagrant/jobs/itrust_job_builder.yml
+    become: true
+
+  - name: create jobs
+    shell: 'jenkins-jobs --conf jenkins_jobs.ini update jobs'
+    become: true
+
+  # - name: build jobs
+
+
+
+
+
+  # - name: git clone repo
+  #   git: 
+  #     repo: "https://{{ username }}:{{ password }}@github.ncsu.edu/engr-csc326-staff/Onboarding.git"
+  #     dest: /home/vagrant/hw1
+
