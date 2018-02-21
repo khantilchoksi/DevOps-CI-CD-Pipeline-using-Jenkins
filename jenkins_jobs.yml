@@ -1,0 +1,6 @@
+- job:
+    name: itrust_job
+    description: 'automatically generated test'
+    project-type: freestyle
+    builders:
+      - shell: 'ls'
