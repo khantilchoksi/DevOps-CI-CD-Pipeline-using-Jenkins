@@ -7,10 +7,19 @@
 
 # hlsearch on (H) or off (h):
 ~h
+# Last Search Pattern:
+~MSle0~/stat.
+
 # Command Line History (newest to oldest):
 :wq
+:x
+:q
+:xs
 
 # Search String History (newest to oldest):
+?/stat.
+?/stat
+? \<name\>
 
 # Expression History (newest to oldest):
 
@@ -19,20 +28,69 @@
 # Input Line History (newest to oldest):
 
 # Registers:
+"0	LINE	0
+	#  - name: insert the api token into .ini file
+	#    lineinfile:
+""1	LINE	0
+	      - shell: 'sudo mvn compile'
+"2	LINE	0
+	#  - name: insert the api token into .ini file
+	#    lineinfile:
+"3	LINE	0
+	      state: absent
+"-	CHAR	0
+	.
 
 # File marks:
-'0  358  10  /etc/ansible/ansible.cfg
-'1  2  79  ~/inventory
-'2  10  30  ~/roles/jdk8/tasks/main.yml
-'3  2  34  ~/roles/jdk8/vars/main.yml
-'4  1  7  ~/inventory
-'5  28  0  ~/keys/jenkinsvm.key
+'0  61  0  /etc/ansible/ansible.cfg
+'1  2  65  ~/inventory
+'2  28  0  ~/keys/jenkinsvm2.key
+'3  61  45  ~/itrust_build.yml
+'4  1  0  ~/jenkins_jobs.ini
+'5  1  0  ~/jenkins_jobs.yml
+'6  32  0  ~/itrust_build.yml
+'7  8  0  ~/jenkins_jobs.yml
+'8  1  0  ~/itrust_build.yml
+'9  28  0  ~/itrust_build.yml
 
 # Jumplist (newest first):
--'  358  10  /etc/ansible/ansible.cfg
+-'  61  0  /etc/ansible/ansible.cfg
 -'  1  0  /etc/ansible/ansible.cfg
--'  2  79  ~/inventory
+-'  2  65  ~/inventory
 -'  1  0  ~/inventory
+-'  28  0  ~/keys/jenkinsvm2.key
+-'  1  0  ~/keys/jenkinsvm2.key
+-'  61  45  ~/itrust_build.yml
+-'  1  0  ~/itrust_build.yml
+-'  1  0  ~/jenkins_jobs.ini
+-'  1  0  ~/jenkins_jobs.yml
+-'  32  0  ~/itrust_build.yml
+-'  8  0  ~/jenkins_jobs.yml
+-'  28  0  ~/itrust_build.yml
+-'  29  0  ~/itrust_build.yml
+-'  70  15  ~/itrust_build.yml
+-'  8  0  ~/itrust_build.yml
+-'  69  30  ~/itrust_build.yml
+-'  7  36  ~/jenkins_jobs.yml
+-'  74  0  ~/itrust_build.yml
+-'  3  0  ~/jenkins_jobs.ini
+-'  4  19  ~/jenkins_jobs.ini
+-'  54  0  ~/itrust_build.yml
+-'  78  0  ~/itrust_build.yml
+-'  73  103  ~/itrust_build.yml
+-'  58  15  ~/itrust_build.yml
+-'  53  55  ~/itrust_build.yml
+-'  13  34  ~/itrust_build.yml
+-'  48  37  ~/itrust_build.yml
+-'  45  0  ~/itrust_build.yml
+-'  2  0  ~/jenkins_jobs.ini
+-'  31  0  ~/itrust_build.yml
+-'  22  0  ~/itrust_build.yml
+-'  23  134  ~/itrust_build.yml
+-'  43  0  ~/itrust_build.yml
+-'  50  15  ~/itrust_build.yml
+-'  358  10  /etc/ansible/ansible.cfg
+-'  4  79  ~/inventory
 -'  10  30  ~/roles/jdk8/tasks/main.yml
 -'  1  0  ~/roles/jdk8/tasks/main.yml
 -'  2  34  ~/roles/jdk8/vars/main.yml
@@ -77,8 +135,6 @@
 -'  1  0  ~/keys/jenkinsvm.key
 -'  28  0  ~/keys/jenkinsvm.key
 -'  1  0  ~/keys/jenkinsvm.key
--'  2  79  ~/inventory
--'  1  0  ~/inventory
 -'  10  30  ~/roles/jdk8/tasks/main.yml
 -'  1  0  ~/roles/jdk8/tasks/main.yml
 -'  2  34  ~/roles/jdk8/vars/main.yml
@@ -96,49 +152,109 @@
 -'  28  0  ~/keys/jenkinsvm.key
 -'  1  0  ~/keys/jenkinsvm.key
 -'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  10  30  ~/roles/jdk8/tasks/main.yml
--'  1  0  ~/roles/jdk8/tasks/main.yml
--'  2  34  ~/roles/jdk8/vars/main.yml
--'  1  0  ~/roles/jdk8/vars/main.yml
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  2  34  ~/roles/jdk8/vars/main.yml
--'  1  0  ~/roles/jdk8/vars/main.yml
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
 
 # History of marks within files (newest to oldest):
 
 > /etc/ansible/ansible.cfg
-	"	358	10
-	^	358	11
-	.	358	10
+	"	61	0
+	^	61	0
+	.	61	0
 	+	358	10
+	+	61	0
 
 > ~/inventory
-	"	2	79
-	^	2	80
-	.	2	79
-	+	2	8
+	"	2	65
+	^	2	66
+	.	2	65
+	+	4	8
 	+	1	7
-	+	2	79
+	+	4	79
+	+	1	9
+	+	2	65
+
+> ~/keys/jenkinsvm2.key
+	"	28	0
+	^	28	0
+	.	27	29
+	+	27	29
+
+> ~/itrust_build.yml
+	"	61	45
+	^	61	46
+	.	61	45
+	+	18	0
+	+	19	0
+	+	20	0
+	+	23	11
+	+	23	147
+	+	23	11
+	+	23	134
+	+	40	3
+	+	41	5
+	+	42	3
+	+	43	1
+	+	23	135
+	+	22	0
+	+	23	0
+	+	24	0
+	+	25	0
+	+	27	0
+	+	29	0
+	+	29	0
+	+	30	0
+	+	31	0
+	+	48	37
+	+	59	20
+	+	73	143
+	+	74	15
+	+	73	142
+	+	7	29
+	+	12	27
+	+	13	34
+	+	73	72
+	+	53	69
+	+	56	28
+	+	58	15
+	+	73	79
+	+	59	0
+	+	73	0
+	+	74	0
+	+	59	0
+	+	70	0
+	+	73	0
+	+	74	0
+	+	72	1
+	+	60	40
+	+	62	60
+	+	60	21
+	+	61	7
+	+	62	0
+	+	69	30
+	+	70	15
+	+	27	0
+	+	28	0
+	+	61	45
+
+> ~/jenkins_jobs.ini
+	"	1	0
+	^	4	20
+	.	4	19
+	+	3	13
+	+	2	9
+	+	4	19
+
+> ~/jenkins_jobs.yml
+	"	1	0
+	^	8	0
+	.	8	0
+	+	6	127
+	+	7	18
+	+	6	121
+	+	7	37
+	+	6	125
+	+	8	32
+	+	7	57
+	+	8	0
 
 > ~/roles/jdk8/tasks/main.yml
 	"	10	30

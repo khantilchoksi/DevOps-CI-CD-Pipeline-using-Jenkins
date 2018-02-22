@@ -1,0 +1,67 @@
+---
+- hosts: jenkins
+  vars:
+  - jenkins_ip: "localhost"  
+  - jenkins_port: 8080
+  - jenkins_username: "admin"
+  - jenkins_password: "admin"
+  - github_username: "khchoksi"
+  - job_name: "itrust_job"
+
+      
+  # vars_prompt:
+  # - name: jenkins_password
+  #   prompt: "Enter Jenkins Password for admin"
+ 
+  tasks:
+  - name: enabling access to mvn without password 
+    lineinfile:
+      path: /etc/sudoers
+      line: "jenkins ALL=(ALL) NOPASSWD: ALL"
+    become: true
+
+  - name: copy jenkins_jobs.ini file to jenkins server
+    template:
+      src: /home/vagrant/jenkins_jobs.ini
+      dest: /home/vagrant/jenkins_jobs.ini
+  #   become: true
+
+  - name: create jobs folder if it doesn't exit
+    file:
+      path: "/home/vagrant/jobs"
+      state: directory
+
+  - name: Copy jenkins job builder script
+    template:
+      src: /home/vagrant/itrust_jenkins_jobs.yml
+      dest: /home/vagrant/jobs/itrust_jenkins_jobs.yml
+    # become: true
+
+  - name: create jobs
+    shell: 'jenkins-jobs --conf /home/vagrant/jenkins_jobs.ini update /home/vagrant/jobs'
+    become: true
+
+  - name: change directories
+    shell: 'cd /home/vagrant/'
+    become: true
+
+  - name: check itrust git folder if it exists
+    stat:
+      path: "/var/lib/jenkins/workspace/{{job_name}}/iTrust2-v2/"
+    register: itrust_git_file
+
+  - name: delete if the directory exists
+    file:
+      state: absent
+      path: "/var/lib/jenkins/workspace/{{job_name}}/iTrust2-v2/"
+    when: itrust_git_file.stat.exists
+    become: true
+
+  - name: build jobs
+    shell: 'java -jar jenkins-cli.jar -s http://localhost:8080/ build {{job_name}} --username {{ jenkins_username }} --password {{ jenkins_password }}'
+    become: true
+
+
+
+
+
