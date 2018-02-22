@@ -6,9 +6,7 @@
   - jenkins_username: "admin"
   - jenkins_password: "admin"
   - github_username: "khchoksi"
-  - job_name: "itrust_job6"
-
-
+  - job_name: "itrust_job"
  
   tasks:
   - name: enabling access to mvn without password 
@@ -27,7 +25,6 @@
     file:
       path: "/home/vagrant/jobs"
       state: directory
-
 
   - name: Copy jenkins job builder script
     template:
