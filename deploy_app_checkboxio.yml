@@ -1,4 +1,4 @@
 ---
-- hosts: all
+- hosts: checkboxio
   roles:
     - deploy_checkbox
