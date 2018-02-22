@@ -1,0 +1,14 @@
+- job:
+    name: "{{job_name}}"
+    description: 'automatically generated test'
+    project-type: freestyle
+    builders:
+      - shell: 'sudo git clone https://github.com/chrisparnin/checkbox.io.git'
+      - shell: 'cd /var/lib/jenkins/workspace/{{job_name}}/checkbox.io/server-side/site && sudo npm install'
+
+
+
+
+#java -jar jenkins-cli.jar -s http://localhost:8080/ build itrust_job --username {{ jenkins_username }} --password {{ jenkins_password }}
+
+

@@ -4,4 +4,5 @@
 *.cache/
 *.vagrant/
 Vagrantfile
-
+backup/
+git_rsa

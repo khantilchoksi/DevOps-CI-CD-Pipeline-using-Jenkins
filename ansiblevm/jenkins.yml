@@ -28,109 +28,119 @@
     #   - libjpeg8-dev 
     #   - zlib1g-dev
 
-  # roles:
-  #   - java8
+  roles:
+    - java8
   
   tasks:
-    # - name: Install Maven
-    #   apt: pkg=maven state=present
-    #   become: true
 
-    # - name: Adding Apt Key For Jenkins
-    #   apt_key:
-    #     url: "https://jenkins-ci.org/debian/jenkins-ci.org.key"
-    #     state: present
-    #     validate_certs: no
-    #   become: true
+    - name: Install packages for node machine
+      apt: pkg="{{item}}" state=present update_cache=true
+      with_items: 
+        - maven
+        - git
+        - npm
+        - python-dev
+        - python-pip
+        - python-setuptools
+        - python-lxml
+        - jetty
+        - vim
+      become: true
 
-    # - name: Check For Jenkins List    
-    #   stat: path=/etc/apt/sources.list.d/jenkins.list
-    #   register: jenkins_list
+    - name: Adding Apt Key For Jenkins
+      apt_key:
+        url: "https://jenkins-ci.org/debian/jenkins-ci.org.key"
+        state: present
+        validate_certs: no
+      become: true
 
-    # - name: Adding Jenkins Source List
-    #   shell: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-    #   when: not jenkins_list.stat.exists
-    #   become: true
+    - name: Check For Jenkins List    
+      stat: path=/etc/apt/sources.list.d/jenkins.list
+      register: jenkins_list
+
+    - name: Adding Jenkins Source List
+      shell: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+      when: not jenkins_list.stat.exists
+      become: true
     
-    # - name: Installing Jenkins
-    #   apt:
-    #     name: jenkins     
-    #     state: present
-    #     update_cache: yes
-    #   register: jenkins_install
-    #   become: true
+    - name: Installing Jenkins
+      apt:
+        name: jenkins     
+        state: present
+        update_cache: yes
+      register: jenkins_install
+      become: true
 
-    # - name: Restarting Jenkins
-    #   service:
-    #     name: jenkins
-    #     state: restarted
-    #   become: true
+    - name: Restarting Jenkins
+      service:
+        name: jenkins
+        state: restarted
+      become: true
 
-    # - name: Wait while re-starting Jenkins
-    #   wait_for: 
-    #     port: 8080 
-    #     delay: 20
+    - name: Wait while re-starting Jenkins
+      wait_for: 
+        port: 8080 
+        delay: 20
     
-    # - name: Create Directory For Groovy Script - Jenkins
-    #   file:
-    #     path: "{{jenkins_path}}/init.groovy.d"
-    #     state: directory
-    #     mode: 0755
-    #   register: groovy_dir
-    #   become: true
+    - name: Create Directory For Groovy Script - Jenkins
+      file:
+        path: "{{jenkins_path}}/init.groovy.d"
+        state: directory
+        mode: 0755
+      register: groovy_dir
+      become: true
 
-    # - name: Copying Groovy Script For Deafult Jenkins User(ADMIN) Creation
-    #   template:
-    #     force: yes
-    #     src: "/home/vagrant/templates/jenkins_user.groovy.j2"
-    #     dest: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
-    #     mode: 0755
-    #   become: true
+    - name: Copying Groovy Script For Deafult Jenkins User(ADMIN) Creation
+      template:
+        force: yes
+        src: "/home/vagrant/templates/jenkins_user.groovy.j2"
+        dest: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
+        mode: 0755
+      become: true
 
-    # - name: Restarting Jenkins
-    #   service:
-    #     name: jenkins
-    #     state: restarted
-    #   become: true
+    - name: Restarting Jenkins
+      service:
+        name: jenkins
+        state: restarted
+      become: true
 
-    # - name: Wait while re-starting Jenkins
-    #   wait_for: 
-    #     port: 8080 
-    #     delay: 30
+    - name: Wait while re-starting Jenkins
+      wait_for: 
+        port: 8080 
+        delay: 30
 
-    # - name: Removing Groovy Script so it doesn't create furthermore user
-    #   file:
-    #     path: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
-    #     state: absent
-    #   become: true
+    - name: Removing Groovy Script so it doesn't create furthermore user
+      file:
+        path: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
+        state: absent
+      become: true
 
-    # - name: Getting Jenkins CLI Jar
-    #   get_url:
-    #     url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
-    #     dest: "/home/vagrant/"
-    #     mode: 0755
-    #   become: true
-    #   when: groovy_dir.changed
+    - name: Getting Jenkins CLI Jar
+      get_url:
+        url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
+        dest: "/home/vagrant/"
+        mode: 0755
+      become: true
+      when: groovy_dir.changed
 
-    # - name: Wait while re-starting Jenkins
-    #   wait_for: 
-    #     port: 8080 
-    #     delay: 30
+    - name: Wait while re-starting Jenkins
+      wait_for: 
+        port: 8080 
+        delay: 30
 
-    # - name: Install packages for node machine
-    #   apt: pkg="{{item}}" state=present update_cache=true
-    #   with_items: 
-    #     - npm
-    #     - maven
-    #     - python-dev
-    #     - python-pip
-    #     - python-setuptools
-    #     - python-lxml
-    #     - vim
-    #   become: true
+    - pip:
+        name: jenkins-job-builder
 
-    # - pip:
-    #     name: jenkins-job-builder
+    - name: Restarting Jenkins
+      service:
+        name: jenkins
+        state: restarted
+      become: true
+
+    - name: Wait while re-starting Jenkins
+      wait_for: 
+        port: 8080 
+        delay: 30
 
     - name: Install Jenkin Plugins
       jenkins_plugin:
@@ -151,7 +161,6 @@
         - jenkins-job-builder
         - html-xml-utils
         
-
     - name: Restarting Jenkins
       service:
         name: jenkins
@@ -163,5 +172,32 @@
         name: jenkins
         state: started
       become: true
+    
+    - name: Copy private SSH Key for GitHub
+      copy:
+        src: /home/vagrant/.ssh/git_rsa
+        dest: /root/.ssh/git_rsa
+        mode: 0400
+      become: true
+
+    - name: Add the identity file inconfiguration
+      shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+      become: true
+
+    - name: Add config file for ssh for github ncsu host
+      copy:
+        src: /home/vagrant/config
+        dest: /root/.ssh/config
+      become: true
+
+    - name: Copy jenkins_jobs.ini file to jenkins server
+      template:
+        src: /home/vagrant/jenkins_jobs.ini
+        dest: /home/vagrant/jenkins_jobs.ini
+
+    - name: create jobs folder if it doesn't exit
+      file:
+        path: "/home/vagrant/jobs"
+        state: directory
 
     
