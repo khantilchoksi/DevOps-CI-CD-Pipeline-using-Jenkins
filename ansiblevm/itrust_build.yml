@@ -6,12 +6,15 @@
   - jenkins_username: "admin"
   - jenkins_password: "admin"
   - github_username: "khchoksi"
-  - job_name: "itrust_job"
+  - itrust_job_name: "itrust_job"
 
       
   # vars_prompt:
   # - name: jenkins_password
   #   prompt: "Enter Jenkins Password for admin"
+
+  roles:
+    - create_jobs
  
   tasks:
   - name: enabling access to mvn without password 
