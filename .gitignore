@@ -4,5 +4,6 @@
 *.cache/
 *.vagrant/
 Vagrantfile
-backup/
+ansiblevm/backup_scripts/
 git_rsa
+old_scripts/
