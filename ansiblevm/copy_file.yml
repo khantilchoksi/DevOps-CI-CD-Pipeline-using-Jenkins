@@ -1,0 +1,15 @@
+---
+- hosts: jenkins
+
+  tasks:
+  #Don't execute following task with root 
+    - name: Copy private SSH Key for GitHub
+      copy:
+        src: /home/vagrant/.ssh/git_rsa
+        dest: /root/.ssh/git_rsa
+        mode: 0400
+      become: true
+
+    - name: Add the identity file inconfiguration
+      shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+      become: true

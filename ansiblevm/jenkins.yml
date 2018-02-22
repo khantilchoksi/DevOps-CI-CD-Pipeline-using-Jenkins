@@ -3,8 +3,8 @@
   become: true
   vars:
     jenkins_path: /var/lib/jenkins
-    jenkins_username: admin
-    jenkins_password: admin
+    jenkins_username: "admin"
+    jenkins_password: "admin"
     jenkins_url: http://localhost:8080
     jenkins_params:
       url_username: "admin"
@@ -96,7 +96,7 @@
     # - name: Wait while re-starting Jenkins
     #   wait_for: 
     #     port: 8080 
-    #     delay: 20
+    #     delay: 30
 
     # - name: Removing Groovy Script so it doesn't create furthermore user
     #   file:
@@ -110,28 +110,18 @@
     #     dest: "/home/vagrant/"
     #     mode: 0755
     #   become: true
-      #when: groovy_dir.changed
+    #   when: groovy_dir.changed
 
-    #- name: Install Jenkin Plugins 
-      # jenkins_plugin:
-      #   name: "{{ item }}"
-      #   params: "{{ jenkins_params }}"
-      # with_items:
-      #   - maven-plugin
-      #   - github
-      #   - jacoco
-      #   - junit
-      #   - test-stability
-      #   - postbuildscript
-      #   - build-timeout
-      #   - postbuild-task
-      # register: jenkins_plugins
-      # become: true
+    # - name: Wait while re-starting Jenkins
+    #   wait_for: 
+    #     port: 8080 
+    #     delay: 30
 
     # - name: Install packages for node machine
     #   apt: pkg="{{item}}" state=present update_cache=true
     #   with_items: 
     #     - npm
+    #     - maven
     #     - python-dev
     #     - python-pip
     #     - python-setuptools
@@ -139,26 +129,27 @@
     #     - vim
     #   become: true
 
-    - pip:
-        name: jenkins-job-builder
+    # - pip:
+    #     name: jenkins-job-builder
 
-    # - name: Install Jenkin Plugins
-    #   jenkins_plugin:
-    #     name: "{{ item }}"
-    #     params: "{{ jenkins_params }}"
-    #     url_password: "{{jenkins_password}}"
-    #     url: "http://localhost:8080"
-    #   with_items:
-    #     - github
-    #     - maven-plugin
-    #     - jacoco
-    #     - junit
-    #     - test-stability
-    #     - postbuildscript
-    #     - build-timeout
-    #     - postbuild-task
-    #     - ws-cleanup
-    #     - jenkins-job-builder
+    - name: Install Jenkin Plugins
+      jenkins_plugin:
+        name: "{{ item }}"
+        params: "{{ jenkins_params }}"
+        url_password: "{{jenkins_password}}"
+        url: "{{jenkins_url}}"
+      with_items:
+        - github
+        - maven-plugin
+        - jacoco
+        - junit
+        - test-stability
+        - postbuildscript
+        - build-timeout
+        - postbuild-task
+        - ws-cleanup
+        - jenkins-job-builder
+        - html-xml-utils
         
 
     - name: Restarting Jenkins
