@@ -218,14 +218,14 @@
         dest: /root/.ssh/config
       become: true
 
-    - name: Copy jenkins_jobs.ini file to jenkins server
-      template:
-        src: /home/vagrant/jenkins_jobs.ini
-        dest: /home/vagrant/jenkins_jobs.ini
+    # - name: Copy jenkins_jobs.ini file to jenkins server
+    #   template:
+    #     src: /home/vagrant/jenkins_jobs.ini
+    #     dest: /home/vagrant/jenkins_jobs.ini
 
-    - name: create jobs folder to create jobs if it doesn't exit
-      file:
-        path: "/home/vagrant/jobs"
-        state: directory
+    # - name: create jobs folder to create jobs if it doesn't exit
+    #   file:
+    #     path: "/home/vagrant/jobs"
+    #     state: directory
 
     
