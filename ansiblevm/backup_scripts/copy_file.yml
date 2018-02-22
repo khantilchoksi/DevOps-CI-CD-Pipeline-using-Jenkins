@@ -11,5 +11,11 @@
       become: true
 
     - name: Add the identity file inconfiguration
-      shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+      shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa && exit'
+      become: true
+
+    - name: Add config file for ssh for github ncsu host
+      copy:
+        src: /home/vagrant/config
+        dest: /root/.ssh/config
       become: true

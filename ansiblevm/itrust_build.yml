@@ -7,6 +7,11 @@
   - jenkins_password: "admin"
   - github_username: "khchoksi"
   - job_name: "itrust_job"
+
+      
+  # vars_prompt:
+  # - name: jenkins_password
+  #   prompt: "Enter Jenkins Password for admin"
  
   tasks:
   - name: enabling access to mvn without password 
@@ -28,8 +33,8 @@
 
   - name: Copy jenkins job builder script
     template:
-      src: /home/vagrant/jenkins_jobs.yml
-      dest: /home/vagrant/jobs/itrust_job_builder.yml
+      src: /home/vagrant/itrust_jenkins_jobs.yml
+      dest: /home/vagrant/jobs/itrust_jenkins_jobs.yml
     # become: true
 
   - name: create jobs

@@ -4,7 +4,7 @@
     project-type: freestyle
     builders:
       - shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
-      - shell: 'cd /var/lib/jenkins/workspace/{{job_name}}/iTrust2-v2/iTrust2/ && sudo mvn compile'
+      - shell: 'cd /var/lib/jenkins/workspace/{{job_name}}/iTrust2-v2/iTrust2/ && sudo mvn process-test-classes && sudo mvn clean test verify checkstyle:checkstyle'
 
 
 

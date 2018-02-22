@@ -32,8 +32,20 @@
     - java8
   
   tasks:
-    - name: Install Maven
-      apt: pkg=maven state=present
+
+    - name: Install packages for node machine
+      apt: pkg="{{item}}" state=present update_cache=true
+      with_items: 
+        - maven
+        - git
+        - npm
+        - python-dev
+        - python-pip
+        - python-setuptools
+        - python-lxml
+        - jetty
+        - vim
+        - html-xml-utils
       become: true
 
     - name: Adding Apt Key For Jenkins
@@ -117,23 +129,19 @@
         port: 8080 
         delay: 30
 
-    - name: Install packages for node machine
-      apt: pkg="{{item}}" state=present update_cache=true
-      with_items: 
-        - npm
-        - maven
-        - python-dev
-        - python-pip
-        - python-setuptools
-        - python-lxml
-        - vim
-        - git
-        - html-xml-utils
-        - jetty
-      become: true
-
     - pip:
         name: jenkins-job-builder
+
+    - name: Restarting Jenkins
+      service:
+        name: jenkins
+        state: restarted
+      become: true
+
+    - name: Wait while re-starting Jenkins
+      wait_for: 
+        port: 8080 
+        delay: 30
 
     - name: Install Jenkin Plugins
       jenkins_plugin:
@@ -154,7 +162,6 @@
         - jenkins-job-builder
         - html-xml-utils
         
-
     - name: Restarting Jenkins
       service:
         name: jenkins
@@ -166,5 +173,32 @@
         name: jenkins
         state: started
       become: true
+    
+    - name: Copy private SSH Key for GitHub
+      copy:
+        src: /home/vagrant/.ssh/git_rsa
+        dest: /root/.ssh/git_rsa
+        mode: 0400
+      become: true
+
+    - name: Add the identity file inconfiguration
+      shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+      become: true
+
+    - name: Add config file for ssh for github ncsu host
+      copy:
+        src: /home/vagrant/config
+        dest: /root/.ssh/config
+      become: true
+
+    - name: Copy jenkins_jobs.ini file to jenkins server
+      template:
+        src: /home/vagrant/jenkins_jobs.ini
+        dest: /home/vagrant/jenkins_jobs.ini
+
+    - name: create jobs folder to create jobs if it doesn't exit
+      file:
+        path: "/home/vagrant/jobs"
+        state: directory
 
     

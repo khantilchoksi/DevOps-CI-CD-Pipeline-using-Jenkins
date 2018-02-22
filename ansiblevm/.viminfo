@@ -11,9 +11,9 @@
 ~MSle0~/stat.
 
 # Command Line History (newest to oldest):
+:wq
 :x
 :q
-:wq
 :xs
 
 # Search String History (newest to oldest):
@@ -42,18 +42,24 @@
 	.
 
 # File marks:
-'0  61  45  ~/itrust_build.yml
-'1  1  0  ~/jenkins_jobs.ini
-'2  1  0  ~/jenkins_jobs.yml
-'3  32  0  ~/itrust_build.yml
-'4  8  0  ~/jenkins_jobs.yml
-'5  1  0  ~/itrust_build.yml
-'6  28  0  ~/itrust_build.yml
-'7  70  15  ~/itrust_build.yml
-'8  69  30  ~/itrust_build.yml
-'9  7  36  ~/jenkins_jobs.yml
+'0  61  0  /etc/ansible/ansible.cfg
+'1  2  65  ~/inventory
+'2  28  0  ~/keys/jenkinsvm2.key
+'3  61  45  ~/itrust_build.yml
+'4  1  0  ~/jenkins_jobs.ini
+'5  1  0  ~/jenkins_jobs.yml
+'6  32  0  ~/itrust_build.yml
+'7  8  0  ~/jenkins_jobs.yml
+'8  1  0  ~/itrust_build.yml
+'9  28  0  ~/itrust_build.yml
 
 # Jumplist (newest first):
+-'  61  0  /etc/ansible/ansible.cfg
+-'  1  0  /etc/ansible/ansible.cfg
+-'  2  65  ~/inventory
+-'  1  0  ~/inventory
+-'  28  0  ~/keys/jenkinsvm2.key
+-'  1  0  ~/keys/jenkinsvm2.key
 -'  61  45  ~/itrust_build.yml
 -'  1  0  ~/itrust_build.yml
 -'  1  0  ~/jenkins_jobs.ini
@@ -82,11 +88,9 @@
 -'  22  0  ~/itrust_build.yml
 -'  23  134  ~/itrust_build.yml
 -'  43  0  ~/itrust_build.yml
--'  1  0  ~/inventory
 -'  50  15  ~/itrust_build.yml
 -'  358  10  /etc/ansible/ansible.cfg
--'  1  0  /etc/ansible/ansible.cfg
--'  2  79  ~/inventory
+-'  4  79  ~/inventory
 -'  10  30  ~/roles/jdk8/tasks/main.yml
 -'  1  0  ~/roles/jdk8/tasks/main.yml
 -'  2  34  ~/roles/jdk8/vars/main.yml
@@ -148,11 +152,31 @@
 -'  28  0  ~/keys/jenkinsvm.key
 -'  1  0  ~/keys/jenkinsvm.key
 -'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
--'  28  0  ~/keys/jenkinsvm.key
--'  1  0  ~/keys/jenkinsvm.key
 
 # History of marks within files (newest to oldest):
+
+> /etc/ansible/ansible.cfg
+	"	61	0
+	^	61	0
+	.	61	0
+	+	358	10
+	+	61	0
+
+> ~/inventory
+	"	2	65
+	^	2	66
+	.	2	65
+	+	4	8
+	+	1	7
+	+	4	79
+	+	1	9
+	+	2	65
+
+> ~/keys/jenkinsvm2.key
+	"	28	0
+	^	28	0
+	.	27	29
+	+	27	29
 
 > ~/itrust_build.yml
 	"	61	45
@@ -231,20 +255,6 @@
 	+	8	32
 	+	7	57
 	+	8	0
-
-> ~/inventory
-	"	1	0
-	^	2	80
-	.	2	79
-	+	2	8
-	+	1	7
-	+	2	79
-
-> /etc/ansible/ansible.cfg
-	"	358	10
-	^	358	11
-	.	358	10
-	+	358	10
 
 > ~/roles/jdk8/tasks/main.yml
 	"	10	30
