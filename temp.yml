@@ -1,0 +1,13 @@
+---
+- hosts: jenkins
+  
+  vars:
+    - jenkins_url: http://localhost:8080
+    
+  task:
+    - name: Getting Jenkins CLI Jar
+      get_url:
+        url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
+        dest: "~/"
+        mode: 0755
+      become: true
