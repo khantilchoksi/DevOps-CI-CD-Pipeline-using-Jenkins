@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: iTrust2
   sudo: yes
   remote_user: root
   gather_facts: false
