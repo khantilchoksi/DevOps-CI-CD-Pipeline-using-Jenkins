@@ -7,3 +7,4 @@ Vagrantfile
 ansiblevm/backup_scripts/
 git_rsa
 old_scripts/
+keys/

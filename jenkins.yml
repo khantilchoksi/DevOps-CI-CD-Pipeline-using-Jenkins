@@ -27,6 +27,12 @@
       - libxslt1-dev 
       - libjpeg8-dev 
       - zlib1g-dev
+    mysql_password: "{{ mysql_root_pass }}"
+    
+  vars_prompt:
+    - name: "mysql_root_pass"
+      prompt: "enter mysql root pass"
+ 
 
   roles:
     - java8
@@ -90,7 +96,20 @@
         - python-mysqldb
         - php5-mysql
       become: yes
-    
+
+    - name: insert skip grant tables in my.cnf
+      lineinfile: 
+        dest: /etc/mysql/my.cnf
+        insertafter: 'skip-external-locking'
+        line: 'skip-grant-tables'
+      become: true
+
+    - name: restarting mysql
+      service:
+        name: mysql
+        enabled: yes
+        state: restarted
+  
     - name: Installing Jenkins
       apt:
         name: jenkins     
