@@ -25,3 +25,6 @@ Link to screencast:
 ### References
 https://stackoverflow.com/questions/46515704/how-to-kill-a-running-process-using-ansible
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html
+https://dba.stackexchange.com/questions/185240/creating-mongodb-database-with-ansible-playbook
+https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314
+
