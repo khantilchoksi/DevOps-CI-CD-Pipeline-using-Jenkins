@@ -1,0 +1,80 @@
+---
+- hosts: all
+  sudo: yes
+  remote_user: root
+  gather_facts: false
+  pre_tasks:
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+  roles:
+   - java
+   - mysql
+   - maven
+
+  vars_prompt:
+   - name: "git_username"
+     prompt: "Enter your github username"
+     private: no
+   - name: "git_password"
+     prompt: "Enter your github password"
+     private: yes
+
+   - name: "mysql_password"
+     prompt: Type your password for mysql server
+     private: no
+
+  tasks:
+   - name: Install git
+     apt: pkg=git state=present
+     become: yes
+   #
+   - name: Delete currently running jobs
+     shell: ps -ef | grep -v grep | grep -w "jetty" | awk '{print $2}'
+     register: running_processes
+   #
+   - name: Kill running processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ running_processes.stdout_lines }}"
+
+   - wait_for:
+       path: "/proc/{{ item }}/status"
+       state: absent
+     with_items: "{{ running_processes.stdout_lines }}"
+     ignore_errors: yes
+     register: killed_processes
+
+   - name: Force kill stuck processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+
+   - name: clean Repo
+     file:
+       state: absent
+       path: /home/vagrant
+
+   - name: Cloning Git Repo
+     git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/engr-csc326-staff/iTrust2-v2.git dest=/home/vagrant/tmp
+
+   - name: copy 2 files
+     shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+
+   - name: Edit mysql.conf file
+     lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        line: skip-grant-tables
+        insertafter: skip-external-locking
+
+   - name: Restarting mysql service
+     shell: sudo service mysql restart
+   #
+   - name: Cleaning Repo & building mvn
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean && mvn process-test-classes
+
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt: update_cache=yes
+
+   - name: Running jetty (In background)
+     shell: cd /home/vagrant/tmp/iTrust2 && nohup sudo mvn jetty:run &
+
+#
