@@ -1,7 +1,5 @@
 ---
 - hosts: all
   roles:
-    - { role: nodejs }
-    - { role: ec2_instance, param: checkboxio }
-    - { role: ec2_instance, param: itrust2 }
-
+    - nodejs
+    - ec2_instance
