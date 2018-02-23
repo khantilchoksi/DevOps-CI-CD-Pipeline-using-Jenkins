@@ -10,6 +10,12 @@ DevOps Project Spring 2018 NC State University
 
 Link to screencast: 
 
+## Contribution 
+
+Setting up Jenkins and building jobs : Khantil & Navjot
+
+Deploying checkbox.io & iTrust2 : Khelan & Pavithra
+
 ## Challanges faced
 
 ### Checkbox.io (Khelan - Pavithra)
