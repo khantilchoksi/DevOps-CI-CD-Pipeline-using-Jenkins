@@ -8,6 +8,10 @@
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties'
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/ && sudo mvn process-test-classes && sudo mvn clean test verify checkstyle:checkstyle'
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: 'cd && ansible-playbook -i inventory itrust_deploy.yml'
 
 
 

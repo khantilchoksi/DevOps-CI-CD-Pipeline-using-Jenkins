@@ -5,7 +5,10 @@
     builders:
       - shell: 'sudo git clone https://github.com/chrisparnin/checkbox.io.git'
       - shell: 'cd /var/lib/jenkins/workspace/{{ checkbox_job_name }}/checkbox.io/server-side/site && sudo npm install'
-
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: 'cd && ansible-playbook -i inventory checkbox_deploy.yml'
 
 
 
