@@ -8,7 +8,15 @@ Vagrantfile
 ansiblevm/backup_scripts/
 git_rsa
 old_scripts/
+<<<<<<< HEAD
 .aws/
 inventory
 *.pem
 
+=======
+keys/
+ping.yml
+ping.retry
+.viminfo
+.bash_history
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38

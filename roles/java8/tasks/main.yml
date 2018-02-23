@@ -1,25 +1,52 @@
 ---   
 # tasks to be performed to install java
+<<<<<<< HEAD
 - name: Install java 8 preresequesits
   apt: name=python-software-properties
+=======
+
+- name: Install java 8 preresequesits
+  apt: name=python-software-properties
+#  #when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: yes
 
 - name: Add Java 8 repository
   apt_repository: repo='ppa:webupd8team/java'
+<<<<<<< HEAD
+=======
+#  #when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: yes
 
 - name: Update APT-GET
   shell: apt-get update
+<<<<<<< HEAD
+=======
+#  when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: true
 
 - name: Agree to Oracle license
   debconf: name={{ jdk_version }} question=shared/accepted-oracle-license-v1-1 vtype=select value=true
+<<<<<<< HEAD
+=======
+#  when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: yes
 
 - name: Install java 8
   apt: name={{ jdk_version }} state=latest update-cache=yes force=yes
+<<<<<<< HEAD
+=======
+#  when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: yes
 
 - name: Update apt-get
   action: apt update_cache=yes
+<<<<<<< HEAD
+=======
+#  when: check_java.rc > 0
+>>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
   become: true

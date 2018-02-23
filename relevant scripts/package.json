@@ -9,14 +9,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-<<<<<<< HEAD
-    "needle": "^0.7.10"
-  },
-  "dependencies": {
-    "aws-sdk": "^2.201.0",
-    "ping": "^0.2.2"
-=======
-    "aws-sdk": "latest"
->>>>>>> 061ec1b139ecf9d16fb9ded4f6751a8bcf9f9a38
+    "needle": "^0.7.10",
+    "aws-sdk": ">= 2.0.9",
+    "node-uuid": ">= 1.4.1"
   }
 }
