@@ -1,8 +1,8 @@
 ---   
 # tasks to be performed to install java
-- name: Install java 8 preresequesits
-  apt: name=python-software-properties
-  become: yes
+# - name: Install java 8 preresequesits
+#   apt: name=python-software-properties
+#   become: yes
 
 - name: Add Java 8 repository
   apt_repository: repo='ppa:webupd8team/java'

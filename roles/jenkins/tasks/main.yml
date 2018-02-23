@@ -12,6 +12,7 @@
     - python-lxml
     - vim
     - html-xml-utils
+    - python3-setuptools
   become: true
 
 - name: Adding Apt Key For Jenkins
@@ -136,16 +137,20 @@
     delay: 30
 
 
-- name: pip version
-  shell: 'pip install jenkins-job-builder'
-  #register: pip_version
+# - name: pip version
+#   shell: 'pip install jenkins-job-builder'
+#   #register: pip_version
 
 #- debug:
 #    msg=pip_version.stdout
 
+- name: Install pip3
+  shell: 'easy_install3 pip'
+  become: true
 
-#- pip:
-#    name: jenkins-job-builder
+- pip:
+    name: jenkins-job-builder
+  become: true
 
 - name: Restarting Jenkins
   service:

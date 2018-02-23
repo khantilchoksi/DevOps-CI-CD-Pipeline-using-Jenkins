@@ -15,7 +15,7 @@ relevant_scripts/
 inventory
 *.pem
 
-
+aws.js
 keys/
 ping.yml
 ping.retry
