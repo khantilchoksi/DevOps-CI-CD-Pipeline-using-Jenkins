@@ -46,7 +46,7 @@ ec2.createSecurityGroup(paramsSecurityGroup, function(err, data) {
 });
 
 
-var keyPairName='HW1_Key'
+var keyPairName=process.argv[2];
 var params = {
    KeyName: keyPairName
 };
@@ -58,14 +58,18 @@ ec2.createKeyPair(params, function(err, data) {
       console.log("Key Pair already exist");
    } else {
       //console.log(JSON.stringify(data.KeyMaterial));
+
+
       myKey=data.KeyMaterial;
       const fs = require('fs');
 
-      var dir = '/home/vagrant/keys/';
+      var dir = process.env.HOME+'/keys/';
       let filePath=dir+keyPairName+'.pem'
+console.log(fs.existsSync(dir));
 
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
+        console.log('came here');
       }
       
       let buffer = new Buffer(myKey);
@@ -104,7 +108,7 @@ var publicDNS=null;
     InstanceType: 't2.micro',
     MinCount: 1,
     MaxCount: 1,
-    KeyName: 'HW1_Key',
+    KeyName: keyPairName,
     SecurityGroups: ['SSHGroup']
  };
 
@@ -158,7 +162,7 @@ var publicDNS=null;
          const fs = require('fs');
          let filePath='./inventory';
          var tag= '\n['+process.argv[2]+']\n';
-         var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=../keys/'+keyPairName+'.pem\n';
+         var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=../keys/'+keyPairName+'.pem ansible_python_interpreter=/usr/bin/python3\n';
          // open the file in append mode
      
          // write the contents of the buffer, from position 0 to the end, to the file descriptor returned in opening our file
@@ -175,7 +179,6 @@ var publicDNS=null;
     });
 
  });
-
 
 
 
