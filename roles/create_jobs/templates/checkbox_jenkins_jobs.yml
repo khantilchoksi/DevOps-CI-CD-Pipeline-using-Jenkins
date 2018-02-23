@@ -8,7 +8,7 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: 'cd && ansible-playbook -i inventory checkbox_deploy.yml'
+            - shell: 'cd && ansible-playbook -i "localhost," -c local provision_ec2.yml --extra-vars="param=checkboxio" && ansible-playbook -i inventory deploy_app_checkbox.yml -s --vault-password-file ~/.vault_pass.txt '
 
 
 
