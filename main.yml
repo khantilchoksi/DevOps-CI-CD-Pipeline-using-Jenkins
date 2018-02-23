@@ -39,7 +39,7 @@
         - nodejs
         - nginx
         - git
-        - mongodb-org
+        - mongodb
         - python-pip
       apt:
         name: '{{item}}'
@@ -54,7 +54,6 @@
       pip:
         name: pymongo
         state: latest
-        use_mirrors: no
 
     - name: Create a new database and user in MongoDB
       mongodb_user: 
@@ -75,6 +74,7 @@
       git:
         repo: 'https://github.com/chrisparnin/checkbox.io.git'
         dest: "{{ lookup('env','HOME') }}/checkbox"
+        update: no
 
     - name: Install forever package using npm
       become: yes
@@ -93,9 +93,11 @@
         replace: "root {{ lookup('env','HOME') }}/checkbox/public_html/;"
 
     - name: 'Copy files from checkbox to nginx available sites'
+      become: yes
       copy:
         src: "{{ lookup('env','HOME') }}/checkbox/local-conf/default"
         dest: /etc/nginx/sites-available/default
+        remote_src: yes
         mode: 0644
 
     - name: 'Copy nginx conf file'
@@ -103,6 +105,7 @@
       copy:
         src: "{{ lookup('env','HOME') }}/checkbox/local-conf/nginx.conf"
         dest: /etc/nginx/nginx.conf
+        remote_src: yes
         mode: 0644
 
     - name: Restart Nginx
