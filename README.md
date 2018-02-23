@@ -18,6 +18,10 @@ Deploying checkbox.io & iTrust2 : Khelan & Pavithra
 
 ## Challanges faced
 
+### Jenkins (Khantil & Navjot)
+- After restarting Jenkins server, we were immediately checking the URL. Later we realized that we have to add the wait time after restarting jenkins server.
+- 
+
 ### Checkbox.io (Khelan - Pavithra)
 - Figure out how to use vault to encrypt the DB passwords.
 - Setting up mongoDB service and adding a user took us a lot of time.
