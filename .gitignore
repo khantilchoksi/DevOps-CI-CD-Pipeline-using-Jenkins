@@ -1,5 +1,6 @@
 #Ignoring Private SSH Keys of VMs
 *.key
+keys/
 *.ssh/
 *.cache/
 *.vagrant/
@@ -7,3 +8,7 @@ Vagrantfile
 ansiblevm/backup_scripts/
 git_rsa
 old_scripts/
+.aws/
+inventory
+*.pem
+
