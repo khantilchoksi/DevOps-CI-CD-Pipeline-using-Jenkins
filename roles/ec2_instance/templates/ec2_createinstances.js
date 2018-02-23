@@ -160,7 +160,7 @@ var publicDNS=null;
 
          //---- Write inventory File
          const fs = require('fs');
-         let filePath='./inventory';
+         let filePath=process.env.HOME+'/inventory';
          var tag= '\n['+process.argv[2]+']\n';
          var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=../keys/'+keyPairName+'.pem ansible_python_interpreter=/usr/bin/python3\n';
          // open the file in append mode
