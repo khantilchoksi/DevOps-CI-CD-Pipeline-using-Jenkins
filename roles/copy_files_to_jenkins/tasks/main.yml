@@ -2,7 +2,7 @@
 - name: copy roles to jenkins
   synchronize: 
     src: ~/roles
-    dest: ~/
+    dest: /var/lib/jenkins/
     rsync_opts:
       - "--exclude=node_modules"
 #    owner: ubuntu
@@ -12,7 +12,7 @@
 - name: copy files necessary to deploy itrust and checkbox 
   copy:
     src: ~/app_deploy/
-    dest: ~/
+    dest: /var/lib/jenkins/
     owner: ubuntu
     group: ubuntu
     mode: 0666
@@ -28,7 +28,7 @@
 - name: copying additional necessary files
   copy:
     src: ~/provision_ec2.yml
-    dest: ~/provision_ec2.yml
+    dest: /var/lib/jenkins/provision_ec2.yml
     owner: ubuntu
     group: ubuntu
     mode: 0666
@@ -36,17 +36,17 @@
 - name: copy aws files
   copy:
     src: ~/.aws/
-    dest: ~/.aws/
+    dest: /var/lib/jenkins/.aws/
     owner: ubuntu
     group: ubuntu
     mode: 0400
-  become: yes
+
 
 
 - name: copy vault
   copy:
     src: ~/.vault_pass.txt
-    dest: ~/.vault_pass.txt
+    dest: /var/lib/jenkins/.vault_pass.txt
     owner: ubuntu
     group: ubuntu
     mode: 0400

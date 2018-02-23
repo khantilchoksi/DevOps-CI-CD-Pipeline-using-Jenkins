@@ -113,72 +113,88 @@ var publicDNS=null;
  };
 
  // Create the instance
- ec2.runInstances(params, function(err, data) {
-    if (err) {
-       console.log("Could not create instance", err);
-       return;
-    }
-    instanceId = data.Instances[0].InstanceId;
-    //publicDNS = data.Instances[0].PublicDNS;
-    console.log("Created instance", instanceId);
-    // Add tags to the instance
-    params = {Resources: [instanceId], Tags: [
-       {
-          Key: 'HW1 Instance',
-          Value: 'HW1 AWS Instance'
-       }
-    ]};
-    ec2.createTags(params, function(err) {
-       console.log("Tagging instance", err ? "failure" : "success");
-    });
+ function createRunInstance(){
+  return new Promise(function(resolve, reject){
 
-    // call EC2 to start the selected instances
-    params = {
-      InstanceIds: [instanceId],
-      DryRun: false
-    };
-     
-    ec2.startInstances(params, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else if (data) {
-          //console.log("Success", data.StartingInstances);
-
-        }
-    });
-
-    
-    params = {
-      InstanceIds: [instanceId],
-      DryRun: false
-    };
-
-    ec2.describeInstances(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else {
-
-
-         //---- Write inventory File
-         const fs = require('fs');
-         let filePath=process.env.HOME+'/inventory';
-         var tag= '\n['+process.argv[2]+']\n';
-         var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./keys/'+keyPairName+'.pem ansible_python_interpreter=/usr/bin/python3\n';
-         // open the file in append mode
-     
-         // write the contents of the buffer, from position 0 to the end, to the file descriptor returned in opening our file
-         fs.appendFile(filePath,tag,function(err) {
-             if (err) throw 'error writing file: ' + err;
-         });
-
-         fs.appendFile(filePath, buffer, function(err) {
-             if (err) throw 'error writing file: ' + err;
-         });
-
+    ec2.runInstances(params, function(err, data) {
+      if (err) {
+         console.log("Could not create instance", err);
+         return;
       }
-          
-    });
+      instanceId = data.Instances[0].InstanceId;
+      //publicDNS = data.Instances[0].PublicDNS;
+      console.log("Created instance", instanceId);
+      // Add tags to the instance
+      params = {Resources: [instanceId], Tags: [
+         {
+            Key: 'HW1 Instance',
+            Value: 'HW1 AWS Instance'
+         }
+      ]};
+      ec2.createTags(params, function(err) {
+         console.log("Tagging instance", err ? "failure" : "success");
+      });
+  
+      // call EC2 to start the selected instances
+      params = {
+        InstanceIds: [instanceId],
+        DryRun: false
+      };
+       
+      ec2.startInstances(params, function(err, data) {
+          if (err) {
+            console.log("Error", err);
+            reject(err);
+          } else if (data) {
+            //console.log("Success", data.StartingInstances);
+            resolve(instanceId);
+          }
+      });
+  
+  
+   });
+  })
+  
+ }
 
- });
+
+ var promise = createRunInstance();
+ promise.then(function(result){
+  params = {
+    InstanceIds: [result],
+    DryRun: false
+  };
+
+  ec2.describeInstances(params, function(err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else {
+
+
+       //---- Write inventory File
+       const fs = require('fs');
+       let filePath=process.env.HOME+'/inventory';
+       var tag= '\n['+process.argv[2]+']\n';
+       var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./keys/'+keyPairName+'.pem ansible_python_interpreter=/usr/bin/python3\n';
+       // open the file in append mode
+   
+       // write the contents of the buffer, from position 0 to the end, to the file descriptor returned in opening our file
+       fs.appendFile(filePath,tag,function(err) {
+           if (err) throw 'error writing file: ' + err;
+       });
+
+       fs.appendFile(filePath, buffer, function(err) {
+           if (err) throw 'error writing file: ' + err;
+       });
+
+    }
+        
+  });
+ },function(error){
+  console.log("Promise Error",error);
+});
+
+
+
 
 
 

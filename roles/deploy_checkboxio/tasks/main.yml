@@ -28,11 +28,16 @@
     - git
     - mongodb
     - python-pip
+    - python3-setuptools
   apt:
     name: '{{item}}'
     state: latest
     update_cache: yes
     force: yes
+
+- name: Install pip3
+  shell: 'easy_install3 pip'
+  become: true
 
 - name: Install pymongo
   become: yes
