@@ -35,11 +35,12 @@
 
 - name: copy aws files
   copy:
-    src: ~/.aws
-    dest: ~/.aws
+    src: ~/.aws/
+    dest: ~/.aws/
     owner: ubuntu
     group: ubuntu
     mode: 0400
+  become: yes
 
 
 - name: copy vault
