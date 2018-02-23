@@ -1,0 +1,14 @@
+---
+- name: Add repository for node 9
+  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+  become: yes
+
+- name: Install latest package
+  become: yes
+  apt:
+    name: nodejs
+    state: latest
+    update_cache: yes
+    force: yes
+
+

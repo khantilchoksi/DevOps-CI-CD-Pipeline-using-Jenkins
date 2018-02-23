@@ -156,7 +156,7 @@ var publicDNS=null;
 
          //---- Write inventory File
          const fs = require('fs');
-         let filePath='/home/vagrant/inventory';
+         let filePath='./inventory';
          var tag= '\n['+process.argv[2]+']\n';
          var buffer = data.Reservations[0].Instances[0].PublicDnsName+' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=../keys/'+keyPairName+'.pem\n';
          // open the file in append mode
