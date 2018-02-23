@@ -12,4 +12,11 @@
     update_cache: yes
     force: yes
 
+- name: Turning off Host Key Checking
+  replace:
+    dest: /etc/ansible/ansible.cfg
+    regexp: '#host_key_checking'
+    replace: 'host_key_checking'
+  become: true
+
 

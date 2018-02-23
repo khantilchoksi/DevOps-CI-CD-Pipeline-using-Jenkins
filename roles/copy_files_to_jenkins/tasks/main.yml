@@ -5,10 +5,10 @@
     dest: /var/lib/jenkins/
     rsync_opts:
       - "--exclude=node_modules"
+  become: true
 #    owner: ubuntu
 #    group: ubuntu
 #    mode: 0666
-  become: true
 
 
 - name: copy files necessary to deploy itrust and checkbox 
@@ -37,7 +37,6 @@
     mode: 0666
   become: true
 
-
 - name: copy aws files
   copy:
     src: ~/.aws/
@@ -48,8 +47,6 @@
   become: true
 
 
-
-
 - name: copy vault
   copy:
     src: ~/.vault_pass.txt
@@ -58,5 +55,3 @@
     group: ubuntu
     mode: 0400
   become: true
-
-
