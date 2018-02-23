@@ -1,0 +1,14 @@
+---
+- name: Add java repository from PPA
+  apt_repository:
+    repo: 'ppa:ansible/ansible'
+
+- name: Install ansible
+  become: yes
+  apt:
+    name: ansible
+    state: latest
+    update_cache: yes
+    force: yes
+
+
