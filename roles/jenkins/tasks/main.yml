@@ -56,6 +56,19 @@
     - python-mysqldb
   become: yes
 
+- name: insert skip grant tables in my.cnf
+  lineinfile: 
+    dest: /etc/mysql/my.cnf
+    insertafter: 'skip-external-locking'
+    line: 'skip-grant-tables'
+  become: true
+
+- name: restarting mysql
+  service:
+    name: mysql
+    enabled: yes
+    state: restarted
+
 - name: Installing Jenkins
   apt:
     name: jenkins     

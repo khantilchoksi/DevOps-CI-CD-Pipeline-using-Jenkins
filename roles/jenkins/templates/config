@@ -2,3 +2,4 @@ host github.ncsu.edu
  HostName github.ncsu.edu
  IdentityFile /root/.ssh/git_rsa
  User khchoksi
+ StrictHostKeyChecking no
