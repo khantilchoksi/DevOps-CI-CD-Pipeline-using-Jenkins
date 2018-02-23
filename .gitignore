@@ -8,3 +8,7 @@ ansiblevm/backup_scripts/
 git_rsa
 old_scripts/
 keys/
+ping.yml
+ping.retry
+.viminfo
+.bash_history
