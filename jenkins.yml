@@ -5,10 +5,10 @@
     - name: "mysql_root_pass"
       prompt: "enter mysql root pass" 
 
-  pre_tasks:
-    - name: install python 2
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-      become: true
+  # pre_tasks:
+  #   - name: install python 2
+  #     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  #     become: true
 
   roles:
     - java8

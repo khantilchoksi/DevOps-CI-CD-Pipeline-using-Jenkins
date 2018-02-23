@@ -9,7 +9,7 @@
 
 - name: copy files necessary to run checkbox 
   copy:
-    src: ~/deploy_app_checkboxio.yml
+    src: ~/app_deploy/deploy_app_checkboxio.yml
     dest: ~/deploy_app_checkboxio.yml
     owner: ubuntu
     group: ubuntu
@@ -17,7 +17,7 @@
 
 - name: copy files necessary to run itrust
   copy:
-    src: ~/deploy_app_iTrust2.yml
+    src: ~/app_deploy/deploy_app_iTrust2.yml
     dest: ~/deploy_app_iTrust2.yml
     owner: ubuntu
     group: ubuntu
