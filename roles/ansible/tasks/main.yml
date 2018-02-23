@@ -1,5 +1,6 @@
 ---
-- name: Add java repository from PPA
+- name: Add ansible repository from PPA
+  become: yes
   apt_repository:
     repo: 'ppa:ansible/ansible'
 
