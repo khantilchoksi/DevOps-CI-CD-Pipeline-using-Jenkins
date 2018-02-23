@@ -3,7 +3,7 @@
     description: 'automatically generated test'
     project-type: freestyle
     builders:
-      - shell: 'echo yes | sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      - shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties'
