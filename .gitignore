@@ -2,6 +2,8 @@
 *.key
 keys/
 *.ssh/
+*.aws/
+*vault_pass.txt
 *.cache/
 *.vagrant/
 Vagrantfile
