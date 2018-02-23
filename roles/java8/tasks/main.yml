@@ -1,35 +1,32 @@
 ---   
 # tasks to be performed to install java
-- name: Check Java
-  shell: command -v java
-ansible all -m ping -i inventory
 
 - name: Install java 8 preresequesits
   apt: name=python-software-properties
-  when: check_java.rc > 0
+#  #when: check_java.rc > 0
   become: yes
 
 - name: Add Java 8 repository
   apt_repository: repo='ppa:webupd8team/java'
-  when: check_java.rc > 0
+#  #when: check_java.rc > 0
   become: yes
 
 - name: Update APT-GET
   shell: apt-get update
-  when: check_java.rc > 0
+#  when: check_java.rc > 0
   become: true
 
 - name: Agree to Oracle license
   debconf: name={{ jdk_version }} question=shared/accepted-oracle-license-v1-1 vtype=select value=true
-  when: check_java.rc > 0
+#  when: check_java.rc > 0
   become: yes
 
 - name: Install java 8
   apt: name={{ jdk_version }} state=latest update-cache=yes force=yes
-  when: check_java.rc > 0
+#  when: check_java.rc > 0
   become: yes
 
 - name: Update apt-get
   action: apt update_cache=yes
-  when: check_java.rc > 0
+#  when: check_java.rc > 0
   become: true

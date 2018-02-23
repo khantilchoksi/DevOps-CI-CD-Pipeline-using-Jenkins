@@ -16,7 +16,8 @@ DevOps Project Spring 2018 NC State University
 - Setting up mongoDB service and adding a user took us a lot of time.
 - Since we were running playbook to deploy checkbox.io we later realized about setting up environment variables in virtual machine.
 
-### iTrust (Khelan - Pavithra) 
+### iTrust2 (Khelan - Pavithra) 
 - Learnt how to set up mysql-server without root password and make necessary changes in mysql.conf file to accept incoming connections.
+- Learnt how to kill processes before deploying application again on EC2 instance (so that it doesn't give port binding error : Idempotency)
 - 
 
