@@ -8,7 +8,7 @@
     publishers:
       - postbuildscript:
           builders:
-            - shell: 'pwd && cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=checkboxio" -vvv && sleep 60s && sudo chmod 644 ~/keys/checkboxio.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt -vvv'
+            - shell: 'pwd && cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=checkboxio" -vvv && sleep 30s && sudo chmod 400 ~/keys/checkboxio.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt -vvv'
 
 
 
