@@ -26,7 +26,8 @@ Deploying checkbox.io & iTrust2 : Khelan & Pavithra
 ### iTrust2 (Khelan - Pavithra) 
 - Learnt how to set up mysql-server without root password and make necessary changes in mysql.conf file to accept incoming connections.
 - Learnt how to kill processes before deploying application again on EC2 instance (so that it doesn't give port binding error : Idempotency)
-- 
+- Learnt how to bypass the prompts for password via ansible (for setting up MySql)
+- We had to increase the memory of the node machine in order to completely run the tests and had to look out for few long running java dispatcher jobs (forecefully kill them)
 
 ### References
 https://stackoverflow.com/questions/46515704/how-to-kill-a-running-process-using-ansible
