@@ -58,7 +58,7 @@
 
 - name: insert skip grant tables in my.cnf
   lineinfile: 
-    dest: /etc/mysql/my.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
     insertafter: 'skip-external-locking'
     line: 'skip-grant-tables'
   become: true
@@ -68,6 +68,7 @@
     name: mysql
     enabled: yes
     state: restarted
+  become: yes
 
 - name: Installing Jenkins
   apt:

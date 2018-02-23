@@ -1,27 +1,29 @@
 ---
 - name: copy roles to jenkins
-  copy: 
+  synchronize: 
     src: ~/roles
-    dest: ~/roles
+    dest: ~/
+    rsync_opts:
+      - "--exclude=node_modules"
+#    owner: ubuntu
+#    group: ubuntu
+#    mode: 0666
+
+- name: copy files necessary to deploy itrust and checkbox 
+  copy:
+    src: ~/app_deploy/
+    dest: ~/
     owner: ubuntu
     group: ubuntu
     mode: 0666
 
-- name: copy files necessary to run checkbox 
-  copy:
-    src: ~/deploy_app_checkboxio.yml
-    dest: ~/deploy_app_checkboxio.yml
-    owner: ubuntu
-    group: ubuntu
-    mode: 0666
-
-- name: copy files necessary to run itrust
-  copy:
-    src: ~/deploy_app_iTrust2.yml
-    dest: ~/deploy_app_iTrust2.yml
-    owner: ubuntu
-    group: ubuntu
-    mode: 0666
+#- name: copy files necessary to run ec2instance
+#  synchronize:
+#    src: ~/deploy_app_iTrust2.yml
+#    dest: ~/deploy_app_iTrust2.yml
+#    owner: ubuntu
+#    group: ubuntu
+#    mode: 0666
 
 - name: copying additional necessary files
   copy:
