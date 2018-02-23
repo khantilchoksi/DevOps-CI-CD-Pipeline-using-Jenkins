@@ -1,0 +1,50 @@
+---
+- name: copy roles to jenkins
+  copy: 
+    src: ~/roles
+    dest: ~/roles
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+
+- name: copy files necessary to run checkbox 
+  copy:
+    src: ~/deploy_app_checkboxio.yml
+    dest: ~/deploy_app_checkboxio.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+
+- name: copy files necessary to run itrust
+  copy:
+    src: ~/deploy_app_iTrust2.yml
+    dest: ~/deploy_app_iTrust2.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+
+- name: copying additional necessary files
+  copy:
+    src: ~/provision_ec2.yml
+    dest: ~/provision_ec2.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+
+- name: copy aws files
+  copy:
+    src: ~/.aws
+    dest: ~/.aws
+    owner: ubuntu
+    group: ubuntu
+    mode: 0400
+
+
+- name: copy vault
+  copy:
+    src: ~/.vault_pass.txt
+    dest: ~/.vault_pass.txt
+    owner: ubuntu
+    group: ubuntu
+    mode: 0400
+
