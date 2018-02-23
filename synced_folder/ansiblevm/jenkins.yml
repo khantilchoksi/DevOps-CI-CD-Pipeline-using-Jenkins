@@ -1,8 +1,0 @@
----
-- hosts: jenkins
-
-  roles:
-    - java8
-    - jenkins
-
-    
