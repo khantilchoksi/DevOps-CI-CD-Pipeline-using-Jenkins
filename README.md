@@ -14,7 +14,7 @@ Link to screencast:
 
 Setting up Jenkins and building jobs : Khantil & Navjot
 
-Deploying checkbox.io & iTrust2 : Khelan & Pavithra
+Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 
 ## Challanges faced
 
