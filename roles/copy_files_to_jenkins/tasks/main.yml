@@ -8,6 +8,8 @@
 #    owner: ubuntu
 #    group: ubuntu
 #    mode: 0666
+  become: true
+
 
 - name: copy files necessary to deploy itrust and checkbox 
   copy:
@@ -16,6 +18,7 @@
     owner: ubuntu
     group: ubuntu
     mode: 0666
+  become: true
 
 #- name: copy files necessary to run ec2instance
 #  synchronize:
@@ -32,6 +35,8 @@
     owner: ubuntu
     group: ubuntu
     mode: 0666
+  become: true
+
 
 - name: copy aws files
   copy:
@@ -40,6 +45,8 @@
     owner: ubuntu
     group: ubuntu
     mode: 0400
+  become: true
+
 
 
 
@@ -50,4 +57,6 @@
     owner: ubuntu
     group: ubuntu
     mode: 0400
+  become: true
+
 
