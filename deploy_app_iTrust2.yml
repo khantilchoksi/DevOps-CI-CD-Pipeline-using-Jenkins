@@ -12,17 +12,16 @@
    - mysql
    - maven
 
-  vars_prompt:
-   - name: "git_username"
-     prompt: "Enter your github username"
-     private: no
-   - name: "git_password"
-     prompt: "Enter your github password"
-     private: yes
-
-   - name: "mysql_password"
-     prompt: Type your password for mysql server
-     private: no
+  vars:
+    git_username: piyer3
+    git_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34666361343930363337396137613562656539643632616433366430393136666331636362363064
+          3137633661663535333261626330623463396462666436360a666565383063663232653065343234
+          36616330616461346162376230323933326639383037643836653539366164393563636463393937
+          3965353033666239330a313435396666373334636362373266333230353365623762663537366335
+          3666
+    mysql_password: ''
 
   tasks:
    - name: Install git
