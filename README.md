@@ -20,7 +20,7 @@ Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 ## Working
 
 1. Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to remote instance.
-- ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins"
+  - ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins"
 
 
 
