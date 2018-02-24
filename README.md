@@ -17,6 +17,13 @@ Setting up Jenkins, writing build, post-build jobs using Jenkin job builder : Kh
 
 Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 
+## Working
+
+1. Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to remote instance.
+- ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins"
+
+
+
 ## Challanges faced
 
 ### Jenkins (Khantil & Navjot)
@@ -25,6 +32,7 @@ Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 - The variations in users while switching between host, ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.
 - We initially setup the system using Vagrant and while installing Python, it used Python 2. However, on deploying on EC2 instances, it already has Python 3 version installed and mismatches between pip and pip3 software utility lists broke the system at various points. We tried pre-installing python 2 after using python-interpretor command with ansible inventory but that failed because of conflicts. Finally, we used python 3's setuptools and easy install to move everything to Python 3.
 - We tried using a synced folder on our local machine with Vagrant to test run the entire system to start with. This gave problems with the keys stored as virtual machine user was not able to properly restrict the permissions on the key.
+- Building both the jobs simultaneously would hang up the EC2 instances even after increasing the memory. We then decided to ran them sequentially to distribute the load over time.
 
 ### Checkbox.io (Khelan - Pavithra)
 - Figure out how to use vault to encrypt the DB passwords.
