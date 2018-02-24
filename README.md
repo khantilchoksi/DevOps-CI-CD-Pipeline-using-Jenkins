@@ -1,17 +1,23 @@
 # DevOps-Project
 DevOps Project Spring 2018 NC State University
 
-#### Team members
+----------------------------------------  
 
-1. Navjot Singh; nsingh9@ncsu.edu
-2. Khelan Patel; kjpatel4@ncsu.edu
-3. Khantil Choksi; khchoksi@ncsu.edu
-4. Pavithra Iyer; piyer3@ncsu.edu
+### Team members
+   Name             ::        Unity ID
+   -------------              ----------
+1. Navjot Singh     ::        nsingh9
+2. Khelan Patel     ::        kjpatel4
+3. Khantil Choksi   ::        khchoksi
+4. Pavithra Iyer    ::        piyer3
+
+--------------------------------------------------------
 
 ## Screencast: 
 [  Click here to go the screencast video  ](https://youtu.be/uFHt1vF90pI)
 
-## Working
+---------------------------------------------------------------------------
+## Implementation
 
 1. **[Provision Jenkins Server](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/provision_ec2.yml)** Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to the remote instance.    
      ``` ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```
@@ -25,16 +31,17 @@ DevOps Project Spring 2018 NC State University
           -[Build iTrust2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_itrust.yml)   
      ``` ansible-playbook -i inventory build_itrust.yml ```
 
+-----------------------------------------  
 
-## Challenges faced
+## Experience and Challenges Faced
 
-### Jenkins (Khantil & Navjot)
-- Figuring out the differences in using "java -jar" with Jenkins-cli.jar and "Jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs.
-- After provisioning EC2 instances, we were initially immediately running ansible scripts to configure the machines. The delay in setting up the machines on the Amazon servers led to post-build failures as the servers would often refuse connections.
-- The variations in users while switching between the host, Ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.
-- We initially setup the system using Vagrant and while installing Python, it used Python 2. However, on deploying on EC2 instances, it already has Python 3 version installed and mismatches between pip and pip3 software utility lists broke the system at various points. We tried pre-installing python 2 after using the python-interpreter command with ansible inventory but that failed because of conflicts. Finally, we used python 3's setuptools and easy install to move everything to Python 3.
-- We tried using a synced folder on our local machine with Vagrant to test run the entire system to start with. This gave problems with the keys stored as virtual machine user was not able to properly restrict the permissions on the key.
-- Building both the jobs simultaneously would hang up the EC2 instances even after increasing the memory. We then decided to ran them sequentially to distribute the load over time.
+### Provisioning, Configuring Jenkins; Jenkins-Job-Builds (Khantil & Navjot)
+     * Figuring out the differences in using "java -jar" with Jenkins-cli.jar and "Jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs.  
+     * Figuring out the differences in using "java -jar" with Jenkins-cli.jar and "Jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs. 
+     * After provisioning EC2 instances, we were initially immediately running ansible scripts to configure the machines. The delay in setting up the machines on the Amazon servers led to post-build failures as the servers would often refuse connections.  
+     * The variations in users while switching between the host, Ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.  
+     * We initially setup the system using Vagrant and while installing Python, it used Python 2. However, on deploying on EC2 instances, it already has Python 3 version installed and mismatches between pip and pip3 software utility lists broke the system at various points. We tried pre-installing python 2 after using the python-interpreter command with ansible inventory but that failed because of conflicts. Finally, we used python 3's setuptools and easy install to move everything to Python 3.      * We tried using a synced folder on our local machine with Vagrant to test run the entire system to start with. This gave problems with the keys stored as virtual machine user was not able to properly restrict the permissions on the key.  
+     * Building both the jobs simultaneously would hang up the EC2 instances even after increasing the memory. We then decided to ran them sequentially to distribute the load over time.
 
 ### Checkbox.io (Khelan - Pavithra)
 - Figure out how to use vault to encrypt the DB passwords.
