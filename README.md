@@ -12,15 +12,16 @@ Link to screencast:
 
 ## Contribution 
 
-Setting up Jenkins and building jobs : Khantil & Navjot
+Setting up Jenkins, writing build, post-build jobs using Jenkin job builder : Khantil & Navjot
 
 Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 
 ## Challanges faced
 
 ### Jenkins (Khantil & Navjot)
+- Figuring out the differences in using "java -jar" with jenkins-cli.jar and "jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs.
 - After restarting Jenkins server, we were immediately checking the URL. Later we realized that we have to add the wait time after restarting jenkins server.
-- 
+- The variations in users while switching between host, ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.
 
 ### Checkbox.io (Khelan - Pavithra)
 - Figure out how to use vault to encrypt the DB passwords.
