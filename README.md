@@ -36,13 +36,16 @@ DevOps Project Spring 2018 NC State University
 ### Managing GitHub and AWS Credetials:  
 * Loading AWS Credentials from the shared credentials file:  
      * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system:  
+        ```config
         Linux, Unix, and macOS users:`~/.aws/credentials`  
-        Windows users:`C:\Users\USER_NAME\.aws\credentials`  
+        Windows users:`C:\Users\USER_NAME\.aws\credentials`   
+        ```
         
-        
+        ```config
         [default]  
         aws_access_key_id = <YOUR_ACCESS_KEY_ID>  
-        aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>  
+        aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY> 
+        ```
      
      * The [nodejs code](/roles/ec2_instance/templates/ec2_createinstance.js) is used to access this credetials and create new EC2 instance whenever required.  
         
