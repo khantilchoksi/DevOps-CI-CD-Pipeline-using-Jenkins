@@ -26,7 +26,7 @@ DevOps Project Spring 2018 NC State University
      ``` ansible-playbook -i inventory build_itrust.yml ```
 
 
-## Challanges faced
+## Challenges faced
 
 ### Jenkins (Khantil & Navjot)
 - Figuring out the differences in using "java -jar" with jenkins-cli.jar and "jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs.
