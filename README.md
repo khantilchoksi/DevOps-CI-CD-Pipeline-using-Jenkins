@@ -35,7 +35,7 @@ DevOps Project Spring 2018 NC State University
      
 ### Managing GitHub and AWS Credetials:  
 * Loading AWS Credentials from the shared credentials file:  
-        * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system:  
+     * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system:  
         Linux, Unix, and macOS users:`~/.aws/credentials`  
         Windows users:`C:\Users\USER_NAME\.aws\credentials`  
         
