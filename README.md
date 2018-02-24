@@ -8,7 +8,8 @@ DevOps Project Spring 2018 NC State University
 3. Khantil Choksi; khchoksi@ncsu.edu
 4. Pavithra Iyer; piyer3@ncsu.edu
 
-Link to screencast: 
+#### Screencast: 
+[Link to screencast: ](https://youtu.be/uFHt1vF90pI)
 
 ## Contribution 
 
@@ -39,5 +40,5 @@ https://stackoverflow.com/questions/46515704/how-to-kill-a-running-process-using
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html
 https://dba.stackexchange.com/questions/185240/creating-mongodb-database-with-ansible-playbook
 https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314
+https://docs.openstack.org/infra/jenkins-job-builder/publishers.html
 
-Screencast: https://youtu.be/uFHt1vF90pI
