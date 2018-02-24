@@ -3,12 +3,16 @@ DevOps Project Spring 2018 NC State University
 
 ----------------------------------------  
 ### Team members
-   Name             ::        Unity ID  
-1. Navjot Singh     ::        nsingh9
-2. Khelan Patel     ::        kjpatel4
-3. Khantil Choksi   ::        khchoksi
-4. Pavithra Iyer    ::        piyer3
+|Name | Unity ID |
+| :---: | :---: |
+|1. Navjot Singh |       nsingh9|
+|2. Khelan Patel     |        kjpatel4|
+|3. Khantil Choksi   |        khchoksi|
+|4. Pavithra Iyer    |       piyer3|
 
+----------------------------------------
+## Architecture Diagram: 
+![img](/Architecture.png)
 --------------------------------------------------------
 
 ## Screencast
@@ -24,24 +28,23 @@ DevOps Project Spring 2018 NC State University
 3. **[Create Jobs](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/create_jobs.yml)**  Now we create the jobs. We create a template under the [create_jobs](https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone1/roles/create_jobs) role which has all the jobs that are to be created.    
      ``` ansible-playbook -i inventory create_jobs.yml ```
 4. **[Build Jobs](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_itrust.yml)**  After creating the jobs we build the jobs sequentially. This is to reduce the load on the remote instance.  
-          * [Build checkbox](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_checkboxio.yml)   
+   * [Build checkbox](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_checkboxio.yml)   
      ``` ansible-playbook -i inventory build_checkboxio.yml ```  
-          * [Build iTrust2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_itrust.yml)   
+    * [Build iTrust2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_itrust.yml)   
      ``` ansible-playbook -i inventory build_itrust.yml ```
      
 ### Managing GitHub and AWS Credetials:  
 * Loading AWS Credentials from the shared credentials file:  
-        * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system:
-        ```
-         Linux, Unix, and macOS users: ~/.aws/credentials  
+        * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system: 
+        Linux, Unix, and macOS users: ~/.aws/credentials  
         Windows users: C:\Users\USER_NAME\.aws\credentials  
-        [default]
-        aws_access_key_id = <YOUR_ACCESS_KEY_ID>
-        aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
-        ```
-
-        * The [nodejs code](/roles/ec2_instance/templates/ec2_createinstance.js) is used to access this credetials and create new EC2 instance whenever required.
-
+        
+        [default]  
+        aws_access_key_id = <YOUR_ACCESS_KEY_ID>  
+        aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>  
+     
+     * The [nodejs code](/roles/ec2_instance/templates/ec2_createinstance.js) is used to access this credetials and create new EC2 instance whenever required.  
+        
 * The github credentails are maintained by creating the SSH key pairs and registering the [public key on github account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). Moreover, the github password is also managed for cloning the iTrust repo in iTrust EC2 instance as `post-build` using [ansible vault](http://docs.ansible.com/ansible/2.4/vault.html).
 
 -----------------------------------------  
@@ -49,13 +52,16 @@ DevOps Project Spring 2018 NC State University
 ## Experience and Challenges Faced
 
 ### Provisioning, Configuring Jenkins; Jenkins-Job-Builds (Khantil & Navjot)
-     * The first major issue was to handle the setup wizard and simultaneously providing sercure configuration. To resolve this, the default admin user was created. By creating the `init.groovy.d` directory under the Jenkins default path `/var/lib/jenkins/`, and putting the `groovy` file, for creating a new account helped to solve this issue. [Resource](https://github.com/geerlingguy/ansible-role-jenkins/issues/50)
+     * The first major issue was to handle the setup wizard and simultaneously providing sercure configuration. To resolve this, the default admin user was created. By creating the `init.groovy.d` directory under the Jenkins default path `/var/lib/jenkins/`, and putting the `groovy` file, for creating a new account helped to solve this issue. [Resource](https://github.com/geerlingguy/ansible-role-jenkins/issues/50)  
+     
     * Next to the above challenge was, once the creation of user groovy file was placed inside the `init.groovy.d`, every time the jenkins server was restarted, it was making the new user everytime. So, we have to place the groovy file for creating the user, then restarting the jenkins server to take effect of that and then removing this file, solved our issue.  
-    * After the new EC2 instance has been created, the first time when we `ssh` or run ansible script on that node, it asks for the host key to be added in known_hosts. So, it was hindering our process to automate the tasks. So, we turned off `ANSIBLE_HOST_KEY_CHECKING` feature by adding this into `ansible.config` file. 
-    ```
-    [defaults]   
-    host_key_checking = False
-    ```
+    
+    * After the new EC2 instance has been created, the first time when we `ssh` or run ansible script on that node, it asks for the host key to be added in known_hosts. So, it was hindering our process to automate the tasks. So, we turned off `ANSIBLE_HOST_KEY_CHECKING` feature by adding this into `ansible.config` file.   
+ ```  
+ [defaults]
+ host_key_checking = False  
+ ```  
+    
      * Figuring out the differences in using "java -jar" with Jenkins-cli.jar and "Jenkins-jobs" for updating, deleting jobs was tricky. `java -jar` command didn't delete the jobs completely and that led to the problems with creating new jobs. 
      * After provisioning EC2 instances, we were initially immediately running ansible scripts to configure the machines. The delay in setting up the machines on the Amazon servers led to post-build failures as the servers would often refuse connections.  
      * The variations in users while switching between the host, Ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.  
