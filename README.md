@@ -39,3 +39,4 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html
 https://dba.stackexchange.com/questions/185240/creating-mongodb-database-with-ansible-playbook
 https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314
 
+Screencast: https://youtu.be/uFHt1vF90pI
