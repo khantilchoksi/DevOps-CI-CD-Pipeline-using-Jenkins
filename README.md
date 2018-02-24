@@ -8,19 +8,21 @@ DevOps Project Spring 2018 NC State University
 3. Khantil Choksi; khchoksi@ncsu.edu
 4. Pavithra Iyer; piyer3@ncsu.edu
 
-Link to screencast: 
+#### Screencast: 
+[Link to screencast: ](https://youtu.be/uFHt1vF90pI)
 
 ## Contribution 
 
-Setting up Jenkins and building jobs : Khantil & Navjot
+Setting up Jenkins, writing build, post-build jobs using Jenkin job builder : Khantil & Navjot
 
 Configuring & deploying checkbox.io, iTrust2 : Khelan & Pavithra
 
 ## Challanges faced
 
 ### Jenkins (Khantil & Navjot)
+- Figuring out the differences in using "java -jar" with jenkins-cli.jar and "jenkins-jobs" for updating, deleting jobs was tricky. Java -jar command didn't delete the jobs completely and that led to the problems with creating new jobs.
 - After restarting Jenkins server, we were immediately checking the URL. Later we realized that we have to add the wait time after restarting jenkins server.
-- 
+- The variations in users while switching between host, ansible, and Jenkin server was tricky as we were initially considering only Ubuntu and Vagrant user and overlooked the presence of Jenkins user.
 
 ### Checkbox.io (Khelan - Pavithra)
 - Figure out how to use vault to encrypt the DB passwords.
@@ -38,4 +40,5 @@ https://stackoverflow.com/questions/46515704/how-to-kill-a-running-process-using
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html
 https://dba.stackexchange.com/questions/185240/creating-mongodb-database-with-ansible-playbook
 https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314
+https://docs.openstack.org/infra/jenkins-job-builder/publishers.html
 
