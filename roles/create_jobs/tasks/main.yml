@@ -18,16 +18,16 @@
 
 - name: Copy jenkins job builder script
   template:
-    src: ~/roles/create_jobs/templates/itrust_jenkins_jobs.yml
+    src: "{{ project_directory }}/roles/create_jobs/templates/itrust_jenkins_jobs.yml"
     dest: ~/jobs/itrust_jenkins_jobs.yml
   # become: true
 
 - name: Copy checkbox job builder script
   template:
-    src: ~/roles/create_jobs/templates/checkbox_jenkins_jobs.yml
+    src: "{{ project_directory }}/roles/create_jobs/templates/checkbox_jenkins_jobs.yml"
     dest: ~/jobs/checkbox_jenkins_jobs.yml
   # become: true
   
 - name: create jobs
-  shell: 'cd && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
+  shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
   #become: true

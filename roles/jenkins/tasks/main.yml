@@ -101,7 +101,7 @@
 - name: Copying Groovy Script For Deafult Jenkins User(ADMIN) Creation
   template:
     force: yes
-    src: "~/roles/jenkins/templates/jenkins_user.groovy.j2"
+    src: "{{ project_directory }}/roles/jenkins/templates/jenkins_user.groovy.j2"
     dest: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
     mode: 0755
   become: true
@@ -208,16 +208,16 @@
 
 - name: Add config file for ssh for github ncsu host
   copy:
-    src: ~/roles/jenkins/templates/config
+    src: "{{ project_directory }}/roles/jenkins/templates/config"
     dest: /root/.ssh/config
   become: true
 
 - name: Copy jenkins_jobs.ini file to jenkins server
   template:
-    src: /home/vagrant/roles/jenkins/templates/jenkins_jobs.ini
-    dest: /home/ubuntu/jenkins_jobs.ini
+    src: "{{ project_directory }}/roles/jenkins/templates/jenkins_jobs.ini"
+    dest: ~/jenkins_jobs.ini
 
 - name: create jobs folder to create jobs if it doesn't exit
   file:
-    path: "~/jobs"
+    path: ~/jobs
     state: directory
