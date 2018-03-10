@@ -11,7 +11,8 @@
     publishers:
       - postbuildscript:
           builders:
-             - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
+             - build-steps:
+               - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
 
 
 

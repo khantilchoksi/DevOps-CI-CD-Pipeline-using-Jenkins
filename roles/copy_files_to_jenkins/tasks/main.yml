@@ -1,7 +1,7 @@
 ---
 - name: copy roles to jenkins
   synchronize: 
-    src: ~/roles
+    src: "{{project_directory}}/roles"
     dest: /var/lib/jenkins/
     rsync_opts:
       - "--exclude=node_modules"
@@ -13,7 +13,7 @@
 
 - name: copy files necessary to deploy itrust and checkbox 
   copy:
-    src: ~/app_deploy/
+    src: "{{ project_directory }}/app_deploy/"
     dest: /var/lib/jenkins/
     owner: ubuntu
     group: ubuntu
@@ -30,7 +30,7 @@
 
 - name: copying additional necessary files
   copy:
-    src: ~/provision_ec2.yml
+    src: "{{ project_directory }}/provision_ec2.yml"
     dest: /var/lib/jenkins/provision_ec2.yml
     owner: ubuntu
     group: ubuntu
