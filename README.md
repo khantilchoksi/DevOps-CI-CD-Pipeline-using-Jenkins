@@ -31,7 +31,7 @@ DevOps Project Spring 2018 NC State University
    * [Build checkbox](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_checkboxio.yml)   
      ``` ansible-playbook -i ~/inventory build_checkboxio.yml ```  
     * [Build iTrust2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/build_itrust.yml)   
-     ``` ansible-playbook -i ~inventory build_itrust.yml ```
+     ``` ansible-playbook -i ~/inventory build_itrust.yml ```
      
 ### Managing GitHub and AWS Credetials:  
 * Loading AWS Credentials from the shared credentials file:  
