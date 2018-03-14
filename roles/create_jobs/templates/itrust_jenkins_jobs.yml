@@ -7,7 +7,9 @@
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties'
-      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/ && sudo mvn process-test-classes && sudo mvn clean test verify checkstyle:checkstyle'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/pom.xml /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/pom-data.xml'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/ && sudo mvn -f pom-data.xml clean process-test-classes'
+     # - shell: 'sudo mvn clean test verify checkstyle:checkstyle'
     publishers:
       - postbuildscript:
           builders:
