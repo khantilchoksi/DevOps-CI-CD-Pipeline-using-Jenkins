@@ -3,7 +3,7 @@
     description: 'automatically generated test'
     project-type: freestyle
     builders:
-      - shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      - shell: 'sudo git clone git@github.ncsu.edu:nsingh9/iTrust2-v2.git'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/email.properties'
@@ -11,10 +11,16 @@
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/ && sudo mvn -f pom-data.xml clean process-test-classes'
      # - shell: 'sudo mvn clean test verify checkstyle:checkstyle'
     publishers:
-      - postbuildscript:
-          builders:
-             - build-steps:
-               - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
+      - jacoco:
+          exec-pattern: '**/**.exec'
+          class-pattern: '**/classes'
+          source-pattern: '**/src/test/'
+          update-build-status: true
+          exclusion-pattern: '**/*Test*.class'
+#      - postbuildscript:
+ #         builders:
+  #           - build-steps:
+   #            - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
 
 
 
