@@ -1,0 +1,6 @@
+ul
+	for choice in choices
+		li
+			.controls
+				label.checkbox!= choice.label
+					input(type='checkbox',name='#{choice.name}',value='#{choice.value}')
