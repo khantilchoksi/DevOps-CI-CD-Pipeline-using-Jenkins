@@ -18,8 +18,10 @@ inventory
 aws.js
 keys/
 ping.yml
-ping.retry
+*.retry
 .viminfo
 .bash_history
 node_modules/
 package-lock.json
+
+
