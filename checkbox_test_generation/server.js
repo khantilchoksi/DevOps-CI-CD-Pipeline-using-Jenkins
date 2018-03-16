@@ -1,12 +1,18 @@
 var express = require('express'),
 cors = require('cors'),
-marqdown = require('./marqdown.js'),
+//marqdown = require('./marqdown.js'),
 //routes = require('./routes/designer.js'),
 //votes = require('./routes/live.js'),
 //upload = require('./routes/upload.js'),
-create = require('./routes/create.js'),
+/*create = require('./routes/create.js'),
 study = require('./routes/study.js'),
 admin = require('./routes/admin.js');
+*/
+
+create = require('./mock_routes/create.js'),
+study = require('./mock_routes/study.js'),
+admin = require('./mock_routes/admin.js');
+
 
 var app = express();
 
