@@ -1,6 +1,6 @@
-var studies = require('studies.js');
-var votes = require('votes.js');
-var db;
+var studies = require('./studies.js');
+var votes = require('./votes.js');
+var db = require('./db.js');
 
 
 db.collection = function(collect, cb){

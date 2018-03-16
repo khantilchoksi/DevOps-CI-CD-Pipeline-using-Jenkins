@@ -1,10 +1,18 @@
-var mongo = require('mongodb');
+//var mongo = require('mongodb');
 var crypto = require('crypto');
 var emailjs = require('emailjs/email');
 var models = require('./studyModel.js');
 
+class ObjectID{
+    constructor(val){
+        this.val =  val;
+    }
+}
+
+var db = require("../mock_db/db.js");
+
  
-var Server = mongo.Server,
+/*var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
  
@@ -15,7 +23,7 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
   db = authdb;
   console.log( err || "connected!" );
 });
-
+*/
 var emailServer  = emailjs.server.connect({
    user:    process.env.MAIL_USER, 
    password:process.env.MAIL_PASSWORD, 

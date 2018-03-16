@@ -1,8 +1,8 @@
-var studies = require('studes.js');
-var db = require('db.js');
-var mock_votes = require('');
+var studies = require('./studies.js');
+var db = require('./db.js');
+var mock_votes = require('../test_data/votes.json');
 
-var votes;
+var votes = require('./votes.js');
 
 
 
