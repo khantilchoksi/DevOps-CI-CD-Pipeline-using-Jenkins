@@ -5,16 +5,19 @@ var mock_votes = require('../test_data/votes.json');
 var votes = require('./votes.js');
 
 
-
 votes.findOne = function(dict, cb){
 	var key = Object.keys(dict)[0];
-	var value = dict[key];
+//	console.log(key);
+	var value = dict[key].val;
+//	console.log(value);
+//	console.log('key = ' + key + '; value = ' + value);
 	for(var m_i in mock_votes){
-		if(m_i[key] == value){
-			cb(null, m_i);
+		console.log( " key = " +  mock_votes[m_i][key]);
+		console.log( " val =  " + value);
+		if(mock_votes[m_i][key] == value){
+			cb(null, mock_votes[m_i]);
 		};
 	};
-
 };
 
 
