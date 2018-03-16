@@ -7,7 +7,7 @@
   tasks:
       - name: Copying Auto_Test_Files
         copy: 
-          src: ~/checkbox_test_generation/
+          src: /home/vagrant/DevOps-Project/checkbox_test_generation/
           dest: ~/
           remote_src: yes
           directory_mode: yes
@@ -15,6 +15,7 @@
 
       - name: Installing node modules inside it
         shell: 'npm install'
+        sudo: true
 
 
-#ansible-playbook -i "localhost," -c local provision_ec2.yml --extra-vars="param=checkboxio"
+#ansible-playbook -i "localhost," -c local provision_ec2.yml --extra-vars="param=checkboxio" --vault-password-file ~/.vault_pass.txt
