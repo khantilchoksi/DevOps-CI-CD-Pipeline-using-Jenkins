@@ -1,0 +1,69 @@
+<html>
+<head><title>DocSight Extension Options</title>
+
+<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="options.css" />
+	
+	<script src="api/jquery-1.7.2.min.js"></script>
+	<script src="js/options.js"></script>
+
+</head>
+<body>
+
+	<div id="content">
+		<form id="optionsForm" class="well">
+			<legend>docsight preferences</legend>
+
+<h3>Another question</h3>
+<ul>
+  <li>
+    <div class="controls">
+      <label class="checkbox">this is a label?:
+        <input type="checkbox" name="name"/>
+      </label>
+    </div>
+  </li>
+  <li>
+    <div class="controls">
+      <label class="checkbox">don't check this:
+        <input type="checkbox" name="name2"/>
+      </label>
+    </div>
+  </li>
+</ul>
+
+<h3>I have a question</h3>
+<div class="controls">
+  <label class="checkbox">This is a label?:
+    <input type="checkbox" name="userA name"/>
+  </label>
+</div>
+				<div class="controls">
+					<label class="radio">
+						<input id="chron" type="radio" name="ordertype" value="Chronological"/>Chronological
+					</label>
+					<label class="radio">
+						<input id="newest" type="radio" name="ordertype" value="Newest-First" />Newest First
+					</label>
+				</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">Custom Filters</label>
+				<div class="controls">
+					<textarea id="filters" class="input-xlarge" id="textarea" rows="8"></textarea>
+				</div>
+				<p class="help-block">
+					Example, to include github issues: <code>@include https://github.com/*/issues*</code> <br/>
+					Example to exclude Stack Overflow User Pages: <code>@exclude *://stackoverflow.com/users/*</code><br/>
+					See filtering <a href="https://github.com/chrisparnin/docsight#readme" target="#">section</a> for details.
+				</p>
+			</div>
+			<div class="form-actions">
+				<button id="submitBtn" type="submit" class="btn btn-primary">Save changes</button>
+				<button id="cancelBtn" type="reset" class="btn">Cancel</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+
+</html>

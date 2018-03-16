@@ -4,15 +4,20 @@ var mongoose = require('mongoose');
 require('sinon-mongoose');
 
 // Require index.js so the Book model will be declared
-require('./server.js');
+require('./routes/study.js');
+require('./routes/studyModel.js');
 
 describe('Checkbox mongo', function () {
-  var Book = mongoose.model('Book');
-  var BookMock = sinon.mock(Book);
+  var SurveyModel = mongoose.model('SurveyModel');  
+  var SurveyModelMock = sinon.mock(SurveyModel);
+  var DataStudyModel = mongoose.model('DataStudyModel');
+  var DataStudyModelMock = sinon.mock(DataStudyModel);
 
-  it('#findByAuthor', function (done) {
+  
+
+  it('#collection', function (done) {
     BookMock
-      .expects('find').withArgs({ author: 'AUTHOR' })
+      .expects('findOne').withArgs({ author: 'AUTHOR' })
       .chain('limit', 10)
       .chain('sort', '-date')
       .chain('exec')

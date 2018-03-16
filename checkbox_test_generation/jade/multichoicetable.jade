@@ -1,0 +1,18 @@
+table.questionTable.table-bordered.table-condensed
+	thead
+		tr
+			for header in headers
+				th #{header}
+	tbody
+		each row, r in rows
+			tr
+				each col, c in row
+					- if ( c === 0 )
+						td #{col}
+					- else if (col.indexOf('!') === 0 )
+						td #{col.replace('!','')}
+					- else
+						td
+							.surveycell
+								label.checkbox
+									input(type="checkbox", value="#{c}", name="#{table}_#{r}")
