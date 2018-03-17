@@ -9,9 +9,7 @@ class ObjectID{
         this.val =  val;
     }
 }
-
 var db = require("../mock_db/db.js");
-
 /*var Server = mongo.Server,
     Db = mongo.Db,
     ObjectID = mongo.ObjectID;
