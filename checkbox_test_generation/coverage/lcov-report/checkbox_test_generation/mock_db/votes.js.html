@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for checkbox_test_generation/mock_db/votes.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">checkbox_test_generation/mock_db/</a> votes.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/60</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">15% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/60</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var studies = require('./studies.js');
+var db = require('./db.js');
+var mock_votes = require('../test_data/votes.json');
+&nbsp;
+var votes = require('./votes.js');
+&nbsp;
+&nbsp;
+votes.findOne = <span class="fstat-no" title="function not covered" >function(dict, cb){</span>
+<span class="cstat-no" title="statement not covered" >	var key = Object.keys(dict)[0];</span>
+//	console.log(key);
+<span class="cstat-no" title="statement not covered" >	var value = dict[key].val;</span>
+//	console.log(value);
+//	console.log('key = ' + key + '; value = ' + value);
+<span class="cstat-no" title="statement not covered" >	for(var m_i in mock_votes){</span>
+<span class="cstat-no" title="statement not covered" >		console.log( " key = " +  mock_votes[m_i][key]);</span>
+<span class="cstat-no" title="statement not covered" >		console.log( " val =  " + value);</span>
+<span class="cstat-no" title="statement not covered" >		if(mock_votes[m_i][key] == value){</span>
+<span class="cstat-no" title="statement not covered" >			cb(null, mock_votes[m_i]);</span>
+		};
+	};
+};
+&nbsp;
+&nbsp;
+votes.find = <span class="fstat-no" title="function not covered" >function(dict){</span>
+<span class="cstat-no" title="statement not covered" >	console.log(25);</span>
+<span class="cstat-no" title="statement not covered" >	var input_keys = Object.keys(dict);</span>
+<span class="cstat-no" title="statement not covered" >	var values = [];</span>
+<span class="cstat-no" title="statement not covered" >	var result = [];</span>
+	//console.log(key);
+<span class="cstat-no" title="statement not covered" >	for(var i = 0; i &lt; input_keys.length; i++){</span>
+<span class="cstat-no" title="statement not covered" >		if(typeof dict[input_keys[i]] === 'object' &amp;&amp; dict[input_keys[i]] !== null){		</span>
+<span class="cstat-no" title="statement not covered" >			values.push(dict[input_keys[i]].val);</span>
+		}
+		else{
+<span class="cstat-no" title="statement not covered" >			values.push(dict[input_keys[i]]);			</span>
+		}
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	console.log("values at 39 ");</span>
+<span class="cstat-no" title="statement not covered" >	console.log(values);</span>
+<span class="cstat-no" title="statement not covered" >	console.log(input_keys);</span>
+&nbsp;
+	//	console.log(value);
+	//	console.log('key = ' + key + '; value = ' + value);
+<span class="cstat-no" title="statement not covered" >	for(var m_i = 0; m_i &lt; mock_votes.length; m_i++){</span>
+<span class="cstat-no" title="statement not covered" >		var study = mock_votes[m_i];</span>
+<span class="cstat-no" title="statement not covered" >		for(var i=0; i &lt; input_keys.length; i++){</span>
+<span class="cstat-no" title="statement not covered" >			if(study[input_keys[i]] == values[i]){</span>
+<span class="cstat-no" title="statement not covered" >				console.log("this is equal" + values[i]);</span>
+<span class="cstat-no" title="statement not covered" >				console.log(study);</span>
+<span class="cstat-no" title="statement not covered" >				console.log(mock_votes[m_i]);</span>
+<span class="cstat-no" title="statement not covered" >				if( i == ((input_keys.length)-1)){</span>
+<span class="cstat-no" title="statement not covered" >					result.push(mock_votes[m_i]);</span>
+<span class="cstat-no" title="statement not covered" >					console.log(result);</span>
+				}
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		if(m_i == (mock_votes.length - 1)){</span>
+<span class="cstat-no" title="statement not covered" >			console.log("there is a result");</span>
+			//console.log(result);
+<span class="cstat-no" title="statement not covered" >			return {</span>
+				toArray:  <span class="fstat-no" title="function not covered" >function(cb){</span>
+<span class="cstat-no" title="statement not covered" >					cb(null, result);</span>
+				}
+			};
+		}
+	};
+};
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+votes.find.prototype.toArray = <span class="fstat-no" title="function not covered" >function(input){</span>
+<span class="cstat-no" title="statement not covered" >	console.log("inside our toArray");</span>
+<span class="cstat-no" title="statement not covered" >	console.log(input);</span>
+<span class="cstat-no" title="statement not covered" >	return input;</span>
+};
+&nbsp;
+&nbsp;
+votes.update = <span class="fstat-no" title="function not covered" >function(identifier, value){</span>
+<span class="cstat-no" title="statement not covered" >	var identifier_key = Object.keys(identifier)[0];</span>
+	//	console.log(key);
+<span class="cstat-no" title="statement not covered" >	if(typeof identifier[identifier_key] === 'object' &amp;&amp; identifier[identifier_key] !== null){</span>
+<span class="cstat-no" title="statement not covered" >		var identifier_value = identifier[identifier_key].val;</span>
+	}
+	else{
+<span class="cstat-no" title="statement not covered" >		var identifier_value = identifier[identifier_key];</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var set_or_unset = Object.keys(value)[0];</span>
+<span class="cstat-no" title="statement not covered" >	if(set_or_unset.toString() == '$set'){</span>
+<span class="cstat-no" title="statement not covered" >		var key_to_be_set = Object.keys(value[set_or_unset])[0];</span>
+<span class="cstat-no" title="statement not covered" >		var val_to_be_set = value[set_or_unset][key_to_be_set];</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	for(var m_i in mock_votes){</span>
+<span class="cstat-no" title="statement not covered" >		if(mock_votes[m_i][identifier_key] == identifier_value){</span>
+<span class="cstat-no" title="statement not covered" >			mock_votes[m_i][key_to_be_set] = val_to_be_set;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		if(m_i == (mock_votes.length)-1){</span>
+<span class="cstat-no" title="statement not covered" >			fs.writeFile("../test_data/votes.json", mock_votes, <span class="fstat-no" title="function not covered" >function(err){</span></span>
+<span class="cstat-no" title="statement not covered" >				if(err){</span>
+<span class="cstat-no" title="statement not covered" >					return console.log(err);</span>
+				}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >				console.log("the file was saved!");</span>
+			});
+		}
+	}
+};
+&nbsp;
+module.exports = votes;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 17 2018 02:10:27 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

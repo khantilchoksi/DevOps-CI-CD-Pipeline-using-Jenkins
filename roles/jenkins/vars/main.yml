@@ -3,7 +3,7 @@ project_directory: ~/DevOps-Project
 jenkins_path: /var/lib/jenkins
 jenkins_username: "admin"
 jenkins_password: "admin"
-jenkins_url: http://localhost:8090
+jenkins_url: http://localhost:8080
 jenkins_params:
   url_username: "admin"
   url: "{{jenkins_url}}"
