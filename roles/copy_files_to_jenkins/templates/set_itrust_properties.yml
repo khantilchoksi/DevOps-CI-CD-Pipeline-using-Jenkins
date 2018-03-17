@@ -4,9 +4,15 @@
     itrust_dir: "iTrust2-v2"
     
   tasks:
-  - name: cloning iTrust git repo
-    shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
-    become: true
+  - name: cloning git repo
+    git:
+      repo: 'git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      dest: "/var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}"
+      clone: yes
+
+#  - name: cloning iTrust git repo
+#    shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+#    become: true
 
   - name: Copy Hibernate Properties
     copy:
@@ -34,7 +40,7 @@
     with_items:
       - { regexp: '^from', line: 'from devopskkpn' }
       - { regexp: '^username', line: 'username devopskkpn' }
-      - { regexp: '^password', line: 'password ' }
+      - { regexp: '^password', line: 'password' }
     become: true
 
   - name: Copy pom-data.xml to jenkins workspace
@@ -43,13 +49,20 @@
       dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml
     become: true
 
-  - name: Running pom-data.yml
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes -vvv'
+  - name: Running process-test-classes and checkstyle
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
     become: true
+    register: out
+  
+  - debug:
+    msg: "{{ item }}"
+    with_items: 
+      - "{{ out.stderr_lines }}"
+      - "{{ out.stdout_lines }}"
 
-  - name: Running checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle -vvv'
-    become: true
+#  - name: Running checkstyle
+#    command: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle -vvv'
+#    become: true
 
   
 
