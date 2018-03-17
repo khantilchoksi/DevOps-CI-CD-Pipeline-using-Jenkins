@@ -90,6 +90,6 @@ app.post('/api/study/admin/notify/', admin.notifyParticipant);
 //app.get('/api/design/survey/vote/stat/:id', votes.getSurveyStats );
 
 
-
+console.log("PORT: ",process.env.MONGO_PORT);
 app.listen(process.env.MONGO_PORT);
 console.log('Listening on port 3002...');

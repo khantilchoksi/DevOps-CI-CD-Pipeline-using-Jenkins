@@ -2,7 +2,7 @@
 const _       = require('lodash');
 const fs      = require("fs");
 
-var base_url = "localhost:3002";
+var base_url = "http://localhost:3002";
 
 /**
  * Generate test cases based on the global object functionConstraints.
@@ -12,7 +12,7 @@ var base_url = "localhost:3002";
  */
 function generateTestCases(filePath, routeConstraints){
     // Content string. This will be built up to generate the full text of the test string.
-    let content = `let subject = require('${filePath}');`
+    let content = `require('${filePath}');`
     content += `\nvar request = require("request");`;
     content += `\nvar assert = require('assert');`;
     content += `\nvar sinon = require('sinon')`;
