@@ -6,15 +6,14 @@ var new_storyboard = {
 };
 
 var options = {
-    url: urlRoot + "/api/study/load/1",
-    method: 'GET',
-    json: new_storyboard,
-    headers: {
-        "content-type": "application/json"
-    }
+    url: urlRoot + "/api/study/load/5aabf0042ceed7549c53a386",
+    method: 'GET'
 };
 
-request(options,function(error, response, body){
+request({
+    url: urlRoot + "/api/study/load/5aabf0042ceed7549c53a386",
+    method: 'GET'
+},function(error, response, body){
     if(error)    
         console.log("\n ERROR ", error);
     else{

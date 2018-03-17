@@ -9,6 +9,7 @@ const randexp = require('randexp');
 class Constraint {
     constructor(properties){
         this.routePath = properties.routePath;
+        this.kind = properties.kind;
 /*        this.expression = properties.expression;
         this.operator = properties.operator;
         this.value = properties.value;
@@ -30,7 +31,7 @@ function constraints(filePath) {
 
    // Initialize function constraints directory
     let routeConstraints = [];
-    let url = "http://54.202.103.166";
+    //let url = "http://54.202.103.166";
 
     // Read input file and parse it with esprima.
     let buf = fs.readFileSync(filePath, "utf8");
@@ -49,12 +50,14 @@ function constraints(filePath) {
                 if( child.type === "CallExpression" && child.callee.property && (child.callee.property.name === "get" || child.callee.property.name === "post")) {
 
                     // Get expression from original source code:
-                    let expression = (child.arguments[0].value);
-                    let full_url = url + expression;
+                    let expression = buf.substring(child.range[0], child.range[1]);
+                    let url = (child.arguments[0].value);
+                    //let full_url = url + expression;
 
                             // Push a new constraint
                             routeConstraints.push(new Constraint({
-                                routePath: full_url,
+                                routePath: url,
+                                kind: `'${child.callee.property.name}'`
                             }));
                         }
 

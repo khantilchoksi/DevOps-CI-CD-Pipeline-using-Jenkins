@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for checkbox_test_generation/mock_routes/studyModel.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">checkbox_test_generation/mock_routes/</a> studyModel.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">29.27% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>12/41</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">22.22% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">29.27% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>12/41</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// This is a constructor that is used to setup inheritance without
+// invoking the base's constructor. It does nothing, so it doesn't
+// create properties on the prototype like our previous example did
+function surrogateCtor() {}
+&nbsp;
+function extend(base, sub) {
+  // Copy the prototype from the base to setup inheritance
+  surrogateCtor.prototype = base.prototype;
+  // Tricky huh?
+  sub.prototype = new surrogateCtor();
+  // Remember the constructor property was set wrong, let's fix it
+  sub.prototype.constructor = sub;
+}
+&nbsp;
+StudyBase = <span class="fstat-no" title="function not covered" >function(incoming)</span>
+{
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.name = incoming.name;</span>
+<span class="cstat-no" title="statement not covered" >    self.description = incoming.description;</span>
+<span class="cstat-no" title="statement not covered" >    self.studyKind = incoming.studyKind;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.researcherName = incoming.researcherName;</span>
+<span class="cstat-no" title="statement not covered" >    self.contact = incoming.contact;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.awards = incoming.awards;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.awardOptions = ['Amazon Gift Card', 'Github Swag', 'BrowserStack', 'Windows Surface RT', 'iPad Mini', 'Other', 'None'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.status = "open";</span>
+<span class="cstat-no" title="statement not covered" >	self.goal = incoming.goal || 100;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.invitecode = incoming.invitecode;</span>
+};
+&nbsp;
+SurveyModel = <span class="fstat-no" title="function not covered" >function( incoming, token )</span>
+{
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+<span class="cstat-no" title="statement not covered" >	StudyBase.call(this, incoming);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.markdown = incoming.markdown;</span>
+<span class="cstat-no" title="statement not covered" >	self.token = token;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.adminLink = "/studies/admin/?token=" + token;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.setPublicLink = <span class="fstat-no" title="function not covered" >function(id)</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		self.publicLink = "/studies/?id=" + id;</span>
+	};
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.getMessage = <span class="fstat-no" title="function not covered" >function()</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		return {</span>
+	        text: "Your survey has been created.\n" +
+              "Survey admin url:\n" + 
+              self.adminLink + "\n" +
+              "Public survey url: \n" + 
+              self.publicLink + "\n"
+            ,
+            from:    "Chris Parnin &lt;support@checkbox.io&gt;",
+            to:      self.researcherName + "&lt;"+ self.contact +"&gt;",
+            subject: "checkbox.io: survey created"
+        };
+	};
+}
+&nbsp;
+extend(StudyBase, SurveyModel);
+//SurveyModel.prototype = new StudyBase();
+//SurveyModel.prototype.constructor = SurveyModel;
+exports.SurveyModel = SurveyModel;
+&nbsp;
+DataStudyModel = <span class="fstat-no" title="function not covered" >function( incoming, token )</span>
+{
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+<span class="cstat-no" title="statement not covered" >	StudyBase.call(this, incoming);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.markdown = incoming.markdown;</span>
+<span class="cstat-no" title="statement not covered" >	self.token = token;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.adminLink = "/studies/admin/?token=" + token;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.setPublicLink = <span class="fstat-no" title="function not covered" >function(id)</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		self.publicLink = "/studies/?id=" + id;</span>
+	};
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	self.getMessage = <span class="fstat-no" title="function not covered" >function()</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		return {</span>
+	        text: "Your data study has been created.\n" +
+              "Study admin url:\n" + 
+              self.adminLink + "\n" +
+              "Public data study url: \n" + 
+              self.publicLink + "\n"
+            ,
+            from:    "Chris Parnin &lt;support@checkbox.io&gt;",
+            to:      self.researcherName + "&lt;"+ self.contact +"&gt;",
+            subject: "checkbox.io: data study created"
+        };
+	};
+}
+&nbsp;
+extend(StudyBase, DataStudyModel);
+//DataStudyModel.prototype = new StudyBase();
+//DataStudyModel.prototype.constructor = DataStudyModel;
+exports.DataStudyModel = DataStudyModel;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Mar 16 2018 23:53:39 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
