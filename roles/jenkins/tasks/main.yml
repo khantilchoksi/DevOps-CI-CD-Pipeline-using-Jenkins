@@ -172,7 +172,7 @@
   with_items:
     - github
     - maven-plugin
-    - jacoco
+#    - jacoco
     - junit
     - test-stability
     - postbuildscript
