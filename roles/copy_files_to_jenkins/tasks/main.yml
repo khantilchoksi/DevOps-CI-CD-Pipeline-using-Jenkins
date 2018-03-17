@@ -73,3 +73,13 @@
     group: ubuntu
     mode: 0400
   become: true
+
+
+- name: Copy set_itrust_properties.yml
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/set_itrust_properties.yml
+    dest: /home/ubuntu/set_itrust_properties.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0400
+  become: true
