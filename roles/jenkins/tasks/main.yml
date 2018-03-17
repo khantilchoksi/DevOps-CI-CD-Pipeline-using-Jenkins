@@ -87,7 +87,7 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8080 
+    port: 8090 
     delay: 20
 
 - name: Create Directory For Groovy Script - Jenkins
@@ -105,7 +105,7 @@
     dest: "{{jenkins_path}}/init.groovy.d/basic-security.groovy"
     mode: 0755
   become: true
-
+# khelan comment
 - name: Restarting Jenkins
   service:
     name: jenkins
@@ -114,7 +114,7 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8080 
+    port: 8090 
     delay: 30
 
 - name: Removing Groovy Script so it doesn't create furthermore user
@@ -131,9 +131,10 @@
 #  become: true
   when: groovy_dir.changed
 
+#Khelan comment
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8080 
+    port: 8090 
     delay: 30
 
 
@@ -160,7 +161,7 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8080 
+    port: 8090 
     delay: 30
 
 - name: Install Jenkin Plugins
@@ -172,7 +173,7 @@
   with_items:
     - github
     - maven-plugin
-#    - jacoco
+    - jacoco
     - junit
     - test-stability
     - postbuildscript
@@ -183,6 +184,13 @@
     - html-xml-utils
   become: true
     
+- name: Configure Jenkins port
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: '^HTTP_PORT=8080'
+    line: 'HTTP_PORT=8090'
+  become: true
+
 - name: Restarting Jenkins
   service:
     name: jenkins
