@@ -1,0 +1,39 @@
+- scm: 
+    name: first-scm
+    scm:
+      - git:
+        url: git@github.ncsu.edu:khchoksi/iTrust2-v2.git
+        branches:
+          - origin/master
+- job:
+    name: "{{itrust_fuzzer_job_name}}"
+    description: 'automatically generated test'
+    project-type: freestyle
+
+    builders:
+      - ansible-playbook:
+          playbook: "/home/ubuntu/set_itrust_properties.yml"
+          inventory-type: "path"
+          inventory:
+            path: "/home/ubuntu/local_inventory"
+          additional-parameters: "-vvv"
+    publishers:
+      - jacoco:
+          exec-pattern: '**/**.exec'
+          #class-pattern: '**/EmailUtil.class'
+          class-pattern: '**/classes'
+          source-pattern: '**/src'
+          update-build-status: true
+          exclusion-pattern: '**/*Test*.class'
+#      - postbuildscript:
+ #         builders:
+  #           - build-steps:
+   #            - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
+
+
+
+
+
+#java -jar jenkins-cli.jar -s http://localhost:8080/ build itrust_job --username {{ jenkins_username }} --password {{ jenkins_password }}
+
+

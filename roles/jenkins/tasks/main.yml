@@ -182,6 +182,7 @@
     - ws-cleanup
     - jenkins-job-builder
     - html-xml-utils
+    - ansible
   become: true
     
 - name: Configure Jenkins port
