@@ -62,7 +62,7 @@
     dest: /home/ubuntu/pom-data.xml
     owner: ubuntu
     group: ubuntu
-    mode: 0400
+    mode: 0666
   become: true
 
 - name: Copy localinventory for localhost of Jenkins EC2
@@ -71,7 +71,7 @@
     dest: /home/ubuntu/local_inventory
     owner: ubuntu
     group: ubuntu
-    mode: 0400
+    mode: 0666
   become: true
 
 
@@ -81,5 +81,5 @@
     dest: /home/ubuntu/set_itrust_properties.yml
     owner: ubuntu
     group: ubuntu
-    mode: 0400
+    mode: 0666
   become: true
