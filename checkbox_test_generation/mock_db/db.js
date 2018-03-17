@@ -5,11 +5,14 @@ var db = require('./db.js');
 
 db.collection = function(collect, cb){
 	try{
+		console.log("inside db: _ + " + collect.toString().trim());
 		if(collect.toString().trim() === 'studies'){
+			console.log("enters studies");
 			cb(null, studies);
 
 		}
 		else if(collect.toString().trim() === 'votes'){
+			console.log("enters votes");
 			cb(null, votes);
 		}		
 	}
