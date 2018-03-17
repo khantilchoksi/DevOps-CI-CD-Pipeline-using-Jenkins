@@ -24,6 +24,6 @@ ping.yml
 node_modules/
 package-lock.json
 checkbox.io/
-*.retry
 *.swp
+.vscode/
 
