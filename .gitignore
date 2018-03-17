@@ -14,7 +14,6 @@ relevant_scripts/
 .aws/
 inventory
 *.pem
-
 aws.js
 keys/
 ping.yml

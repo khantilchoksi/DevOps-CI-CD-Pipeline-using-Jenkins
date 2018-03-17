@@ -7,7 +7,7 @@
   - name: cloning iTrust git repo
     shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
     become: true
-    
+
   - name: Copy Hibernate Properties
       copy:
         src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template
@@ -48,7 +48,7 @@
     become: true
 
   - name: Running checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle -vvv'
     become: true
 
   
