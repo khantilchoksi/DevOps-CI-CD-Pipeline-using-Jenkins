@@ -1,0 +1,44 @@
+- hosts: all
+  vars:
+    itrust_job_name: "itrust_job"
+    itrust_dir: "iTrust2-v2"
+    
+  tasks:
+
+    - name: Copy Hibernate Properties
+        copy:
+          src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template
+          dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties
+        become: true
+
+    - name: Copy DB Properties
+      copy:
+        src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template
+        dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties
+      become: true
+
+    - name: Copy Email Properties
+      copy:
+        src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties.template
+        dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties
+      become: true
+
+    - name: Set email properties
+      lineinfile:
+        dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        - { regexp: '^from', line: 'from devopskkpn' }
+        - { regexp: '^username', line: 'username devopskkpn' }
+        - { regexp: '^password', line: 'password ' }
+      become: true
+
+    - name: Copy pom-data.xml to jenkins workspace
+      copy:
+        src: /home/ubuntu/pom-data.xml
+        dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml
+      become: true
+
+
+      
