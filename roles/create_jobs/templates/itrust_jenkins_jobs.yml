@@ -13,7 +13,6 @@
           inventory:
             path: "/home/ubuntu/local_inventory"
           additional-parameters: "-vvv"
-          sudo: true
       #- shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties'
       #- shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml'
 #      - shell: "sudo mysql -u root -e 'DROP DATABASE iTrust2'"
