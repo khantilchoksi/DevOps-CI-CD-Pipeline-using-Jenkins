@@ -45,7 +45,7 @@ function constraints(filePath) {
             // Traverse function node.
             traverse(node, function(child) {
 
-                //Handle all binary combinations
+                //Handle all get and post calls
                 if( child.type === "CallExpression" && child.callee.property && (child.callee.property.name === "get" || child.callee.property.name === "post")) {
 
                     // Get expression from original source code:

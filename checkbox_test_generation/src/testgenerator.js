@@ -16,8 +16,8 @@ function generateTestCases(filePath, routeConstraints){
     content += `\nvar assert = require('assert');`;
     content += `\nvar sinon = require('sinon')`;
     content += `\nvar mongoose = require('mongoose')`;
-    content += `\nrequire('sinon-mongoose');`;
-    content += `\nvar nock = require("nock"); \n\n\n`;
+    content += `\n\\require('sinon-mongoose');`;
+    content += `\n\\var nock = require("nock"); \n\n\n`;
 
     console.log(routeConstraints);
 
