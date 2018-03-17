@@ -4,14 +4,11 @@
     itrust_dir: "iTrust2-v2"
     
   tasks:
-  - name: cloning iTrust git repo
-    shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
-    become: true
-
-  - name: Copy Hibernate Properties
-    copy:
-      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties
+  - name: cloning itrust repo
+    git: 
+      repo: 'git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      dest: '/var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}'
+      clone: yes
     become: true
 
   - name: Copy DB Properties
