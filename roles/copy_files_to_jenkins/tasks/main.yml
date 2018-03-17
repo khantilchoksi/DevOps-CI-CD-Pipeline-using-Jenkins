@@ -83,3 +83,14 @@
     group: ubuntu
     mode: 0666
   become: true
+
+
+#Temporary
+- name: Copy itrust_fuzzer_builder.yml
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/itrust_fuzzer_builder.yml
+    dest: /home/ubuntu/itrust_fuzzer_builder.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
