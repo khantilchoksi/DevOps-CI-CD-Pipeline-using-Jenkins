@@ -1,9 +1,18 @@
-var mongo = require('mongodb');
+/*var mongo = require('mongodb');
+*/
 var check = require('validator').check;
 var _ = require('underscore');
 var fileService = require('./upload.js');
 
-var Server = mongo.Server,
+class ObjectID{
+    constructor(val){
+        this.val =  val;
+    }
+}
+
+var db = require("../mock_db/db.js");
+
+/*var Server = mongo.Server,
     Db = mongo.Db,
     ObjectID = mongo.ObjectID;
  
@@ -15,6 +24,8 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
   db = authdb;
   console.log( err || "connected!" );
 });
+*/
+
 
 exports.listing = function(req, res)
 {
@@ -101,8 +112,11 @@ exports.loadStudy = function(req, res) {
     var id = req.params.id;
     console.log('Retrieving study: ' + id);
     db.collection('studies', function(err, collection) {
+        console.log('inside db');
         collection.findOne({'_id':new ObjectID(id)}, function(err, item) {
             // don't allow token to be seen by others.
+            console.log("inside item");
+            console.log(item);
             delete item["token"];
             delete item["invitecode"];
 

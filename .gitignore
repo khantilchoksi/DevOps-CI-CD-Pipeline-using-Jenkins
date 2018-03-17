@@ -23,5 +23,7 @@ ping.yml
 .bash_history
 node_modules/
 package-lock.json
-
+checkbox.io/
+*.swp
+.vscode/
 

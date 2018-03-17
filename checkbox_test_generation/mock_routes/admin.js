@@ -1,13 +1,22 @@
-var mongo = require('mongodb');
+//var mongo = require('mongodb');
 var check = require('validator').check;
 var _ = require('underscore');
 var emailjs = require('emailjs');
 var fileService = require('./upload.js');
 
-var Server = mongo.Server,
+class ObjectID{
+    constructor(val){
+        this.val =  val;
+    }
+}
+
+var db = require("../mock_db/db.js");
+
+
+/*var Server = mongo.Server,
     Db = mongo.Db,
     ObjectID = mongo.ObjectID;
- 
+*/ 
 var emailServer  = emailjs.server.connect({
    user:    "supportemail@domain.com", 
    password:"supportpwd", 
@@ -15,16 +24,17 @@ var emailServer  = emailjs.server.connect({
    ssl:     true
 });
 
-var MongoClient = mongo.MongoClient;
-var db = null;
+//var MongoClient = mongo.MongoClient;
+/*var db = null;
 MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASSWORD+"@"+process.env.MONGO_IP+":27017/site?authSource=admin", function(err, authdb) {
   // Now you can use the database in the db variable
   db = authdb;
   console.log( err || "connected!" );
 });
-
+*/
 exports.loadStudy = function(req, res) {
     var token = req.params.token;
+    console.log(" token value" + token)
     console.log('Retrieving study by token: ' + token);
     db.collection('studies', function(err, collection) {
         collection.findOne({'token':token}, function(err, item) {
