@@ -87,8 +87,8 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8090 
-    delay: 20
+    port: 8080 
+    delay: 30
 
 - name: Create Directory For Groovy Script - Jenkins
   file:
@@ -114,7 +114,7 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8090 
+    port: 8080 
     delay: 30
 
 - name: Removing Groovy Script so it doesn't create furthermore user
@@ -129,12 +129,12 @@
     dest: "~/"
     mode: 0755
 #  become: true
-  when: groovy_dir.changed
+#  when: groovy_dir.changed
 
 #Khelan comment
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8090 
+    port: 8080 
     delay: 30
 
 
@@ -161,8 +161,8 @@
 
 - name: Wait while re-starting Jenkins
   wait_for: 
-    port: 8090 
-    delay: 30
+    port: 8080 
+    delay: 40
 
 - name: Install Jenkin Plugins
   jenkins_plugin:
