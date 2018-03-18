@@ -25,5 +25,5 @@ package-lock.json
 checkbox.io/
 *.swp
 .vscode/
-fuzzer.js
+khantil_fuzzer.js
 

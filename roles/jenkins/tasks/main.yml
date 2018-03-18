@@ -128,14 +128,14 @@
     url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
     dest: "~/"
     mode: 0755
-#  become: true
-#  when: groovy_dir.changed
+  become: true
+  when: groovy_dir.changed
 
-#Khelan comment
-- name: Wait while re-starting Jenkins
-  wait_for: 
-    port: 8080 
-    delay: 30
+# #Khelan comment
+# - name: Wait while re-starting Jenkins
+#   wait_for: 
+#     port: 8080 
+#     delay: 30
 
 
 # - name: pip version
@@ -153,16 +153,16 @@
     name: jenkins-job-builder
   become: true
 
-- name: Restarting Jenkins
-  service:
-    name: jenkins
-    state: restarted
-  become: true
+# - name: Restarting Jenkins
+#   service:
+#     name: jenkins
+#     state: restarted
+#   become: true
 
-- name: Wait while re-starting Jenkins
-  wait_for: 
-    port: 8080 
-    delay: 40
+# - name: Wait while re-starting Jenkins
+#   wait_for: 
+#     port: 8080 
+#     delay: 40
 
 - name: Install Jenkin Plugins
   jenkins_plugin:
@@ -197,6 +197,11 @@
     name: jenkins
     state: restarted
   become: true
+
+- name: Wait while re-starting Jenkins
+  wait_for: 
+    port: 8090 
+    delay: 30
 
 - name: Checking Jenkins State
   service:
