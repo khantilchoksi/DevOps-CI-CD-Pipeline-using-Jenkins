@@ -15,12 +15,12 @@ for(i=0;i<n;i++){
     
       files.forEach(function(fileName){
       	// console.log(fileName);
-      	var data = fs.readFileSync(fileName, 'utf8');
-      	fs.writeFileSync(fileName,'','utf8');
-      	var lines = data.split("\n");
+        var data = fs.readFileSync(fileName, 'utf8');
+        fs.writeFileSync(fileName,'','utf8');
+        var lines = data.split("\n");
 
-      	var prob=0;
-      	lines.forEach(function(line){
+        var prob=0;
+        lines.forEach(function(line){
             prob=Math.random();
             if(prob>0.5)
             {
@@ -100,9 +100,9 @@ for(i=0;i<n;i++){
             if(line != '\r')
               line += '\n'
 
-      	    fs.appendFileSync(fileName,line);
+            fs.appendFileSync(fileName,line);
     
-      	});
+        });
     
     
       });
