@@ -28,10 +28,10 @@
     dest: ~/jobs/checkbox_jenkins_jobs.yml
   # become: true
 
-# - name: Copy iTrust Fuzzer jenkins job builder script
-#   template:
-#     src: "{{ project_directory }}/roles/create_jobs/templates/itrust_fuzzing.yml"
-#     dest: ~/jobs/itrust_fuzzing.yml
+- name: Copy iTrust Fuzzer jenkins job builder script
+  template:
+    src: "{{ project_directory }}/roles/create_jobs/templates/itrust_fuzzing.yml"
+    dest: ~/jobs/itrust_fuzzing.yml
   
 - name: create jobs
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
