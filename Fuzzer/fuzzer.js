@@ -30,7 +30,7 @@ for(i=0;i<n;i++){
       	    	}*/
       	    }
       	    prob=Math.random();
-      	    if(prob>-1)
+      	    if(prob>0.5)
       	    {
       	    	if(line.match('while') || line.match('for') || line.match('if'))
       	    	{
