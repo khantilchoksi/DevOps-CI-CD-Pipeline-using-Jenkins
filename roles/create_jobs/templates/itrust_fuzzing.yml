@@ -9,7 +9,8 @@
     name: "{{itrust_fuzzer_job_name}}"
     description: 'automatically generated test'
     project-type: freestyle
-
+    scm:
+      - GITHUB SCM
     builders:
       - ansible-playbook:
           playbook: "/home/ubuntu/itrust_fuzzer_builder.yml"
