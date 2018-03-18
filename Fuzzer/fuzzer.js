@@ -21,14 +21,28 @@ for(i=0;i<n;i++){
 
       	var prob=0;
       	lines.forEach(function(line){
-      	    prob=Math.random();
-      	    if(prob>0.5)
-      	    {
-      	    	/*if(line.match('strings'))
-      	    	{
-      	    		
-      	    	}*/
-      	    }
+            prob=Math.random();
+            if(prob>0.5)
+            {
+              /*if(line.match('strings'))
+              {
+                
+              }*/
+            }
+
+            prob=Math.random();
+            if(prob>0.5)
+            {
+              if(line.match('for'))
+              {
+                if(line.match(/\+\+/)){
+                  line=line.replace(/\+\+/g, "--");
+                }
+                else if(line.match("--")){
+                  line=line.replace("--", "++");
+                }
+              }
+            }
 
             prob=Math.random();
             if(prob>0.5)
@@ -42,38 +56,50 @@ for(i=0;i<n;i++){
                   line=line.replace('false', 'true');
                 }
             }
+            
+            prob=Math.random();
+            if(prob>0.5)
+            {
+              if(line.match('while') || line.match('for') || line.match('if'))
+              {
+                
+                if(line.match('<')){
+                  line=line.replace('<', '>');
+                }
+                else if(line.match('>') && !line.match('->')){
+                  line=line.replace('>', '<');
+                }
+    
+              }
+            }
+            prob=Math.random();
+            if(prob>0.5){
+              if(line.match('=='))
+                line=line.replace(/==/g,'!=');
+              else if(line.match('!='))
+                line=line.replace(/!=/g,'==');
+              
+            }
+            prob=Math.random();
+            
+            if(prob>0.5)
+            {
+              if(line.match(/[0]/))
+              {
+                line=line.replace(/[0]/g,"1");
+              }
+              else if(line.match('1'))
+                { 
+                  console.log(line);
+                  line=line.replace(/[1]/g,'0');
+                  console.log(line);
+              }
 
-      	    prob=Math.random();
-      	    if(prob>0.5)
-      	    {
-      	    	if(line.match('while') || line.match('for') || line.match('if'))
-      	    	{
-      	    		
-      	    		if(line.match('<')){
-      	    			line=line.replace('<', '>');
-      	    		}
-      	    		else if(line.match('>') && !line.match('->')){
-      	    			line=line.replace('>', '<');
-      	    		}
-    
-      	    	}
-      	    }
-      	    prob=Math.random();
-      	    if(prob>0.5){
-      	    	if(line.match('=='))
-      	    	  line=line.replace(/==/g,'!=');
-      	    	if(line.match('!='))
-      	    	  line=line.replace(/!=/g,'==');
-      	    	
-      	    }
-      	    prob=Math.random();
-      	    if(prob>0.5){
-      	    	if(line.match('0'))
-      	    	  line=line.replace(/0/g,'1');
-      	    	if(line.match('1'))
-      	    	  line=line.replace(/1/g,'0');
-      	    }
-    
+            }
+
+            if(line != '\r')
+              line += '\n'
+
       	    fs.appendFileSync(fileName,line);
     
       	});
