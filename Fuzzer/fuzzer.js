@@ -14,7 +14,8 @@ for(i=0;i<n;i++){
     recursive("iTrust2/src/main/java/edu/ncsu/csc/itrust2/", function (err, files) {
     
       files.forEach(function(fileName){
-      	// console.log(fileName);
+
+       if(!fileName.match(/models/) && !fileName.match(/sql/)){
         var data = fs.readFileSync(fileName, 'utf8');
         fs.writeFileSync(fileName,'','utf8');
         var lines = data.split("\n");
@@ -84,15 +85,13 @@ for(i=0;i<n;i++){
             
             if(prob>0.5)
             {
-              if(line.match(/[0]/))
+              if((line.match('while') || line.match('for') || line.match('if')) && line.match(/[0]/))
               {
                 line=line.replace(/[0]/g,"1");
               }
-              else if(line.match('1'))
-                { 
-                  console.log(line);
+              else if((line.match('while') || line.match('for') || line.match('if')) && line.match('1'))
+              { 
                   line=line.replace(/[1]/g,'0');
-                  console.log(line);
               }
 
             }
@@ -104,7 +103,7 @@ for(i=0;i<n;i++){
     
         });
     
-    
+       }
       });
     });
 
