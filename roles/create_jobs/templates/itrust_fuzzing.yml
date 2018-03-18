@@ -7,17 +7,13 @@
           - origin/master
 - job:
     name: "{{itrust_fuzzer_job_name}}"
-#    scm:
-#      - GITHUB SCM
-#    description: 'automatically generated test'
-#    project-type: freestyle
-#    builders:
-#      - ansible-playbook:
-#          playbook: "/home/ubuntu/itrust_fuzzer_builder.yml"
-#          inventory-type: "path"
-#          inventory:
-#            path: "/home/ubuntu/local_inventory"
-#          additional-parameters: "-vvv"
+    builders:
+      - ansible-playbook:
+          playbook: "/home/ubuntu/itrust_fuzzer_builder.yml"
+          inventory-type: "path"
+          inventory:
+            path: "/home/ubuntu/local_inventory"
+          additional-parameters: "-vvv"
     # publishers:
     #   - jacoco:
     #       exec-pattern: '**/**.exec'
