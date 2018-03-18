@@ -11,7 +11,7 @@ child_process.execSync(`git checkout ${commitHash}`);
 var n = 2;
 for(i=0;i<n;i++){
 
-    recursive("iTrust2/src/main/java/edu/ncsu/csc/itrust2/", ["foo.cs", "*.html"], function (err, files) {
+    recursive("iTrust2/src/main/java/edu/ncsu/csc/itrust2/", function (err, files) {
     
       files.forEach(function(fileName){
       	// console.log(fileName);
@@ -29,6 +29,20 @@ for(i=0;i<n;i++){
       	    		
       	    	}*/
       	    }
+
+            prob=Math.random();
+            if(prob>0.5)
+            {
+                if(line.match('true')){
+                  line=line.replace('true', 'false');
+                }
+            }
+            else{
+                if(line.match('false')){
+                  line=line.replace('false', 'true');
+                }
+            }
+
       	    prob=Math.random();
       	    if(prob>0.5)
       	    {
