@@ -9,6 +9,7 @@
       repo: 'git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
       dest: "/var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}"
       clone: yes
+    become: true
 
   - name: Copy Hibernate Properties
     copy:
@@ -38,6 +39,7 @@
       - { regexp: '^username', line: 'username devopskkpn' }
       - { regexp: '^password', line: 'password' }
     become: true
+    register: value
 
   - name: Copy pom-data.xml to jenkins workspace
     copy:
@@ -53,7 +55,7 @@
   - debug:
     msg: "{{ item }}"
     with_items: 
-      - "{{ out.stderr_lines }}"
+     # - "{{ out.stderr_lines }}"
       - "{{ out.stdout_lines }}"
 
   
