@@ -9,6 +9,7 @@
       repo: 'git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
       dest: "/var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}"
       clone: yes
+    become: true
 
   - name: Copy Hibernate Properties
     copy:
