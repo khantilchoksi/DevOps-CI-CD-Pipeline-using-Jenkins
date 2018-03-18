@@ -4,20 +4,26 @@
     project-type: freestyle
 
     builders:
-      #- shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
-      #- shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties'
-      #- shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
-      - ansible-playbook:
-          playbook: "/home/ubuntu/set_itrust_properties.yml"
-          inventory-type: "path"
-          inventory:
-            path: "/home/ubuntu/local_inventory"
-          additional-parameters: "-vvv"
-      #- shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties'
-      #- shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml'
+      - shell: 'sudo git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
+#      - ansible-playbook:
+#          playbook: "/home/ubuntu/set_itrust_properties.yml"
+#          inventory-type: "path"
+#          inventory:
+#            path: "/home/ubuntu/local_inventory"
+#          additional-parameters: "-vvvv"
+      - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties'
+      - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml'
 #      - shell: "sudo mysql -u root -e 'DROP DATABASE iTrust2'"
-      #- shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
-      #- shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+      #- name: Copy Email Properties
+      #  copy:
+      #    src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties.template
+      #    dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties
+      #  become: true
+
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
     publishers:
       - jacoco:
           exec-pattern: '**/**.exec'

@@ -7,8 +7,6 @@
           - origin/master
 - job:
     name: "{{itrust_fuzzer_job_name}}"
-    description: 'automatically generated test'
-    project-type: freestyle
     builders:
       - ansible-playbook:
           playbook: "/home/ubuntu/itrust_fuzzer_builder.yml"
