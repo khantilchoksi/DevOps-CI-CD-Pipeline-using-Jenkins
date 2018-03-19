@@ -36,3 +36,10 @@
 - name: create jobs
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
   #become: true
+
+# New
+- name: Creating new directory for test_reports
+  file:
+    path: /home/ubuntu/test_reports
+    state: direcotry
+    mode: 0777

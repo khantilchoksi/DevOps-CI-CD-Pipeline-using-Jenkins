@@ -34,9 +34,17 @@
   become: true
 
 #Copy report from EC2 instance to host machine
-- name: 
+- name: Fetch Report from the EC2 instance to host machine
   fetch: 
     src: /home/ubuntu/Prioritization_Report.txt
     dest: /home/vagrant/
     flat: yes
   become: true
+
+- name: Remove all previous test results 
+  file:
+    state: absent
+    path: /home/ubuntu/test_reports/
+  become: true
+
+
