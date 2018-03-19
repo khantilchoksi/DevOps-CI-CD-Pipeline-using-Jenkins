@@ -1,16 +1,17 @@
 {
-    "name": "khantil",
-    "version": "1.0.0",
-    "description": "",
-    "main": "prioritization.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "bluebird": "^3.5.0",
-      "hashmap": "^2.3.0",
-      "xml2js": "^0.4.17"
-    }
+  "name": "testsuites",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "hashmap": "^2.3.0",
+    "path": "^0.12.7",
+    "xml2js": "^0.4.17"
   }
+}
