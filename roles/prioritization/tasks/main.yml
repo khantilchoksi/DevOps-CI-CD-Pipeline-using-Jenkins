@@ -17,22 +17,6 @@
     mode: 0777
   become: true
 
-- name: DELETE previous test reports directory if it exists
-  file:
-    path: /home/ubuntu/test_reports
-    state: absent
-  become: true
-
-# create a reports directory if it doesn't exist
-- name: Creating test_reports directory if it doesn't exist
-  file:
-    path: /home/ubuntu/test_reports
-    state: directory
-    owner: ubuntu
-    group: ubuntu
-    mode: 0777
-  become: true
-
 # Delete the previous report if it exists
 - name: "DELETE previous prioritization report if it exists"
   file:
