@@ -7,20 +7,13 @@
           - origin/master
 - job:
     name: "{{itrust_fuzzer_job_name}}"
-    parameters:
-    - string:
-        name: sha1
-        default: HEAD
-        description: "A parameter named SHA1, defaults to 'bar'."
     builders:
-      - shell: 'echo SHA KHELAN $sha1'
-      - shell: 'sudo git checkout $sha1'
-      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties'
-      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
-      - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties'
-      - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml'
-      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
-      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
+      - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties'
+      - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
 
     # publishers:
     #   - jacoco:
