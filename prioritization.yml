@@ -1,0 +1,6 @@
+---
+- hosts: jenkins
+
+  rolese:
+    - prioritization
+
