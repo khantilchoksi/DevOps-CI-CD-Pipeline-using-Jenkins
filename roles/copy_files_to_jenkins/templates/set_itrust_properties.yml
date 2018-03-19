@@ -1,0 +1,65 @@
+- hosts: all
+  vars:
+    itrust_job_name: "itrust_job"
+    itrust_dir: "iTrust2-v2"
+    
+  tasks:
+  - name: cloning git repo
+    git:
+      repo: 'git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+      dest: "/var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}"
+      clone: yes
+    become: true
+
+  - name: Copy Hibernate Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/resources/hibernate.properties
+    become: true
+
+  - name: Copy DB Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/db.properties
+    become: true
+
+  - name: Copy Email Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties
+    become: true
+
+  - name: Set email properties
+    lineinfile:
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/src/main/java/email.properties
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+    with_items:
+      - { regexp: '^from', line: 'from devopskkpn' }
+      - { regexp: '^username', line: 'username devopskkpn' }
+      - { regexp: '^password', line: 'password' }
+    become: true
+    register: value
+
+  - name: Copy pom-data.xml to jenkins workspace
+    copy:
+      src: /home/ubuntu/pom-data.xml
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/pom-data.xml
+    become: true
+
+  - name: Running process-test-classes and checkstyle
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    become: true
+    register: out
+  
+  - debug:
+    msg: "{{ item }}"
+    with_items: 
+     # - "{{ out.stderr_lines }}"
+      - "{{ out.stdout_lines }}"
+
+  
+
+
+
+      

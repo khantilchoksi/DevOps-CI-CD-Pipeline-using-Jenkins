@@ -55,3 +55,42 @@
     group: ubuntu
     mode: 0400
   become: true
+
+- name: Copy pom-data.xml for iTrustv2
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/pom-data.xml
+    dest: /home/ubuntu/pom-data.xml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+- name: Copy localinventory for localhost of Jenkins EC2
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/local_inventory
+    dest: /home/ubuntu/local_inventory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+
+- name: Copy set_itrust_properties.yml
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/set_itrust_properties.yml
+    dest: /home/ubuntu/set_itrust_properties.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+
+#Temporary
+- name: Copy itrust_fuzzer_builder.yml
+  copy:
+    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/itrust_fuzzer_builder.yml
+    dest: /home/ubuntu/itrust_fuzzer_builder.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
