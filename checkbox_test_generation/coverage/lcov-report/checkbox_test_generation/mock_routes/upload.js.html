@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for checkbox_test_generation/mock_routes/upload.js</title>
+    <title>Code coverage report for checkbox_test_generation\mock_routes\upload.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">34.62% </span>
+        <span class="strong">30.51% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/52</span>
+        <span class='fraction'>18/59</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">25% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>1/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">35.29% </span>
+        <span class="strong">31.03% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/51</span>
+        <span class='fraction'>18/58</span>
       </div>
     </div>
   </div>
@@ -167,7 +167,18 @@
 122
 123
 124
-125</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,14 +214,25 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -326,18 +348,29 @@ exports.uploadFiles = <span class="fstat-no" title="function not covered" >funct
 &nbsp;
 exports.readFiles = <span class="fstat-no" title="function not covered" >function(res, fileIds, onReady)</span>
 {
+<span class="cstat-no" title="statement not covered" >	console.log("36");</span>
 <span class="cstat-no" title="statement not covered" >    var archive = archiver('zip');</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    archive.on('error', <span class="fstat-no" title="function not covered" >function(err) {</span></span>
 <span class="cstat-no" title="statement not covered" >  		throw err;</span>
 	});
+<span class="cstat-no" title="statement not covered" >	console.log("42");</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    archive.pipe( res );</span>
+<span class="cstat-no" title="statement not covered" >	console.log("45");</span>
 &nbsp;
+<span class="cstat-no" title="statement not covered" >try{</span>
 <span class="cstat-no" title="statement not covered" >	async.map( fileIds.map(<span class="fstat-no" title="function not covered" >function(elem){</span> <span class="cstat-no" title="statement not covered" >return {fileId:elem,archive:archive} }</span>), readFileStream, <span class="fstat-no" title="function not covered" >function(err, results) </span></span>
 	{
-<span class="cstat-no" title="statement not covered" >	 	onReady(err, archive);</span>
-	});
+<span class="cstat-no" title="statement not covered" >		console.log("49");</span>
+<span class="cstat-no" title="statement not covered" >	 	onReady(err, archive);	</span>
+<span class="cstat-no" title="statement not covered" >	 	console.log("51");</span>
+&nbsp;
+	});	
+}
+catch(e){
+<span class="cstat-no" title="statement not covered" >	console.log(e);	</span>
+}
 }
 &nbsp;
 <span class="fstat-no" title="function not covered" >function readFileStream(obj, onReady)</span>
@@ -421,7 +454,7 @@ exports.readFiles = <span class="fstat-no" title="function not covered" >functio
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 17 2018 02:10:27 GMT-0400 (EDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 19 2018 05:31:03 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

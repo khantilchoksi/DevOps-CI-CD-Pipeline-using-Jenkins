@@ -3,11 +3,6 @@ var crypto = require('crypto');
 var emailjs = require('emailjs/email');
 var models = require('./studyModel.js');
 
-class ObjectID{
-    constructor(val){
-        this.val =  val;
-    }
-}
 
 var db = require("../mock_db/db.js");
 

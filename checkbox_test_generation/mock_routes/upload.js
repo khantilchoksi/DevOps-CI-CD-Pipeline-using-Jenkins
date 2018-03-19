@@ -33,18 +33,29 @@ exports.uploadFiles = function(req, onReady)
 
 exports.readFiles = function(res, fileIds, onReady)
 {
+	console.log("36");
     var archive = archiver('zip');
 
     archive.on('error', function(err) {
   		throw err;
 	});
+	console.log("42");
 
     archive.pipe( res );
+	console.log("45");
 
+try{
 	async.map( fileIds.map(function(elem){ return {fileId:elem,archive:archive} }), readFileStream, function(err, results) 
 	{
-	 	onReady(err, archive);
-	});
+		console.log("49");
+	 	onReady(err, archive);	
+	 	console.log("51");
+
+	});	
+}
+catch(e){
+	console.log(e);	
+}
 }
 
 function readFileStream(obj, onReady)

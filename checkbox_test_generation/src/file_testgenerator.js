@@ -73,9 +73,7 @@ function generateTestCases(filepath, functionConstraints) {
             else {
                 content += `try { ${ "subject.{0}({1});".format(funcName, args) } } catch (e) {} \n`;
             }
-
         }
-
     }
 
     // Write final content string to file test.js.

@@ -34,6 +34,8 @@ exports.listing = function(req, res)
             studies.find().toArray(
                 function(err, studyItems) 
                 {
+                    console.log('looking for study idtems');
+                    console.log(studyItems);
                     console.log(err);
                     votes.aggregate(
                     [
