@@ -12,6 +12,7 @@
 
   roles:
     - java8
+    - nodejs
     - jenkins
     - ansible
     - copy_files_to_jenkins    

@@ -15,8 +15,9 @@
       - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml'
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+      #- shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/'
 
-    # publishers:
+    publishers:
     #   - jacoco:
     #       exec-pattern: '**/**.exec'
     #       #class-pattern: '**/EmailUtil.class'
@@ -24,10 +25,10 @@
     #       source-pattern: '**/src'
     #       update-build-status: true
     #       exclusion-pattern: '**/*Test*.class'
-#      - postbuildscript:
- #         builders:
-  #           - build-steps:
-   #            - shell: 'cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=iTrust2" && sleep 69s && sudo chmod 400 ~/keys/iTrust2.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt '
+     - postbuildscript:
+         builders:
+            - build-steps:
+              - shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/'
 
 
 
