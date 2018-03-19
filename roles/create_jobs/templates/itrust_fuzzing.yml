@@ -4,12 +4,12 @@
       - git:
         url: git@github.ncsu.edu:khchoksi/iTrust2-v2.git
         branches:
-          - origin/master
+          - */fuzzer
 - job:
     name: "{{itrust_fuzzer_job_name}}"
     builders:
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
-      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2-v2/iTrust2/src/main/java/db.properties'
+      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
       - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties'
       - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml'
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
