@@ -1,26 +1,46 @@
 ---
+#- name: Copy private SSH Key for GitHub
+#  copy:
+#    src: ~/.ssh/git_rsa
+#    dest: /root/.ssh/git_rsa
+#    mode: 0400
+#  become: true
+
+#- name: Add the identity file inconfiguration
+#  shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+#  become: true
+
+- name: GIT CLONE
+  shell: 'cd /home/vagrant/iTrustClone && git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
+
+#- name: DELETE iTrustClone dirctory if it exists
+#  file: 
+#    path: "{{itrust_directory}}"
+#    state: absent
+
+#- name: CREATE iTrustClone directory
+#  file: 
+#    path: "{{itrust_directory}}"
+#    state: directory
 
 - name: Git Clone
   git:
     repo: 'git@github.ncsu.edu:khchoksi/iTrust2-v2.git'
-    dest: "{{itrust_directory}}"
+    dest: "/home/vagrant/iTrustClone/"
     clone: yes
-  become: true
 
 - name: Add Pre-Push Hook
   template:
     src: "{{ project_directory }}/roles/fuzzer/templates/pre-push-hook"
-    dest: "~/iTrustClone/{{itrust_directory}}/.git/hooks/pre-push"
+    dest: "{{itrust_directory}}/.git/hooks/pre-push"
     mode: 0767
-  become: true
   
 
 - name: Add Fuzzer.js file
   copy:
     src: "{{ project_directory }}/roles/fuzzer/files/fuzzer.js"
-    dest: "~/iTrustClone/{{itrust_directory}}/fuzzer.js"
+    dest: "{{itrust_directory}}/fuzzer.js"
     mode: 0666
-  become: true
 
 - name: Git add and checkout to master
   shell: "cd {{itrust_directory}} && git add . && git commit -m 'Commiting to master by developer' && git push"
