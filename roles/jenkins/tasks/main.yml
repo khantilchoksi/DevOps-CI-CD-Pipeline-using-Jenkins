@@ -171,6 +171,7 @@
     url_password: "{{jenkins_password}}"
     url: "{{jenkins_url}}"
   with_items:
+    - git
     - github
     - maven-plugin
     - jacoco
