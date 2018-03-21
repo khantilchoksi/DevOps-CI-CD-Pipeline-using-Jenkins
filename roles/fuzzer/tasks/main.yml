@@ -6,7 +6,6 @@
     dest: "{{itrust_directory}}"
     clone: yes
   become: true
-  when: 
 
 - name: Add Pre-Push Hook
   template:
@@ -14,7 +13,6 @@
     dest: "~/iTrustClone/{{itrust_directory}}/.git/hooks/pre-push"
     mode: 0767
   become: true
-  when: 
   
 
 - name: Add Fuzzer.js file
