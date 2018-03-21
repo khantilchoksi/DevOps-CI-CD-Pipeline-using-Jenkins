@@ -6,28 +6,28 @@
 #    mode: 0400
 #  become: true
 
-#- name: Add the identity file inconfiguration
-#  shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+##- name: Add the identity file inconfiguration
+ # shell: 'sudo su && cd /root/.ssh && eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git_rsa'
+ # become: true
+
+#- name: GIT CLONE
+#  shell: 'cd /home/vagrant/iTrustClone && git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
 #  become: true
+- name: DELETE iTrustClone dirctory if it exists
+  file: 
+    path: "{{itrust_directory}}"
+    state: absent
 
-- name: GIT CLONE
-  shell: 'cd /home/vagrant/iTrustClone && git clone git@github.ncsu.edu:engr-csc326-staff/iTrust2-v2.git'
-
-#- name: DELETE iTrustClone dirctory if it exists
-#  file: 
-#    path: "{{itrust_directory}}"
-#    state: absent
-
-#- name: CREATE iTrustClone directory
-#  file: 
-#    path: "{{itrust_directory}}"
-#    state: directory
+- name: CREATE iTrustClone directory
+  file: 
+    path: "{{itrust_directory}}"
+    state: directory
+    mode: 0775
 
 - name: Git Clone
   git:
     repo: 'git@github.ncsu.edu:khchoksi/iTrust2-v2.git'
-    dest: "/home/vagrant/iTrustClone/"
-    clone: yes
+    dest: "{{itrust_directory}}"
 
 - name: Add Pre-Push Hook
   template:

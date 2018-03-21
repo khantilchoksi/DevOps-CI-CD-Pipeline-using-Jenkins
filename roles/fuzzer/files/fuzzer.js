@@ -3,6 +3,8 @@ const path = require('path')
 const child_process = require('child_process')
 var http = require('http');
 
+
+
 // Sync get list of files in a directory, recursively. 
 // https://gist.github.com/kethinov/6658166#gistcomment-1941504
 const walkSync = (dir, filelist = []) => {
@@ -14,16 +16,18 @@ const walkSync = (dir, filelist = []) => {
     return filelist;
 }
 
+
+
 const getJavaFilePaths = (dirPath)=>{
     let filePaths = walkSync(dirPath)
     let javaPaths = []
 
     filePaths.forEach(file => {
-        if (!file.match(/model/) && !file.match(/sql/) && path.basename(file).match(/[a-zA-Z0-9._/]+[.]java$/g)) {
+        if (!file.match(/models/) && !file.match(/sql/) && path.basename(file).match(/[a-zA-Z0-9._/]+[.]java$/g)) {
             javaPaths.push(file)
         }
     })
-    // console.log(javaPaths);
+    console.log("\n ------------- JAVA PATHS: ",javaPaths);
     return javaPaths;
 }
 
@@ -32,30 +36,88 @@ const fileFuzzer = (filePath) => {
     let lines = fs.readFileSync(filePath, 'utf8').split(/\r?\n/)
     fs.writeFileSync(filePath, '', {encoding:'utf8'});
 
-    lines.forEach(line=>{
-        let rnd = Math.random();
-        // Random.integer(0, 1)(engine)
-        if(rnd>0.80 && !line.match(/<.+>/) && (line.match(/while/) || line.match(/if/)))
-            line = line.replace('<', '>')
-        else if(rnd<0.20 && !line.match(/<.+>/) && (line.match(/while/) || line.match(/if/)))
-            line = line.replace('>', '<')
+    var prob=0;
+        lines.forEach(function(line){
+            prob=Math.random();
+            if(prob>0.5)
+            {
+              /*if(line.match('strings'))
+              {
+                
+              }*/
+            }
 
-        rnd = Math.random()
-        if(rnd > 0.80)
-            line = line.replace('==', '!=')
-        else
-            line = line.replace('!=', '==')
-        
-        rnd = Math.random()
-        if(rnd > 0.80 && !line.match(/@/) && !line.match(/\\/))
-            line = line.replace(/"([^"]*)"/g, `"ThisIsANotSoRandomString"`)
+            prob=Math.random();
+            if(prob>0.4)
+            {
+              if(line.match('for'))
+              {
+                if(line.match(/\+\+/)){
+                  line=line.replace(/\+\+/g, "--");
+                }
+                else if(line.match("--")){
+                  line=line.replace("--", "++");
+                }
+              }
+            }
 
-        // Adding new line to the end of each line to keep the format
-        if(line != '\r')
-            line += '\n'
+            prob=Math.random();
+            if(prob>0.4)
+            {
+                if(line.match('true')){
+                  line=line.replace('true', 'false');
+                }
+            }
+            else{
+                if(line.match('false')){
+                  line=line.replace('false', 'true');
+                }
+            }
+            
+            prob=Math.random();
+            if(prob>0.4)
+            {
+              if(line.match('while') || line.match('for') || line.match('if'))
+              {
+                
+                if(line.match('<')){
+                  line=line.replace('<', '>');
+                }
+                else if(line.match('>') && !line.match('->')){
+                  line=line.replace('>', '<');
+                }
+    
+              }
+            }
+            prob=Math.random();
+            if(prob>0.4){
+              if(line.match('=='))
+                line=line.replace(/==/g,'!=');
+              else if(line.match('!='))
+                line=line.replace(/!=/g,'==');
+              
+            }
+            prob=Math.random();
+            
+            if(prob>0.4)
+            {
+              if((line.match('while') || line.match('for') || line.match('if')) && line.match(/[0]/))
+              {
+                line=line.replace(/[0]/g,"1");
+              }
+              else if((line.match('while') || line.match('for') || line.match('if')) && line.match('1'))
+              { 
+                  line=line.replace(/[1]/g,'0');
+              }
 
-        fs.appendFileSync(filePath, line, {encoding:'utf8'});
-    })
+            }
+
+            if(line != '\r')
+              line += '\n'
+
+            fs.appendFileSync(filePath,line);
+    
+        });
 }
 
 const commitFuzzer = (master_sha1, n) => {
@@ -74,12 +136,15 @@ const reverToFirstCommit = (firstSha1, n) => {
 
 const triggerJenkinsBuild = (jenkinsIP, jenkinsToken, githubURL, sha1) => {
     try {
+	console.log("\n $$$$$$$$$$$ SHA1: ",sha1);
+        console.log("http://${jenkinsIP}:8090/git/notifyCommit?url=${githubURL}&branches=fuzzer&sha1=${sha1}")
         child_process.execSync(`curl "http://${jenkinsIP}:8090/git/notifyCommit?url=${githubURL}&branches=fuzzer&sha1=${sha1}"`)
         console.log(`Succesfully trigger build for fuzzer:${sha1}`)
     } catch (error) {
         console.log(`Couldn't trigger build for fuzzer:${sha1}`)
     }
 }
+
 
 const runFuzzingProcess = (n) => {
     let master_sha1 = process.env.MASTER_SHA1;
@@ -88,11 +153,11 @@ const runFuzzingProcess = (n) => {
     let jenkinsToken = process.env.JENKINS_BUILD_TOKEN;
     let githubURL = process.env.GITHUB_URL;
     for (var i = 0; i < n; i++) {
-        let javaPaths = getJavaFilePaths('iTrust/src/main/edu/ncsu/csc/itrust');
+        let javaPaths = getJavaFilePaths('iTrust2/src/main/java/edu/ncsu/csc/itrust2');
         reverToFirstCommit(sha1)
         javaPaths.forEach(javaPath =>{
             let rnd = Math.random();
-            if(rnd > 0.95)
+            if(rnd > 0.35)
                 fileFuzzer(javaPath);
         })
         let lastSha1 = commitFuzzer(master_sha1, i);
@@ -100,4 +165,4 @@ const runFuzzingProcess = (n) => {
     }
 }
 
-runFuzzingProcess(3);
+runFuzzingProcess(1);
