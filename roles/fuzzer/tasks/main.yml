@@ -1,0 +1,30 @@
+---
+
+- name: Git Clone
+  git:
+    repo: 'git@github.ncsu.edu:khchoksi/iTrust2-v2.git'
+    dest: "{{itrust_directory}}"
+    clone: yes
+  become: true
+  when: 
+
+- name: Add Pre-Push Hook
+  template:
+    src: "{{ project_directory }}/roles/fuzzer/templates/pre-push-hook"
+    dest: "~/iTrustClone/{{itrust_directory}}/.git/hooks/pre-push"
+    mode: 0767
+  become: true
+  when: 
+  
+
+- name: Add Fuzzer.js file
+  copy:
+    src: "{{ project_directory }}/roles/fuzzer/files/fuzzer.js"
+    dest: "~/iTrustClone/{{itrust_directory}}/fuzzer.js"
+    mode: 0666
+  become: true
+
+- name: Git add and checkout to master
+  shell: "cd {{itrust_directory}} && git add . && git commit -m 'Commiting to master by developer' && git push"
+
+
