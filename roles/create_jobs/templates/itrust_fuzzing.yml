@@ -9,14 +9,13 @@
     name: "{{itrust_fuzzer_job_name}}"
     scm: 
       - git: 
-          url: https://github.ncsu.edu/khchoksi/iTrust2-v2.git
+          url: git@github.ncsu.edu:khchoksi/iTrust2-v2.git
           branches: 
             - origin/fuzzer
             - ${sha1}
     triggers:
       - pollscm:
           cron: "" 
-          ignore-post-commit-hooks: True
     builders:
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
