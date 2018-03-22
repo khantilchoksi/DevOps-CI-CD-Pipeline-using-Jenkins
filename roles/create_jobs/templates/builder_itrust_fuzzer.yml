@@ -13,19 +13,16 @@
     copy:
       src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template
       dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties
-    become: true
 
   - name: Copy DB Properties
     copy:
       src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template
       dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties
-    become: true
 
   - name: Copy Email Properties
     copy:
       src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties.template
       dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties
-    become: true
 
   - name: Set email properties
     lineinfile:
@@ -36,14 +33,12 @@
       - { regexp: '^from', line: 'from devopskkpn' }
       - { regexp: '^username', line: 'username devopskkpn' }
       - { regexp: '^password', line: 'password {{email_password}}' }
-    become: true
     register: value
 
   - name: Copy pom-data.xml to jenkins workspace
     copy:
-      src: /home/ubuntu/pom-data.xml
+      src: /var/lib/jenkins/pom-data.xml
       dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml
-    become: true
 
   - name: Running process-test-classes and checkstyle
     shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'

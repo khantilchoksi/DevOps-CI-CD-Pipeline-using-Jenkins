@@ -28,9 +28,9 @@
 - name: Copy pom-data.xml for iTrustv2
   copy:
     src: "{{ project_directory }}/roles/create_jobs/templates/pom-data.xml"
-    dest: /home/ubuntu/pom-data.xml
-    owner: ubuntu
-    group: ubuntu
+    dest: /var/lib/jenkins/pom-data.xml
+    owner: jenkins
+    group: jenkins
     mode: 0666
   become: true
 
