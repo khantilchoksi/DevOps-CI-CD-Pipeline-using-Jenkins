@@ -58,8 +58,8 @@
   copy:
     src: "{{ project_directory }}/roles/create_jobs/templates/builder_itrust_fuzzer.yml"
     dest: /var/lib/jenkins/builder_itrust_fuzzer.yml
-    owner: ubuntu
-    group: ubuntu
+    owner: jenkins
+    group: jenkins
     mode: 0666
   become: true
 
