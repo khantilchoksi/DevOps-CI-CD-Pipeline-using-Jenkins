@@ -18,7 +18,9 @@ Link to screencast :
 
 ## Automated Commit Generation - Commit Fuzzer
 
-### Some of our fuzzing operations: 
+Test case fuzzer is [here](https://github.ncsu.edu/khchoksi/iTrust2-v2/blob/master/fuzzer.js) and we have made a new jenkins build job for this. The Jenkins job builder scipt for iTrust fuzzer is [here](roles/create_jobs/templates/itrust_fuzzing.yml). We have also written a small ansible script[here](fuzzing.yml) that clones the iTrust repository and issues test commits that triggers our "itrust_fuzzer_job" job.
+
+#### Some of our fuzzing operations: 
 
 1. swap "<" with ">"
 2. swap "==" with "!="
