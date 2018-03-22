@@ -18,6 +18,8 @@ Link to screencast :
 
 ## Automated Commit Generation - Commit Fuzzer
 
+iTrust already has test suite which is run with Junit and JaCoCo code coverage plugin. The pre-push-hook runs fuzzer.js n times when we push to master. After commiting a fuzzed code, the fuzzer reverts back to original code so that the fuzzing operations are done on original code again.
+
 Test case fuzzer is [here](Fuzzer/fuzzer.js) and we have made a new jenkins build job for this. The Jenkins job builder script for iTrust fuzzer is [here](roles/create_jobs/templates/itrust_fuzzing.yml). We have also written a small ansible script [here](fuzzing.yml) that clones the iTrust repository and issues test commits that triggers our "itrust_fuzzer_job" job.
 
 #### Some of our fuzzing operations: 
