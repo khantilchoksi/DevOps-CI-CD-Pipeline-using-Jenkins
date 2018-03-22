@@ -87,8 +87,8 @@
 #Job Builder Playbook for iTrust Fuzzing
 - name: Copy set_itrust_properties.yml
   copy:
-    src: "{{ project_directory }}/roles/copy_files_to_jenkins/templates/build_itrust_job.yml"
-    dest: /home/ubuntu/build_itrust_job.yml
+    src: "{{ project_directory }}/roles/copy_files_to_jenkins/templates/build_itrust_fuzzer_job.yml"
+    dest: /home/ubuntu/build_itrust_fuzzer_job.yml
     owner: ubuntu
     group: ubuntu
     mode: 0666
