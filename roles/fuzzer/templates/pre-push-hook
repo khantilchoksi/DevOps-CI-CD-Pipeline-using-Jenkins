@@ -1,0 +1,11 @@
+#!/bin/sh
+export BRANCHNAME=$(git rev-parse --abbrev-ref HEAD)
+export MASTER_SHA1=$(git rev-parse master)
+export SHA1=$(git rev-parse fuzzer)
+export GITHUB_URL=$(git config --get remote.origin.url | sed 's/.git$//')
+export JENKINS_IP="{{JENKINS_URL}}"
+echo "\n -------------- IN PREPUSH HOOK"
+if [ $BRANCHNAME = 'master' ]; then
+    echo "CURRENT CHECKED OUT BRANCH IS: master"
+    node fuzzer.js
+fi

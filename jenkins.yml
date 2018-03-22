@@ -14,5 +14,6 @@
     - java8
     - jenkins
     - ansible
-    - copy_files_to_jenkins    
+    - copy_files_to_jenkins  
+    - nodejs  
 
