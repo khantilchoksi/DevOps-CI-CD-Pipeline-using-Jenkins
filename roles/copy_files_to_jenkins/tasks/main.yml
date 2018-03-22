@@ -51,8 +51,8 @@
   copy:
     src: ~/.vault_pass.txt
     dest: /var/lib/jenkins/.vault_pass.txt
-    owner: ubuntu
-    group: ubuntu
-    mode: 0400
+    owner: jenkins
+    group: jenkins
+    mode: 0664
   become: true
 
