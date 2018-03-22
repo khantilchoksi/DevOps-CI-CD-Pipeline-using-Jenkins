@@ -14,7 +14,7 @@ DevOps Project Spring 2018 NC State University
 
 Ensure you have the ability to run iTrust's and checkbox.io* test suite. You need to have your build server have a jetty/mysql instance in order to properly run the unit + integration tests. Add a plugin to jenkins to measure coverage and display a report within Jenkins on every commit.
 
-Link to screencast : https://www.youtube.com/edit?o=U&video_id=_wqYCOx5aO0
+Link to screencast : https://www.youtube.com/watch?v=_wqYCOx5aO0&feature=youtu.be
 
 ## Automated Commit Generation - Commit Fuzzer
 
