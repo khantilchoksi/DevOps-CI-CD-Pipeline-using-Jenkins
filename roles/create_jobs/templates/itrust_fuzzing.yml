@@ -17,12 +17,18 @@
       - pollscm:
           cron: "" 
     builders:
-      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
-      - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
-      - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties'
-      - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml'
-      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
-      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+      - ansible-playbook:
+            playbook: "/home/ubuntu/build_itrust_fuzzer_job.yml"
+            inventory-type: "path"
+            inventory:
+              path: "/home/ubuntu/local_inventory"
+            additional-parameters: "--vault-password-file ~/.vault_pass.txt -vvv"
+      # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
+      # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
+      # - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties'
+      # - shell: 'sudo cp /home/ubuntu/pom-data.xml /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml'
+      # - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+      # - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
       #- shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/'
 
     publishers:

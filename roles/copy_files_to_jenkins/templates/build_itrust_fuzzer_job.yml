@@ -1,0 +1,63 @@
+- hosts: all
+  vars:
+    itrust_fuzzer_job_name: "itrust_fuzzer_job"
+    email_password: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            36663366333664393539643265643538316662326463353964366261303866326565326264306564
+            6235653931653539643832646134656333396635653638630a303435623737643031623233633564
+            30666232623932326365336334633861373531366436316161383832323836323831343963656164
+            3436343630613337640a303837356637323231326332363934353135616631313537323239303165
+            3363
+  tasks:
+  - name: Copy Hibernate Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties
+    become: true
+
+  - name: Copy DB Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/db.properties
+    become: true
+
+  - name: Copy Email Properties
+    copy:
+      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties
+    become: true
+
+  - name: Set email properties
+    lineinfile:
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+    with_items:
+      - { regexp: '^from', line: 'from devopskkpn' }
+      - { regexp: '^username', line: 'username devopskkpn' }
+      - { regexp: '^password', line: 'password {{email_password}}' }
+    become: true
+    register: value
+
+  - name: Copy pom-data.xml to jenkins workspace
+    copy:
+      src: /home/ubuntu/pom-data.xml
+      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/pom-data.xml
+    become: true
+
+  - name: Running process-test-classes and checkstyle
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    become: true
+    #register: out
+  
+  # - debug:
+  #   msg: "{{ item }}"
+  #   with_items: 
+  #     - "{{ out.stderr_lines }}"
+  #     - "{{ out.stdout_lines }}"
+
+  
+
+
+
+      

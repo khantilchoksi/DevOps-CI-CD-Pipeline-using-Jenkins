@@ -51,4 +51,4 @@
   file:
     path: /home/ubuntu/test_reports
     state: directory
-    mode: 0666
+    mode: 0766

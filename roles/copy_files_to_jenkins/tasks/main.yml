@@ -67,30 +67,31 @@
 
 - name: Copy localinventory for localhost of Jenkins EC2
   copy:
-    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/local_inventory
+    src: "{{ project_directory }}/roles/copy_files_to_jenkins/templates/local_inventory"
     dest: /home/ubuntu/local_inventory
     owner: ubuntu
     group: ubuntu
     mode: 0666
   become: true
 
-
+#Job Builder Playbook for iTrust Test
 - name: Copy set_itrust_properties.yml
   copy:
-    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/set_itrust_properties.yml
+    src: "{{ project_directory }}/roles/copy_files_to_jenkins/templates/set_itrust_properties.yml"
     dest: /home/ubuntu/set_itrust_properties.yml
     owner: ubuntu
     group: ubuntu
     mode: 0666
   become: true
 
-
-#Temporary
-- name: Copy itrust_fuzzer_builder.yml
+#Job Builder Playbook for iTrust Fuzzing
+- name: Copy set_itrust_properties.yml
   copy:
-    src: ~/DevOps-Project/roles/copy_files_to_jenkins/templates/itrust_fuzzer_builder.yml
-    dest: /home/ubuntu/itrust_fuzzer_builder.yml
+    src: "{{ project_directory }}/roles/copy_files_to_jenkins/templates/build_itrust_job.yml"
+    dest: /home/ubuntu/build_itrust_job.yml
     owner: ubuntu
     group: ubuntu
     mode: 0666
   become: true
+
+
