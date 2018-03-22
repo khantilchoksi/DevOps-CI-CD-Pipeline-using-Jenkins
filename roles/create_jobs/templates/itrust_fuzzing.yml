@@ -1,10 +1,3 @@
-#- scm:
-#    - git:
-#        url: https://github.ncsu.edu/khchoksi/DevOps-Project.git
-#        branches:
-#          - origin/fuzzer
-#          - ${sha1}
-
 - job:
     name: "{{itrust_fuzzer_job_name}}"
     scm: 
@@ -18,11 +11,11 @@
           cron: "" 
     builders:
       - ansible-playbook:
-            playbook: "/home/ubuntu/build_itrust_fuzzer_job.yml"
+            playbook: "/home/ubuntu/builder_itrust_fuzzer_job.yml"
             inventory-type: "path"
             inventory:
               path: "/home/ubuntu/local_inventory"
-            additional-parameters: "--vault-password-file ~/.vault_pass.txt -vvv"
+            additional-parameters: "--vault-password-file ~/.vault_pass.txt"
       # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
       # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
       # - shell: 'sudo cp /home/ubuntu/email.properties /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties'

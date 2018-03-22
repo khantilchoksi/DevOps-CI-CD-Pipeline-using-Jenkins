@@ -1,6 +1,5 @@
-- hosts: all
+- hosts: localhost
   vars:
-    itrust_fuzzer_job_name: "itrust_fuzzer_job"
     email_password: !vault |
             $ANSIBLE_VAULT;1.1;AES256
             36663366333664393539643265643538316662326463353964366261303866326565326264306564
@@ -18,18 +17,18 @@
   - name: Copy DB Properties
     copy:
       src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/db.properties
+      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties
     become: true
 
   - name: Copy Email Properties
     copy:
-      src: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties
+      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties.template
+      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties
     become: true
 
   - name: Set email properties
     lineinfile:
-      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/src/main/java/email.properties
+      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties
       regexp: "{{ item.regexp }}"
       line: "{{ item.line }}"
     with_items:
@@ -42,19 +41,30 @@
   - name: Copy pom-data.xml to jenkins workspace
     copy:
       src: /home/ubuntu/pom-data.xml
-      dest: /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/pom-data.xml
+      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml
     become: true
 
   - name: Running process-test-classes and checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
     become: true
-    #register: out
+    register: out1
   
-  # - debug:
-  #   msg: "{{ item }}"
-  #   with_items: 
-  #     - "{{ out.stderr_lines }}"
-  #     - "{{ out.stdout_lines }}"
+  - debug:
+    msg: "{{ item }}"
+    with_items: 
+      - "{{ out1.stderr_lines }}"
+      - "{{ out1.stdout_lines }}"
+
+  - name: Running process-test-classes and checkstyle
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    become: true
+    register: out2
+
+  - debug:
+    msg: "{{ item }}"
+    with_items: 
+      - "{{ out2.stderr_lines }}"
+      - "{{ out2.stdout_lines }}"
 
   
 

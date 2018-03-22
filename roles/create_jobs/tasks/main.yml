@@ -25,19 +25,58 @@
     mode: 0400
   become: true
 
-- name: Copy iTrust jenkins job builder script
+- name: Copy pom-data.xml for iTrustv2
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/templates/pom-data.xml"
+    dest: /home/ubuntu/pom-data.xml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+# - name: Copy localinventory for localhost of Jenkins EC2
+#   copy:
+#     src: "{{ project_directory }}/roles/create_jobs/templates/local_inventory"
+#     dest: /home/ubuntu/local_inventory
+#     owner: ubuntu
+#     group: ubuntu
+#     mode: 0666
+#   become: true
+
+#Job Builder Playbook for iTrust Test
+- name: Copy builder playbook for iTrust
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/templates/builder_itrust.yml"
+    dest: /home/ubuntu/set_itrust_properties.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+#Job Builder Playbook for iTrust Fuzzing
+- name: Copy builder playbook for iTrust Fuzzer
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/templates/builder_itrust_fuzzer.yml"
+    dest: /home/ubuntu/builder_itrust_fuzzer.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
+
+
+- name: Copy iTrust jenkins job  script
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/itrust_jenkins_jobs.yml"
     dest: ~/jobs/itrust_jenkins_jobs.yml
   # become: true
 
-- name: Copy checkbox job builder script
+- name: Copy checkbox job script
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/checkbox_jenkins_jobs.yml"
     dest: ~/jobs/checkbox_jenkins_jobs.yml
   # become: true
 
-- name: Copy iTrust Fuzzer jenkins job builder script
+- name: Copy iTrust Fuzzer jenkins job  script
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/itrust_fuzzing.yml"
     dest: ~/jobs/itrust_fuzzing.yml
