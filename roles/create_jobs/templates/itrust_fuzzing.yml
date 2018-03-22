@@ -12,9 +12,6 @@
     builders:
       - ansible-playbook:
             playbook: "/home/ubuntu/builder_itrust_fuzzer_job.yml"
-            inventory-type: "path"
-            inventory:
-              path: "/home/ubuntu/local_inventory"
             additional-parameters: "--vault-password-file ~/.vault_pass.txt"
       # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties'
       # - shell: 'sudo cp /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties'
