@@ -25,6 +25,7 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
 */
 
 
+
 exports.listing = function(req, res)
 {
     db.collection('votes', function(err, votes) {
@@ -34,8 +35,6 @@ exports.listing = function(req, res)
             studies.find().toArray(
                 function(err, studyItems) 
                 {
-                    console.log('looking for study idtems');
-                    console.log(studyItems);
                     console.log(err);
                     votes.aggregate(
                     [
@@ -112,11 +111,8 @@ exports.loadStudy = function(req, res) {
     var id = req.params.id;
     console.log('Retrieving study: ' + id);
     db.collection('studies', function(err, collection) {
-        console.log('inside db');
         collection.findOne({'_id':new ObjectID(id)}, function(err, item) {
             // don't allow token to be seen by others.
-            console.log("inside item");
-            console.log(item);
             delete item["token"];
             delete item["invitecode"];
 
@@ -167,18 +163,11 @@ exports.voteStatus = function(req, res)
 exports.submitVote = function(req, res) {
 
     var studyId = req.body.studyId;
-    console.log(170);
     var ip = getClientAddress(req);
-    console.log(172);
     var fingerprint = req.body.fingerprint;
-    console.log(174);
-    console.log(JSON.parse(JSON.stringify(req.body.answers)));
     var answers = JSON.parse(req.body.answers);
-    console.log(176);
     var email = req.body.email;
-    console.log(178);
     var contact = req.body.contact;
-    console.log(180);
 
     var vote = 
     {
@@ -190,7 +179,6 @@ exports.submitVote = function(req, res) {
         email: email,
         contact: contact
     };
-    console.log(192);
 
     if( req.files && req.files.files && req.files.files.length > 0 )
     {

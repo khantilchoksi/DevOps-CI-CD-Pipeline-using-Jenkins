@@ -56,6 +56,7 @@ function constraints(filePath) {
                         // Get expression from original source code:
                         let expression = buf.substring(child.range[0], child.range[1]);
                         let url = (child.arguments[0].value);
+                        let urls = []
                         //let full_url = url + expression;
                         let start_point = url.indexOf(":")
                         let end_point = url.indexOf("/", start_point);
@@ -63,21 +64,32 @@ function constraints(filePath) {
                             if(end_point == -1){
                                 end_point = url.length;
                                 let sub = url.substring(start_point, end_point);
-                                url = url.replace(sub, Math.floor(Math.random() * 4)+1 );
+                                url1 = url.replace(sub, Math.floor(Math.random() * 1)+1 );
+                                url2 = url.replace(sub, Math.floor(Math.random() * 1)+3 );
+                                urls.push(url1);
+                                urls.push(url2);
                             }
                             else{
                                 let sub = url.substring(start_point, end_point);
                                 url = url.replace(sub, 1);
+                                urls.push(url);
                             }
 
                         }
+                        else{
+                            urls.push(url);
 
+                        }
+
+                        for(var u_i in urls){
                                 // Push a new constraint
                                 routeConstraints.push(new Constraint({
-                                    routePath: url,
+                                    routePath: urls[u_i],
                                     kind: `${child.callee.property.name}`,
                                     body: ''
-                                }));
+                                }));                            
+                        }
+
                     }
                     else{
                         if(child.arguments[1] && child.arguments[1].type === 'FunctionExpression'){
@@ -286,7 +298,13 @@ function findBody(filePath, methodName) {
                             }
                         }
                         if(inner_node.type == 'IfStatement' && inner_node.test.type === 'BinaryExpression' && inner_node.test.left.name in body){
-                            body[inner_node.test.left.name].push(inner_node.test.right.value);
+                            if(['!='].indexOf(inner_node.test.operator) > -1){
+                                body[inner_node.test.left.name].push(inner_node.test.right.value + 'no');
+                                body[inner_node.test.left.name].push(inner_node.test.right.value);                                
+                            }
+                            else{
+                                body[inner_node.test.left.name].push(inner_node.test.right.value);
+                            }
                         }
                     });
                 }

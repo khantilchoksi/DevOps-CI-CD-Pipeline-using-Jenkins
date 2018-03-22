@@ -16,7 +16,7 @@ function generateTestCases(filePath, routeConstraints){
     var content = "";
     for(var i = 0; i < filePath.length; i++){
         console.log('content' + content);
-        content += `\n var file${i} = require('${filePath[i]}');`
+        content += `\n var file${i} = require(${JSON.stringify(filePath[i])});`
     }
     content += `\nvar request = require("request");`;
 //    content += `\nvar assert = require('assert');`;
@@ -47,7 +47,7 @@ function generateTestCases(filePath, routeConstraints){
     });
 
     
-        content += '\n setTimeout(function() { file0.server.close(); }, 15000);'
+        content += '\n setTimeout(function() { file0.server.close(); }, 7000);'
 
     // Write final content string to file test.js.
     fs.writeFileSync('test.js', content, "utf8");
