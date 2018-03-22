@@ -51,10 +51,10 @@
     register: out1
   
   - debug:
-    msg: "{{ item }}"
+    msg: "{{ item.split('\n') }}"
     with_items: 
-      - "{{ out1.stderr_lines.split('\n') }}"
-      - "{{ out1.stdout_lines.split('\n') }}"
+      - "{{ out1.stderr_lines }}"
+      - "{{ out1.stdout_lines }}"
 
   - name: Running process-test-classes and checkstyle
     shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
@@ -62,10 +62,10 @@
     register: out2
 
   - debug:
-    msg: "{{ item }}"
+    msg: "{{ item.split('\n') }}"
     with_items: 
-      - "{{ out2.stderr_lines.split('\n') }}"
-      - "{{ out2.stdout_lines.split('\n') }}"
+      - "{{ out2.stderr_lines }}"
+      - "{{ out2.stdout_lines }}"
 
   
 
