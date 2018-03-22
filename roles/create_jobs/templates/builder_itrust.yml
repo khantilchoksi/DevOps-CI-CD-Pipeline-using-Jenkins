@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: all
   vars:
     itrust_job_name: "itrust_job"
     itrust_dir: "iTrust2-v2"

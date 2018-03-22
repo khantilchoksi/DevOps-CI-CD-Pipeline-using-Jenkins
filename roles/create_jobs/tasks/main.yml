@@ -34,14 +34,14 @@
     mode: 0666
   become: true
 
-# - name: Copy localinventory for localhost of Jenkins EC2
-#   copy:
-#     src: "{{ project_directory }}/roles/create_jobs/templates/local_inventory"
-#     dest: /home/ubuntu/local_inventory
-#     owner: ubuntu
-#     group: ubuntu
-#     mode: 0666
-#   become: true
+- name: Copy localinventory for localhost of Jenkins EC2
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/templates/local_inventory"
+    dest: /home/ubuntu/local_inventory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0666
+  become: true
 
 #Job Builder Playbook for iTrust Test
 - name: Copy builder playbook for iTrust
