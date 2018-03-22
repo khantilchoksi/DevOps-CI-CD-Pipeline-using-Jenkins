@@ -11,7 +11,7 @@
           cron: "" 
     builders:
       - ansible-playbook:
-            playbook: "/home/ubuntu/builder_itrust_fuzzer_job.yml"
+            playbook: "/home/ubuntu/builder_itrust_fuzzer.yml"
             inventory-type: "path"
             inventory:
               path: "/home/ubuntu/local_inventory"
