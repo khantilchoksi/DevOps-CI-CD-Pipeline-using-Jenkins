@@ -42,7 +42,13 @@
     dest: "{{itrust_directory}}/fuzzer.js"
     mode: 0666
 
+- name: adding package.json file for fuzzer.js
+  copy: 
+    src: "{{ project_directory}}/roles/fuzzer/files/package.json"
+    dest: "{{itrust_directory}}/package.json"
+
+
 - name: Git add and checkout to master
-  shell: "cd {{itrust_directory}} && git add . && git commit -m 'Commiting to master by developer' && git push"
+  shell: "cd {{itrust_directory}} && npm install && git checkout master && touch fuzzer.js && git add . && git commit -m \"Commiting to master by developer\" && git push"
 
 
