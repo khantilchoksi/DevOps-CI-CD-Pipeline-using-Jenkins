@@ -1,5 +1,6 @@
 var studies = require('./studies.js');
 var votes = require('./votes.js');
+var surveys = require('./surveys.js');
 var db = require('./db.js');
 
 
@@ -14,6 +15,10 @@ db.collection = function(collect, cb){
 		else if(collect.toString().trim() === 'votes'){
 			console.log("enters votes");
 			cb(null, votes);
+		}		
+		else if(collect.toString().trim() === 'surveys'){
+			console.log("enters surveys");
+			cb(null, surveys);
 		}		
 	}
 	catch(e){

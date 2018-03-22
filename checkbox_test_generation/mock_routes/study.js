@@ -167,11 +167,18 @@ exports.voteStatus = function(req, res)
 exports.submitVote = function(req, res) {
 
     var studyId = req.body.studyId;
+    console.log(170);
     var ip = getClientAddress(req);
+    console.log(172);
     var fingerprint = req.body.fingerprint;
+    console.log(174);
+    console.log(JSON.parse(JSON.stringify(req.body.answers)));
     var answers = JSON.parse(req.body.answers);
+    console.log(176);
     var email = req.body.email;
+    console.log(178);
     var contact = req.body.contact;
+    console.log(180);
 
     var vote = 
     {
@@ -183,6 +190,7 @@ exports.submitVote = function(req, res) {
         email: email,
         contact: contact
     };
+    console.log(192);
 
     if( req.files && req.files.files && req.files.files.length > 0 )
     {

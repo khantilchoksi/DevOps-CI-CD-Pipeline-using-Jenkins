@@ -1,5 +1,6 @@
 var studies = require('./studies.js');
 var db = require('./db.js');
+var fs = require('fs');
 
 var votes = require('./votes.js');
 var mock_votes = JSON.parse(require('fs').readFileSync('./test_data/votes.json', 'utf8'));
@@ -132,5 +133,43 @@ votes.update = function(identifier, value){
 		}
 	}
 };
+
+votes.insert = function(study, safe_dict, cb){
+	var mock_votes = require('../test_data/votes.json');
+	study._id = mock_votes.length+1;
+	var new_entry = {};
+	var keys = Object.keys(mock_votes[0]);
+	console.log(mock_votes.length+1);
+	console.log("---------137--------------");
+	//console.log(keys);
+	for(var m_i in keys){
+		let a = keys[m_i];
+		if(study[a] == undefined)
+			new_entry[keys[m_i]] = `'test${mock_votes.length+1}'`;
+		else
+			new_entry[keys[m_i]] = study[a];
+
+		console.log(keys[m_i]);
+		console.log(new_entry);
+	}
+	console.log('inside insert');
+	mock_votes.push(new_entry);
+	console.log('after push');
+	console.log(mock_votes[mock_votes.length-1]);
+	try{
+	fs.writeFile("../checkbox_test_generation/test_data/votes.json", JSON.stringify(mock_votes), function(err){
+		if(err){
+			return console.log(err);
+		}
+		console.log("the entry was inserted");
+		cb(null, 'success');
+	})		
+	}
+	catch(e){
+		console.log(e);
+	}
+
+};
+
 
 module.exports = votes;
