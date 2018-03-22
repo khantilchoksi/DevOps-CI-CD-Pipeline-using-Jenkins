@@ -27,6 +27,7 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
   console.log( err || "connected!" );
 });
 */
+
 exports.loadStudy = function(req, res) {
     var token = req.params.token;
     console.log(" inside admin token value" + token)

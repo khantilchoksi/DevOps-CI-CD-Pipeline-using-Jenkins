@@ -40,21 +40,21 @@ exports.createStudy = function(req, res) {
 
     basicCreate( req, res, studyKind ).onCreate( function(study)
     {
-    	db.collection('studies', function(err, collection) 
-    	{
-    		if( err )
-    			console.log( err );
+        db.collection('studies', function(err, collection) 
+        {
+            if( err )
+                console.log( err );
 
-        	collection.insert(study, {safe:true}, function(err, result) 
-        	{
-        		console.log( err || "Study created: " + study._id );
+            collection.insert(study, {safe:true}, function(err, result) 
+            {
+                console.log( err || "Study created: " + study._id );
 
-        		if( err )
-        		{
-        			res.send({error: err });
-        		}
-        		else
-        		{
+                if( err )
+                {
+                    res.send({error: err });
+                }
+                else
+                {
                     study.setPublicLink( study._id );
 
                     // update with new public link, and notify via email, redirect user to admin page.
@@ -64,8 +64,8 @@ exports.createStudy = function(req, res) {
                         sendStudyEmail( study );
                         res.send({admin_url: study.adminLink});
                     });
-        		}
-        	});
+                }
+            });
 
         });
     });
@@ -75,33 +75,33 @@ exports.createStudy = function(req, res) {
 
 function basicCreate(req, res, kind) 
 {
-	console.log( kind );
+    console.log( kind );
     this.onCreate = function ( onReady )
     {
-	    crypto.randomBytes(48, function(ex, buf) 
-	    {
-	        // alternative: https://github.com/broofa/node-uuid
-	        var token = buf.toString('hex');
+        crypto.randomBytes(48, function(ex, buf) 
+        {
+            // alternative: https://github.com/broofa/node-uuid
+            var token = buf.toString('hex');
 
-	        console.log( token );
+            console.log( token );
 
-	        var study = null;
-	        if( kind == "survey")
-	        {
-	        	study = new models.SurveyModel( req.body, token );
-	        }
-	        if( kind == "dataStudy")
-	        {
-	        	study = new models.DataStudyModel( req.body, token );
-	        }
+            var study = null;
+            if( kind == "survey")
+            {
+                study = new models.SurveyModel( req.body, token );
+            }
+            if( kind == "dataStudy")
+            {
+                study = new models.DataStudyModel( req.body, token );
+            }
 
-	        console.log( study );
+            console.log( study );
 
-	        onReady(study);
-	    });
-	};
+            onReady(study);
+        });
+    };
 
-	return this;
+    return this;
 }
 
 function sendStudyEmail (study) {

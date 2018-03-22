@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>79/79</span>
+        <span class='fraction'>91/91</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>37/37</span>
+        <span class='fraction'>43/43</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>70/70</span>
+        <span class='fraction'>78/78</span>
       </div>
     </div>
   </div>
@@ -119,7 +119,13 @@
 74
 75
 76
-77</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+77
+78
+79
+80
+81
+82
+83</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -138,7 +144,6 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -163,7 +168,14 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -196,25 +208,30 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
- var file0 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\server.js');
- var file1 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\admin.js');
- var file2 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\study.js');
- var file3 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\create.js');
- var request = require("request");
+ var file0 = require("G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\server.js");
+ var file1 = require("G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\admin.js");
+ var file2 = require("G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\study.js");
+ var file3 = require("G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\create.js");
+var request = require("request");
 //var nock = require("nock"); 
 &nbsp;
 &nbsp;
 request({ url : 'http://localhost:3002/api/design/survey', method: 'POST', json: {"markdown":"\n{NumberQuestions:true}\n-------"}}
             , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/load/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/load/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/vote/status', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/status/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/status/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/listing', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: {"invitecode":"RESEARCHno","studyKind":"survey"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: {"invitecode":"RESEARCHno","studyKind":"dataStudy"}}
+            , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: {"invitecode":"RESEARCH","studyKind":"survey"}}
             , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: {"invitecode":"RESEARCH","studyKind":"dataStudy"}}
             , function(error, response, body) { console.log(body);} ); 
-&nbsp;
 request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"khchoksi@ncsu.edu"}}
             , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"nsingh9@ncsu.edu"}}
@@ -239,11 +256,12 @@ request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', 
             , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"kjpatel4@ncsu.edu"}}
             , function(error, response, body) { console.log(body);} ); 
-&nbsp;
 request({ url : 'http://localhost:3002/api/study/admin/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
-request({ url : 'http://localhost:3002/api/study/admin/download/4', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/admin/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/admin/download/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/download/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
-request({ url : 'http://localhost:3002/api/study/admin/assign/4', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/admin/assign/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/admin/assign/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/open/', method: 'POST', json: {"token":"1"}}
             , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/open/', method: 'POST', json: {"token":"2"}}
@@ -271,13 +289,13 @@ request({ url : 'http://localhost:3002/api/study/admin/notify/', method: 'POST',
 request({ url : 'http://localhost:3002/api/study/admin/notify/', method: 'POST', json: {"email":"khchoksi@ncsu.edu","kind":"BROWSERSTACK"}}
             , function(error, response, body) { console.log(body);} ); 
 &nbsp;
- setTimeout(function() { file0.server.close(); }, 5000);</pre></td></tr>
+ setTimeout(function() { file0.server.close(); }, 7000);</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 19 2018 13:58:53 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 18:29:00 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
