@@ -1,11 +1,13 @@
-var mongo = require('mongodb');
+//var mongo = require('mongodb');
 var crypto = require('crypto');
 var emailjs = require('emailjs/email');
  
-var Server = mongo.Server,
+var db = require("../mock_db/db.js");
+
+/*var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
-
+*/
 var emailServer  = emailjs.server.connect({
    user:    "supportemail@domain.com", 
    password:"supportpwd", 
@@ -13,13 +15,14 @@ var emailServer  = emailjs.server.connect({
    ssl:     true
 });
 
-var MongoClient = mongo.MongoClient;
+/*var MongoClient = mongo.MongoClient;
 var db = null;
 MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASSWORD+"@"+process.env.MONGO_IP+":27017/site?authSource=admin", function(err, authdb) {
   // Now you can use the database in the db variable
   db = authdb;
   console.log( err || "connected!" );
 });
+*/
 
 exports.findById = function(req, res) {
     var id = req.params.id;

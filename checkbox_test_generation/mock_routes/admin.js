@@ -4,11 +4,6 @@ var _ = require('underscore');
 var emailjs = require('emailjs');
 var fileService = require('./upload.js');
 
-class ObjectID{
-    constructor(val){
-        this.val =  val;
-    }
-}
 
 var db = require("../mock_db/db.js");
 

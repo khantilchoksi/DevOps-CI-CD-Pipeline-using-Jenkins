@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>53/53</span>
+        <span class='fraction'>79/79</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>24/24</span>
+        <span class='fraction'>37/37</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>45/45</span>
+        <span class='fraction'>70/70</span>
       </div>
     </div>
   </div>
@@ -92,7 +92,34 @@
 47
 48
 49
-50</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -110,6 +137,33 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -146,7 +200,7 @@
  var file1 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\admin.js');
  var file2 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\study.js');
  var file3 = require('G:\\CSC 519 - DevOps\\DevOps-Project\\checkbox_test_generation\\mock_routes\\create.js');
-var request = require("request");
+ var request = require("request");
 //var nock = require("nock"); 
 &nbsp;
 &nbsp;
@@ -160,8 +214,35 @@ request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: 
             , function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/create', method: 'POST', json: {"invitecode":"RESEARCH","studyKind":"dataStudy"}}
             , function(error, response, body) { console.log(body);} ); 
+&nbsp;
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"khchoksi@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"nsingh9@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"kjpatel4@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"khchoksi@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"nsingh9@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":1,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"kjpatel4@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"khchoksi@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"nsingh9@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":1,\"kind\":\"multichoice\",\"answer\":[\"0\",\"1\"]}","email":"khchoksi@ncsu.edu","contact":"kjpatel4@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"khchoksi@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"nsingh9@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/vote/submit/', method: 'POST', json: {"studyId":2,"fingerprint":"3691423112","answers":"{\"question\":2,\"kind\":\"textarea\",\"answer\":\"Other questions askes\"}","email":"khchoksi@ncsu.edu","contact":"kjpatel4@ncsu.edu"}}
+            , function(error, response, body) { console.log(body);} ); 
+&nbsp;
 request({ url : 'http://localhost:3002/api/study/admin/1', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/download/4', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
+request({ url : 'http://localhost:3002/api/study/admin/download/3', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/assign/4', method: 'GET'}, function(error, response, body) { console.log(body);} ); 
 request({ url : 'http://localhost:3002/api/study/admin/open/', method: 'POST', json: {"token":"1"}}
             , function(error, response, body) { console.log(body);} ); 
@@ -196,7 +277,7 @@ request({ url : 'http://localhost:3002/api/study/admin/notify/', method: 'POST',
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 19 2018 05:31:03 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 19 2018 13:58:53 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
