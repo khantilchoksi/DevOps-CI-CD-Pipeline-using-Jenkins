@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: localhost
   vars:
     itrust_job_name: "itrust_job"
     itrust_dir: "iTrust2-v2"
@@ -54,15 +54,26 @@
     become: true
 
   - name: Running process-test-classes and checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
     become: true
-    register: out
+    register: out1
+
+  - debug:
+    msg: "{{ item }}"
+    with_items: 
+      - "{{ out1.stderr_lines }}"
+      - "{{ out1.stdout_lines }}"
+
+  - name: Running mvn clean test checkstyle
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_job_name}}/{{itrust_dir}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    become: true
+    register: out2
   
   - debug:
     msg: "{{ item }}"
     with_items: 
-     # - "{{ out.stderr_lines }}"
-      - "{{ out.stdout_lines }}"
+      - "{{ out2.stderr_lines }}"
+      - "{{ out2.stdout_lines }}"
 
   
 
