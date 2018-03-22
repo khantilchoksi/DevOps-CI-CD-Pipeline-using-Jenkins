@@ -46,7 +46,7 @@
     become: true
 
   - name: Running process-test-classes and checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes && cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
     become: true
     register: out1
   
