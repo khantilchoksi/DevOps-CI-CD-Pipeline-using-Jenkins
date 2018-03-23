@@ -135,7 +135,7 @@ To mock access to MongoDB, we created a db handle (/mock_db/...) and test data f
 ### Modifying Routes
 To incorporate mocking into the routes, we created a directory called 'mock_routes' with similar structure as 'routes'. It has the similar code structure as the original routes with MongoDB client and DB handle that reflects mocked database and test data. 
 
-[Code architecture](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/architecture.png)
+![Code architecture](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/architecture.png)
 
 ### Code traversal
 To incorporate variations in GET request, we find if the url has a variable parameter (starting with ':'). Then based on the knowledge of the test data and the values present in the db, we select random values for those input parameters and create the respective test cases.
@@ -154,21 +154,21 @@ The initial number of test cases for original 12 routes covered in 'server.js' a
 0. Clone this repo and make sure you have your AWS Credentials and GithHub credentials as described in the next section.  
 
 1. **[Provision Jenkins Server](./provision_ec2.yml)** Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to the remote instance.    
-     ``` ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```  
+     ```shell ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```  
 
 2. **[Configure Jenkins Server](./jenkins.yml)** Once we have the instance running on the remote server, we configure it using jenkins.yml script. This installs Jenkins Server along with all the dependencies, creates the user, and starts the Jenkins server. We can test it on our browser at the remote instances' URL and port 8080.    
-     ``` ansible-playbook -i ~/inventory jenkins.yml ```
+     ```shell ansible-playbook -i ~/inventory jenkins.yml ```
 
 3. **[Create Jobs](./create_jobs.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/create_jobs) role which has all the jobs that are to be created. At this point all iTrust_Fuzzer_Job is also created and will be notified on each commit of the master branch of iTrust_Fuzzer (forked repo).   
-     ``` ansible-playbook -i ~/inventory create_jobs.yml ```
+     ```shell ansible-playbook -i ~/inventory create_jobs.yml ```
 
 4. **[Create JACOCO Report by building iTrust job](./build_itrust.yml)** 
     * [Build iTrust2](./build_itrust.yml)   
-     ``` ansible-playbook -i ~/inventory build_itrust.yml ```
+     ```shell ansible-playbook -i ~/inventory build_itrust.yml ```
     * This is the Jenkins Job Builder Script For iTrust JACOCO REPORT generation: (./roles/create_jobs/templates/itrust_jenkins_jobs.yml)
 
 5. **[Fuzzing](./fuzzing.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/fuzzer) role which has all the tasks that are to be created.    
-     ``` ansible-playbook fuzzing.yml ```
+     ```shell ansible-playbook fuzzing.yml ```
      * This will basically clone the iTrust repo and add `pre-push` hook, make new branch fuzzer, make some changes on master branch and push the changes which will trigger the pre-push hook and run our [node js code for fuzzing](./roles/fuzzer/files/fuzzer.js), commiting and rollbacking on fuzzer branch.
 
 6. **[Test Prioritization](./prioritization.yml)**  We have created ansible-playbook which has role [prioritzation](./roles/prioritization)  which has all the tasks that are to be needed to analyze the test-reports generated from the fuzzing.    
