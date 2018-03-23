@@ -84,3 +84,18 @@ Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
 Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
 Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
 ```
+#### Types of problems that fuzzer discovered
+
+#### Extension of fuzzing operations
+
+We can extend the fuzzing operations in the following ways:
+1. Swap && and ||
+2. Swap << with >>
+3. Remove the NOT operator(!)
+4. 
+
+#### Why do you think those tests were ranked the highest?
+
+
+Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
+
