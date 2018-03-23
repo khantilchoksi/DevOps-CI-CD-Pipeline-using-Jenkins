@@ -10,6 +10,14 @@ DevOps Project Spring 2018 NC State University
 |3. Khantil Choksi|        khchoksi|
 |4. Pavithra Iyer    |       piyer3|
 
+----------------------------------------------------------------------------------
+
+## Contribution 
+   * *Automated test generation on Checkbox:*  Navjot & Khantil 
+   * *Jenkins setup and Jacoco coverage:* Khelan & Pavithra
+   * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil  
+   * *Report generation:* Entire team
+   
 ## Coverage/Jenkins Support
 
 Ensure you have the ability to run iTrust's and checkbox.io* test suite. You need to have your build server have a jetty/mysql instance in order to properly run the unit + integration tests. Add a plugin to jenkins to measure coverage and display a report within Jenkins on every commit.
