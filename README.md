@@ -14,7 +14,7 @@ DevOps Project Spring 2018 NC State University
 
 ## Milestones
 
-* [Milestone1](/milestone1.md)  
+* [Milestone1](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/README.md)  
 
 
 ---------------------------------------------------------------------------
@@ -56,7 +56,8 @@ Link to Screencast for Fuzzing and Test Prioritization:  https://youtu.be/bdZcqy
 
 
 #### Test Prioritization analysis
-To generate the prioritization report, we are first sorting test cases on the basis of number of times failed in descending order. If the number of times failed are equal, then we sort on the basis of execution time in ascending order as seen in the report below - 
+To generate the prioritization report, we are first sorting test cases on the basis of number of times failed in descending order. If the number of times failed are equal, then we sort on the basis of execution time in ascending order.
+Here, we are only considering the time for failed test cases and then taking average. The below report is for the 4 commits, as seen in the report below -   
 ```
 ------------ PRIORITIZATION REPORT -------------- 
 
@@ -107,8 +108,6 @@ Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
 Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
 Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
 ```  
-
-#### Types of problems that fuzzer discovered
 
 #### Extension of fuzzing operations
 
