@@ -34,7 +34,7 @@ Test case fuzzer is [here](Fuzzer/fuzzer.js) and we have made a new jenkins buil
 
 #### Test Prioritization analysis
 To generate the prioritization report, we are first sorting test cases on the basis of number of times failed in descending order. If the number of times failed are equal, then we sort on the basis of execution time in ascending order as seen in the report below - 
-
+```
 ------------ PRIORITIZATION REPORT -------------- 
 
 Test name is: testPasswordReset || # of times failed: 4 || time is: 0.5427500000000001
@@ -83,4 +83,4 @@ Test name is: testCreateBadAppointmentRequest || # of times failed: 0 || time is
 Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
 Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
 Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
-
+```
