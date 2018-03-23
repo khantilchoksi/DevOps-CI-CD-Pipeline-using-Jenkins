@@ -24,6 +24,13 @@ DevOps Project Spring 2018 NC State University
    * *Jenkins setup and Jacoco coverage:* Khelan & Pavithra
    * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil & Pavithra 
    * *Report generation:* Entire team
+
+--------------------------------------------  
+## Screencast
+* [Jenkins Coverage](https://www.youtube.com/watch?v=_wqYCOx5aO0&feature=youtu.be) 
+* [Automated Commit Generation - Commit Fuzzer](https://youtu.be/bdZcqy-U0aA) 
+* [Automated test case generation for Checkbox.io](https://youtu.be/L2TPdd384Us)
+------------------------------------------------- 
    
 ## Coverage/Jenkins Support
 
@@ -128,6 +135,7 @@ Observation:
 Hence, the function will either throw an exception or will return false and our test case will fail.
 
 ## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
+Link to the screencast: https://youtu.be/L2TPdd384Us 
 
 ### Mocking
 To mock access to MongoDB, we created a db handle (/mock_db/...) and test data files (/test_data/...) that contains sample data.  
