@@ -119,3 +119,12 @@ Hence, the function will either throw an exception or will return false and our 
 
 ## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
 
+
+## References  
+   * https://wiki.jenkins.io/display/JENKINS/SCM+Sync+configuration+plugin
+   * https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
+   * https://www.eclemma.org/jacoco/trunk/doc/maven.html
+   * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html    
+   * https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314  
+   * https://wiki.jenkins.io/display/JENKINS/Post+build+task  
+   * http://docs.ansible.com/ansible/2.4/vault.html 
