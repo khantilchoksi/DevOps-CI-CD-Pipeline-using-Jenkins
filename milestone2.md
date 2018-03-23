@@ -102,8 +102,20 @@ We can extend the fuzzing operations in the following ways:
 3. Remove the NOT operator(!)
 4. 
 
-#### Why do you think those tests were ranked the highest?
+#### Reasons for highest ranked test cases
 
+In testPasswordReset and testPasswordChangeForm (among the most failed test cases), the validate function on password tests that the new password is in the range 6-20. This is implemented as -
+```
+   if ( getNewPassword().length() < 6 || getNewPassword().length() > 20 ) {
+      throw new IllegalArgumentException( "New password must be between 6 and 20 characters." );
+   }
+   return true;
+```       
+Observation:
+1. With 60% chance, either the '<' is swapped with '>' and '>' is swapped with '<'. 
+2. The function returns true in the end. With 60% chance, true is changed to false. 
 
-Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
+Hence, the function will either throw an exception or will return false and our test case will fail.
+
+## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
 
