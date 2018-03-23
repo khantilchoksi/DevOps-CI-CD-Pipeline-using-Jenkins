@@ -15,7 +15,7 @@ DevOps Project Spring 2018 NC State University
 ## Contribution 
    * *Automated test generation on Checkbox:*  Navjot & Khantil 
    * *Jenkins setup and Jacoco coverage:* Khelan & Pavithra
-   * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil  
+   * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil & Pavithra 
    * *Report generation:* Entire team
    
 ## Coverage/Jenkins Support
@@ -100,7 +100,7 @@ We can extend the fuzzing operations in the following ways:
 1. Swap && and ||
 2. Swap << with >>
 3. Remove the NOT operator(!)
-4. 
+4. Changin == to = in condition checks
 
 #### Reasons for highest ranked test cases
 
