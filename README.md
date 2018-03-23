@@ -135,7 +135,7 @@ To mock access to MongoDB, we created a db handle (/mock_db/...) and test data f
 ### Modifying Routes
 To incorporate mocking into the routes, we created a directory called 'mock_routes' with similar structure as 'routes'. It has the similar code structure as the original routes with MongoDB client and DB handle that reflects mocked database and test data. 
 
-[]()
+[Code architecture](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/architecture.png)
 
 ### Code traversal
 To incorporate variations in GET request, we find if the url has a variable parameter (starting with ':'). Then based on the knowledge of the test data and the values present in the db, we select random values for those input parameters and create the respective test cases.
@@ -144,9 +144,9 @@ To handle variations in POST request, we traverse through the method code that d
 
 ### Code Coverage and Test Cases:
 The initial number of test cases for original 12 routes covered in 'server.js' are 42. The coverage for each of the three files is shown below. The number of test cases increase as we run the tests again and again and create sample data to handle variations in data present in the database.
-[]()
-[]()
-[]()
+![admin.js](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/admin.png)
+![study.js](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/study.png)
+![create.js](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/images/create.png)
 
 ---------------------------------  
 ## Execution / Implementation
@@ -171,9 +171,17 @@ The initial number of test cases for original 12 routes covered in 'server.js' a
      ``` ansible-playbook fuzzing.yml ```
      * This will basically clone the iTrust repo and add `pre-push` hook, make new branch fuzzer, make some changes on master branch and push the changes which will trigger the pre-push hook and run our [node js code for fuzzing](./roles/fuzzer/files/fuzzer.js), commiting and rollbacking on fuzzer branch.
 
-6. **[Test Prioritization](./prioritization.yml)**  We have created ansoible-playbook which has role [prioritzation](./roles/prioritization)  which has all the tasks that are to be needed to analyze the test-reports generated from the fuzzing.    
+6. **[Test Prioritization](./prioritization.yml)**  We have created ansible-playbook which has role [prioritzation](./roles/prioritization)  which has all the tasks that are to be needed to analyze the test-reports generated from the fuzzing.    
      ``` ansible-playbook -i ~/inventory prioritization.yml ```
      * This will basically run our [prioritization js code](./roles/prioritization/templates/prioritization.js) on the xml test-reports generated after every build job.   
+
+7. **[Automatic test code generation](https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone2/checkbox_test_generation)** We have create a dedicated folder for automatic test generation. You can go to `$ cd checkbox_test_generation` directory and run the following commands to create tests and run coverage.  
+```shell
+$ npm install
+$ node main.js
+$ node_modules/.bin/istanbul cover test.js
+```
+
 
 ### Managing GitHub and AWS Credetials:  
 * Loading AWS Credentials from the shared credentials file:  
