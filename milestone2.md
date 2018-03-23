@@ -28,7 +28,9 @@ Link to screencast : https://www.youtube.com/watch?v=_wqYCOx5aO0&feature=youtu.b
 
 iTrust already has test suite which is run with Junit and JaCoCo code coverage plugin. The pre-push-hook runs fuzzer.js n times when we push to master. After commiting a fuzzed code, the fuzzer reverts back to original code so that the fuzzing operations are done on original code again.
 
-Test case fuzzer is [here](Fuzzer/fuzzer.js) and we have made a new jenkins build job for this. The Jenkins job builder script for iTrust fuzzer is [here](roles/create_jobs/templates/itrust_fuzzing.yml). We have also written a small ansible script [here](fuzzing.yml) that clones the iTrust repository and issues test commits that triggers our "itrust_fuzzer_job" job.
+Test case fuzzer is [here](./roles/fuzzer/templates/fuzzer.js) and we have made a new jenkins build job for this. The Jenkins job builder script for iTrust fuzzer is [here](./roles/create_jobs/templates/itrust_fuzzing.yml). We have also written a small ansible script [here](fuzzing.yml) that clones the iTrust repository and issues test commits that triggers our "itrust_fuzzer_job" job.
+
+Link to Screencast for Fuzzing and Test Prioritization:  https://youtu.be/bdZcqy-U0aA
 
 #### Some of our fuzzing operations: 
 
@@ -38,7 +40,9 @@ Test case fuzzer is [here](Fuzzer/fuzzer.js) and we have made a new jenkins buil
 4. swap "++" with "--"
 5. swap "true" with "false"
 
-#### Fuzzing Analysis
+
+
+
 
 #### Test Prioritization analysis
 To generate the prioritization report, we are first sorting test cases on the basis of number of times failed in descending order. If the number of times failed are equal, then we sort on the basis of execution time in ascending order as seen in the report below - 
@@ -91,7 +95,8 @@ Test name is: testCreateBadAppointmentRequest || # of times failed: 0 || time is
 Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
 Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
 Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
-```
+```  
+
 #### Types of problems that fuzzer discovered
 
 #### Extension of fuzzing operations
@@ -100,7 +105,8 @@ We can extend the fuzzing operations in the following ways:
 1. Swap && and ||
 2. Swap << with >>
 3. Remove the NOT operator(!)
-4. Changin == to = in condition checks
+4. Changin == to = in condition checks  
+5. Using faker we can replace the String constants using randomly generated strings.
 
 #### Reasons for highest ranked test cases
 
@@ -119,7 +125,50 @@ Hence, the function will either throw an exception or will return false and our 
 
 ## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
 
+---------------------------------  
+## Execution / Implementation
 
+0. Clone this repo and make sure you have your AWS Credentials and GithHub credentials as described in the next section.  
+
+1. **[Provision Jenkins Server](./provision_ec2.yml)** Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to the remote instance.    
+     ``` ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```  
+
+2. **[Configure Jenkins Server](./jenkins.yml)** Once we have the instance running on the remote server, we configure it using jenkins.yml script. This installs Jenkins Server along with all the dependencies, creates the user, and starts the Jenkins server. We can test it on our browser at the remote instances' URL and port 8080.    
+     ``` ansible-playbook -i ~/inventory jenkins.yml ```
+
+3. **[Create Jobs](./create_jobs.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/create_jobs) role which has all the jobs that are to be created. At this point all iTrust_Fuzzer_Job is also created and will be notified on each commit of the master branch of iTrust_Fuzzer (forked repo).   
+     ``` ansible-playbook -i ~/inventory create_jobs.yml ```
+
+4. **[Create JACOCO Report by building iTrust job](./build_itrust.yml)** 
+    * [Build iTrust2](./build_itrust.yml)   
+     ``` ansible-playbook -i ~/inventory build_itrust.yml ```
+    * This is the Jenkins Job Builder Script For iTrust JACOCO REPORT generation: (./roles/create_jobs/templates/itrust_jenkins_jobs.yml)
+
+5. **[Fuzzing](./fuzzing.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/fuzzer) role which has all the tasks that are to be created.    
+     ``` ansible-playbook fuzzing.yml ```
+     * This will basically clone the iTrust repo and add `pre-push` hook, make new branch fuzzer, make some changes on master branch and push the changes which will trigger the pre-push hook and run our [node js code for fuzzing](./roles/fuzzer/files/fuzzer.js), commiting and rollbacking on fuzzer branch.
+
+6. **[Test Prioritization](./prioritization.yml)**  We have created ansoible-playbook which has role [prioritzation](./roles/prioritization)  which has all the tasks that are to be needed to analyze the test-reports generated from the fuzzing.    
+     ``` ansible-playbook -i ~/inventory prioritization.yml ```
+     * This will basically run our [prioritization js code](./roles/prioritization/templates/prioritization.js) on the xml test-reports generated after every build job.   
+
+### Managing GitHub and AWS Credetials:  
+* Loading AWS Credentials from the shared credentials file:  
+     * Keep your AWS credentials data in a shared file used by SDKs and the command line interface. The SDK for JavaScript automatically searches the shared credentials file for credentials when loading. Where you keep the shared credentials file depends on your operating system:  
+        ```config
+        Linux, Unix, and macOS users:`~/.aws/credentials`  
+        Windows users:`C:\Users\USER_NAME\.aws\credentials`   
+        ```
+        
+        ```config
+        [default]  
+        aws_access_key_id = <YOUR_ACCESS_KEY_ID>  
+        aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY> 
+        ```
+     
+     * The [nodejs code](/roles/ec2_instance/templates/ec2_createinstance.js) is used to access this credetials and create new EC2 instance whenever required.  
+        
+* The github credentails are maintained by creating the SSH key pairs and registering the [public key on github account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). Moreover, the github password is also managed for cloning the iTrust repo in iTrust EC2 instance as `post-build` using [ansible vault](http://docs.ansible.com/ansible/2.4/vault.html).
 ## References  
    * https://wiki.jenkins.io/display/JENKINS/SCM+Sync+configuration+plugin
    * https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
