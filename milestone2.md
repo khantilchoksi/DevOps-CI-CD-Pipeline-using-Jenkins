@@ -125,6 +125,17 @@ Hence, the function will either throw an exception or will return false and our 
 
 ## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
 
+### Mocking
+To mock access to MongoDB, we created a db handle (/mock_db/...) and test data files (/test_data/...) that contains sample data.  
+
+### Modifying Routes
+To incorporate mocking into the routes, we created a directory called 'mock_routes' with similar structure as 'routes'. It has the similar code structure as the original routes with MongoDB client and DB handle that reflects mocked database and test data. 
+
+### Code traversal
+To incorporate variations in GET request, we find if the url has a variable parameter (starting with ':'). Then based on the knowledge of the test data and the values present in the db, we select random values for those input parameters and create the respective test cases.
+
+To handle variations in POST request, we traverse through the method code that deals with the POST request and find out the statements that indicates the parameters that the method searches for in the 'request body'. We then keep those parameters and find the binary assignment statments in the rest of the method to identify potential values for those parameters.
+
 ---------------------------------  
 ## Execution / Implementation
 
