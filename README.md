@@ -136,7 +136,9 @@ Hence, the function will either throw an exception or will return false and our 
 
 ## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
 Link to the screencast: https://youtu.be/L2TPdd384Us 
-
+* [Link to constraints file](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/checkbox_test_generation/src/constraint.js) 
+* [Link to mock db handles](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/checkbox_test_generation/mock_db/)
+* [Link to test data](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/checkbox_test_generation/test_data/)
 ### Mocking
 To mock access to MongoDB, we created a db handle (/mock_db/...) and test data files (/test_data/...) that contains sample data.  
 
