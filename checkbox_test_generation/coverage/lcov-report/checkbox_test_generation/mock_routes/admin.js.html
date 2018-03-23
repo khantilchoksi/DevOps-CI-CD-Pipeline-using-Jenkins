@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.12% </span>
+        <span class="strong">88.42% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>89/101</span>
+        <span class='fraction'>84/95</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">67.5% </span>
+        <span class="strong">68.42% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>27/40</span>
+        <span class='fraction'>26/38</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">93.33% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>28/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">89% </span>
+        <span class="strong">89.36% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>89/100</span>
+        <span class='fraction'>84/94</span>
       </div>
     </div>
   </div>
@@ -285,13 +285,7 @@
 240
 241
 242
-243
-244
-245
-246
-247
-248
-249</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+243</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -320,8 +314,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
@@ -381,7 +375,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -392,17 +385,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -568,9 +556,9 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
   console.log( err || "connected!" );
 });
 */
+&nbsp;
 exports.loadStudy = function(req, res) {
     var token = req.params.token;
-    console.log(" inside admin token value" + token)
     console.log('Retrieving study by token: ' + token);
     db.collection('studies', function(err, collection) {
         collection.findOne({'token':token}, function(err, item) {
@@ -631,7 +619,6 @@ exports.download = function(req, res ) {
             {
                 db.collection('votes', function(err, voteCollection) {
                     voteCollection.find({'studyId':study._id}).toArray(function(err, items) {
-                        console.log("98");
 &nbsp;
                         var fileIds = items.map( <span class="fstat-no" title="function not covered" >function(elem)</span>
                             { 
@@ -640,17 +627,12 @@ exports.download = function(req, res ) {
                                 else
 <span class="cstat-no" title="statement not covered" >                                    return null; </span>
                             }).filter( <span class="fstat-no" title="function not covered" >function(elem){</span> <span class="cstat-no" title="statement not covered" >return elem != null; </span>});
-                        console.log("107");
 &nbsp;
                         console.log( fileIds );
 &nbsp;
                         // This creates the archive and attaches files to it.
                         fileService.readFiles( res, fileIds, function(err, archive)
                         {
-                            <span class="missing-if-branch" title="if path not taken" >I</span>if(err)
-<span class="cstat-no" title="statement not covered" >                                console.log("error aa bai");</span>
-                            else
-                                console.log("nhi haiga");
                             for( var i=0; i &lt; items.length; i++ )
                             {
 <span class="cstat-no" title="statement not covered" >                                delete items[i]['email'];</span>
@@ -793,7 +775,7 @@ exports.notifyParticipant = function(req, res) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 18:29:00 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 21:08:46 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

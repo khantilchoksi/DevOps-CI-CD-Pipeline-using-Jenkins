@@ -30,7 +30,6 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
 
 exports.loadStudy = function(req, res) {
     var token = req.params.token;
-    console.log(" inside admin token value" + token)
     console.log('Retrieving study by token: ' + token);
     db.collection('studies', function(err, collection) {
         collection.findOne({'token':token}, function(err, item) {
@@ -91,7 +90,6 @@ exports.download = function(req, res ) {
             {
                 db.collection('votes', function(err, voteCollection) {
                     voteCollection.find({'studyId':study._id}).toArray(function(err, items) {
-                        console.log("98");
 
                         var fileIds = items.map( function(elem)
                             { 
@@ -100,17 +98,12 @@ exports.download = function(req, res ) {
                                 else
                                     return null; 
                             }).filter( function(elem){ return elem != null; });
-                        console.log("107");
 
                         console.log( fileIds );
 
                         // This creates the archive and attaches files to it.
                         fileService.readFiles( res, fileIds, function(err, archive)
                         {
-                            if(err)
-                                console.log("error aa bai");
-                            else
-                                console.log("nhi haiga");
                             for( var i=0; i < items.length; i++ )
                             {
                                 delete items[i]['email'];
