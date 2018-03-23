@@ -14,7 +14,7 @@ DevOps Project Spring 2018 NC State University
 
 ## Milestones
 
-* ###[Milestone1](/milestone1.md)  
+* [Milestone1](/milestone1.md)  
 
 
 ---------------------------------------------------------------------------
