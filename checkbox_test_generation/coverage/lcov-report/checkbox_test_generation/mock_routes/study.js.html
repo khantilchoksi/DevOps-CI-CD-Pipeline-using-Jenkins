@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.67% </span>
+        <span class="strong">84.42% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>78/90</span>
+        <span class='fraction'>65/77</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">57.14% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>20/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.67% </span>
+        <span class="strong">84.42% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>78/90</span>
+        <span class='fraction'>65/77</span>
       </div>
     </div>
   </div>
@@ -261,19 +261,7 @@
 216
 217
 218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+219</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -300,7 +288,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -308,9 +295,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -388,10 +375,7 @@
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -447,13 +431,6 @@
 <span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -465,7 +442,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -530,6 +506,7 @@ MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PA
 */
 &nbsp;
 &nbsp;
+&nbsp;
 exports.listing = function(req, res)
 {
     db.collection('votes', function(err, votes) {
@@ -539,8 +516,6 @@ exports.listing = function(req, res)
             studies.find().toArray(
                 function(err, studyItems) 
                 {
-                    console.log('looking for study idtems');
-                    console.log(studyItems);
                     console.log(err);
                     votes.aggregate(
                     [
@@ -617,11 +592,8 @@ exports.loadStudy = function(req, res) {
     var id = req.params.id;
     console.log('Retrieving study: ' + id);
     db.collection('studies', function(err, collection) {
-        console.log('inside db');
         collection.findOne({'_id':new ObjectID(id)}, function(err, item) {
             // don't allow token to be seen by others.
-            console.log("inside item");
-            console.log(item);
             delete item["token"];
             delete item["invitecode"];
 &nbsp;
@@ -672,18 +644,11 @@ exports.voteStatus = function(req, res)
 exports.submitVote = function(req, res) {
 &nbsp;
     var studyId = req.body.studyId;
-    console.log(170);
     var ip = getClientAddress(req);
-    console.log(172);
     var fingerprint = req.body.fingerprint;
-    console.log(174);
-    console.log(JSON.parse(JSON.stringify(req.body.answers)));
     var answers = JSON.parse(req.body.answers);
-    console.log(176);
     var email = req.body.email;
-    console.log(178);
     var contact = req.body.contact;
-    console.log(180);
 &nbsp;
     var vote = 
     {
@@ -695,7 +660,6 @@ exports.submitVote = function(req, res) {
         email: email,
         contact: contact
     };
-    console.log(192);
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if( req.files &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >req.files.files </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >req.files.files.length &gt; 0 </span>)
     {
@@ -739,7 +703,7 @@ var getClientAddress = function (req) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 18:29:00 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 21:08:46 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

@@ -208,7 +208,6 @@ function cartesianProduct(arr)
     return arr.reduce(function(a,b){
         return a.map(function(x){
             return b.map(function(y){
-                console.log('------ethe------');
                 if(!(x instanceof Array)  && (typeof x == 'object'))
                     x = JSON.stringify(x);
                 if(!(y instanceof Array)  && (typeof y == 'object'))
@@ -281,19 +280,16 @@ function findBody(filePath, methodName) {
                 //Handle all get and post calls
                 //console.log(child);
                 if( child.type === "ExpressionStatement" && child.expression.type === 'AssignmentExpression' && child.expression.left.type === 'MemberExpression' && child.expression.left.property.name === methodName){
-                    console.log("aa gya bai andar method de-------------------------");
                     console.log(methodName);
                     console.log(filePath);
                     traverse(child, function(inner_node){
                         if(inner_node.type == 'VariableDeclarator' && inner_node.init.type == 'MemberExpression' && inner_node.init.object.property && inner_node.init.object.property.name === 'body'){
                             body[inner_node.init.property.name] = [];
-                            console.log("body dekho-----------------------");
                             console.log(JSON.stringify(body));
                         }
                         else if(inner_node.type == 'VariableDeclarator' && inner_node.init.type == 'CallExpression' && inner_node.init.arguments[0].type === 'MemberExpression' && inner_node.init.arguments[0].object.type === 'MemberExpression'){
                             if(inner_node.init.arguments[0].object.property.name === 'body'){
                                 body[inner_node.init.arguments[0].property.name] = [];
-                                console.log("body dekho-----------------------");
                                 console.log(JSON.stringify(body));                                
                             }
                         }

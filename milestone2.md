@@ -10,6 +10,14 @@ DevOps Project Spring 2018 NC State University
 |3. Khantil Choksi|        khchoksi|
 |4. Pavithra Iyer    |       piyer3|
 
+----------------------------------------------------------------------------------
+
+## Contribution 
+   * *Automated test generation on Checkbox:*  Navjot & Khantil 
+   * *Jenkins setup and Jacoco coverage:* Khelan & Pavithra
+   * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil  
+   * *Report generation:* Entire team
+   
 ## Coverage/Jenkins Support
 
 Ensure you have the ability to run iTrust's and checkbox.io* test suite. You need to have your build server have a jetty/mysql instance in order to properly run the unit + integration tests. Add a plugin to jenkins to measure coverage and display a report within Jenkins on every commit.
@@ -29,3 +37,94 @@ Test case fuzzer is [here](Fuzzer/fuzzer.js) and we have made a new jenkins buil
 3. swap 0 with 1
 4. swap "++" with "--"
 5. swap "true" with "false"
+
+#### Fuzzing Analysis
+
+#### Test Prioritization analysis
+To generate the prioritization report, we are first sorting test cases on the basis of number of times failed in descending order. If the number of times failed are equal, then we sort on the basis of execution time in ascending order as seen in the report below - 
+```
+------------ PRIORITIZATION REPORT -------------- 
+
+Test name is: testPasswordReset || # of times failed: 4 || time is: 0.5427500000000001
+Test name is: testPersonnelForm || # of times failed: 3 || time is: 0.049666666666666665
+Test name is: testPasswordChangeForm || # of times failed: 3 || time is: 0.17133333333333334
+Test name is: testPatientDateOfDeath || # of times failed: 2 || time is: 0.045
+Test name is: testGetNonExistentHospital || # of times failed: 0 || time is: 0
+Test name is: testPatientAsPatient || # of times failed: 0 || time is: 0
+Test name is: testPatientUnauthenticated || # of times failed: 0 || time is: 0
+Test name is: testDiagnoses || # of times failed: 0 || time is: 0
+Test name is: testPersonnelAPI || # of times failed: 0 || time is: 0
+Test name is: testPatientAPI || # of times failed: 0 || time is: 0
+Test name is: testUserAPI || # of times failed: 0 || time is: 0
+Test name is: testGetNonExistentUser || # of times failed: 0 || time is: 0
+Test name is: testCreateDomainObject || # of times failed: 0 || time is: 0
+Test name is: testRetrieveDomainObject || # of times failed: 0 || time is: 0
+Test name is: testDelete || # of times failed: 0 || time is: 0
+Test name is: testGetNonExistentPatient || # of times failed: 0 || time is: 0
+Test name is: testEmail || # of times failed: 0 || time is: 0
+Test name is: testValidPasswordChanges || # of times failed: 0 || time is: 0
+Test name is: testSendEmail || # of times failed: 0 || time is: 0
+Test name is: testInvalidPasswordChanges || # of times failed: 0 || time is: 0
+Test name is: testHospitalForm || # of times failed: 0 || time is: 0
+Test name is: testRequestReset || # of times failed: 0 || time is: 0
+Test name is: testCodes || # of times failed: 0 || time is: 0
+Test name is: testPreScheduledOfficeVisit || # of times failed: 0 || time is: 0
+Test name is: testInvalidCodes || # of times failed: 0 || time is: 0
+Test name is: testOfficeVisitAPI || # of times failed: 0 || time is: 0
+Test name is: testUserLockouts || # of times failed: 0 || time is: 0
+Test name is: testGetNonExistentOfficeVisit || # of times failed: 0 || time is: 0
+Test name is: testIPLockouts || # of times failed: 0 || time is: 0
+Test name is: testDeleteNonExistentOfficeVisit || # of times failed: 0 || time is: 0
+Test name is: testLogging || # of times failed: 0 || time is: 0
+Test name is: testLogByDate || # of times failed: 0 || time is: 0
+Test name is: testOfficeVisit || # of times failed: 0 || time is: 0
+Test name is: testLogByDateLarge || # of times failed: 0 || time is: 0
+Test name is: testEnumAPI || # of times failed: 0 || time is: 0
+Test name is: testCodeAPI || # of times failed: 0 || time is: 0
+Test name is: testDrugAPI || # of times failed: 0 || time is: 0
+Test name is: testHospitalAPI || # of times failed: 0 || time is: 0
+Test name is: testGetNonExistentAppointment || # of times failed: 0 || time is: 0
+Test name is: testPrescriptionAPI || # of times failed: 0 || time is: 0
+Test name is: testFieldValidation || # of times failed: 0 || time is: 0
+Test name is: testDeleteNonExistentAppointment || # of times failed: 0 || time is: 0
+Test name is: testCreateBadAppointmentRequest || # of times failed: 0 || time is: 0
+Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
+Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
+Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
+```
+#### Types of problems that fuzzer discovered
+
+#### Extension of fuzzing operations
+
+We can extend the fuzzing operations in the following ways:
+1. Swap && and ||
+2. Swap << with >>
+3. Remove the NOT operator(!)
+4. 
+
+#### Reasons for highest ranked test cases
+
+In testPasswordReset and testPasswordChangeForm (among the most failed test cases), the validate function on password tests that the new password is in the range 6-20. This is implemented as -
+```
+   if ( getNewPassword().length() < 6 || getNewPassword().length() > 20 ) {
+      throw new IllegalArgumentException( "New password must be between 6 and 20 characters." );
+   }
+   return true;
+```       
+Observation:
+1. With 60% chance, either the '<' is swapped with '>' and '>' is swapped with '<'. 
+2. The function returns true in the end. With 60% chance, true is changed to false. 
+
+Hence, the function will either throw an exception or will return false and our test case will fail.
+
+## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
+
+
+## References  
+   * https://wiki.jenkins.io/display/JENKINS/SCM+Sync+configuration+plugin
+   * https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
+   * https://www.eclemma.org/jacoco/trunk/doc/maven.html
+   * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html    
+   * https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314  
+   * https://wiki.jenkins.io/display/JENKINS/Post+build+task  
+   * http://docs.ansible.com/ansible/2.4/vault.html 
