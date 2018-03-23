@@ -40,27 +40,27 @@
       src: /var/lib/jenkins/pom-data.xml
       dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml
 
-  - name: Running process-test-classes and checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
-    become: true
-    register: out1
+#  - name: Running process-test-classes and checkstyle
+#    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+#    become: true
+#    register: out1
   
-  - debug:
-    msg: "{{ item.split('\n') }}"
-    with_items: 
-      - "{{ out1.stderr_lines }}"
-      - "{{ out1.stdout_lines }}"
+#  - debug:
+#    msg: "{{ item.split('\n') }}"
+#    with_items: 
+#      - "{{ out1.stderr_lines }}"
+#      - "{{ out1.stdout_lines }}"
 
-  - name: Running process-test-classes and checkstyle
-    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
-    become: true
-    register: out2
+#  - name: Running process-test-classes and checkstyle
+#    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+#    become: true
+#    register: out2
 
-  - debug:
-    msg: "{{ item.split('\n') }}"
-    with_items: 
-      - "{{ out2.stderr_lines }}"
-      - "{{ out2.stdout_lines }}"
+#  - debug:
+#    msg: "{{ item.split('\n') }}"
+#    with_items: 
+#      - "{{ out2.stderr_lines }}"
+#      - "{{ out2.stdout_lines }}"
 
   
 
