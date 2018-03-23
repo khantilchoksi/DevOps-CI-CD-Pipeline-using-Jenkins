@@ -3,10 +3,6 @@ const path = require('path')
 const child_process = require('child_process')
 var http = require('http');
 
-
-
-// Sync get list of files in a directory, recursively. 
-// https://gist.github.com/kethinov/6658166#gistcomment-1941504
 const walkSync = (dir, filelist = []) => {
     fs.readdirSync(dir).forEach(file => {
         filelist = fs.statSync(path.join(dir, file)).isDirectory()
@@ -122,7 +118,7 @@ const fileFuzzer = (filePath) => {
 
 const commitFuzzer = (master_sha1, n) => {
     // child_process.execSync(`git add . && git commit -am "Fuzzing master:${master_sha1}: # ${n}" && git push --force`)
-    child_process.execSync(`git stash && git checkout fuzzer && git checkout stash -- . && git commit -am "Fuzzing master:${master_sha1}: # ${n}" && git push`)
+    child_process.execSync(`git stash && git checkout fuzzer && git checkout stash -- . && git commit -am "Fuzzing :${master_sha1}: # ${n+1}" && git push`)
     child_process.execSync('git stash drop');
     let lastSha1 = child_process.execSync(`git rev-parse fuzzer`).toString().trim()
     return lastSha1;
@@ -165,4 +161,4 @@ const runFuzzingProcess = (n) => {
     }
 }
 
-runFuzzingProcess(1);
+runFuzzingProcess(4);
