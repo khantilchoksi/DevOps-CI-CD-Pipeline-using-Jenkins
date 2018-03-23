@@ -10,6 +10,14 @@ DevOps Project Spring 2018 NC State University
 |3. Khantil Choksi|        khchoksi|
 |4. Pavithra Iyer    |       piyer3|
 
+----------------------------------------------------------------------------------
+
+## Contribution 
+   * *Automated test generation on Checkbox:*  Navjot & Khantil 
+   * *Jenkins setup and Jacoco coverage:* Khelan & Pavithra
+   * *iTrust Commit Fuzzer & Test prioritization:* Khelan & Khantil & Pavithra 
+   * *Report generation:* Entire team
+   
 ## Coverage/Jenkins Support
 
 Ensure you have the ability to run iTrust's and checkbox.io* test suite. You need to have your build server have a jetty/mysql instance in order to properly run the unit + integration tests. Add a plugin to jenkins to measure coverage and display a report within Jenkins on every commit.
@@ -84,3 +92,39 @@ Test name is: testAppointmentRequestAPI || # of times failed: 0 || time is: 0
 Test name is: testEqualsAndProperties || # of times failed: 0 || time is: 0
 Test name is: testGetNonExistentPersonnel || # of times failed: 0 || time is: 0
 ```
+#### Types of problems that fuzzer discovered
+
+#### Extension of fuzzing operations
+
+We can extend the fuzzing operations in the following ways:
+1. Swap && and ||
+2. Swap << with >>
+3. Remove the NOT operator(!)
+4. Changin == to = in condition checks
+
+#### Reasons for highest ranked test cases
+
+In testPasswordReset and testPasswordChangeForm (among the most failed test cases), the validate function on password tests that the new password is in the range 6-20. This is implemented as -
+```
+   if ( getNewPassword().length() < 6 || getNewPassword().length() > 20 ) {
+      throw new IllegalArgumentException( "New password must be between 6 and 20 characters." );
+   }
+   return true;
+```       
+Observation:
+1. With 60% chance, either the '<' is swapped with '>' and '>' is swapped with '<'. 
+2. The function returns true in the end. With 60% chance, true is changed to false. 
+
+Hence, the function will either throw an exception or will return false and our test case will fail.
+
+## Describe your approach for automated test generation. How many tests were you able to achieve and what was the resulting coverage?
+
+
+## References  
+   * https://wiki.jenkins.io/display/JENKINS/SCM+Sync+configuration+plugin
+   * https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
+   * https://www.eclemma.org/jacoco/trunk/doc/maven.html
+   * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html    
+   * https://medium.com/devops-process-and-tools/configure-jenkins-job-with-ansible-jenkins-plugin-to-setup-ci-for-ansible-playbooks-3ed23137d314  
+   * https://wiki.jenkins.io/display/JENKINS/Post+build+task  
+   * http://docs.ansible.com/ansible/2.4/vault.html 

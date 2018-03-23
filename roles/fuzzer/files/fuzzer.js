@@ -12,8 +12,6 @@ const walkSync = (dir, filelist = []) => {
     return filelist;
 }
 
-
-
 const getJavaFilePaths = (dirPath)=>{
     let filePaths = walkSync(dirPath)
     let javaPaths = []
@@ -117,7 +115,7 @@ const fileFuzzer = (filePath) => {
 }
 
 const commitFuzzer = (master_sha1, n) => {
-    // child_process.execSync(`git add . && git commit -am "Fuzzing master:${master_sha1}: # ${n}" && git push --force`)
+    
     child_process.execSync(`git stash && git checkout fuzzer && git checkout stash -- . && git commit -am "Fuzzing :${master_sha1}: # ${n+1}" && git push`)
     child_process.execSync('git stash drop');
     let lastSha1 = child_process.execSync(`git rev-parse fuzzer`).toString().trim()

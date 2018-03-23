@@ -10,7 +10,6 @@
       - pollscm:
           cron: "" 
     builders:
-      - shell: 'pwd && cd ~ && pwd'
       - ansible-playbook:
             playbook: "/var/lib/jenkins/builder_itrust_fuzzer.yml"
             inventory-type: "path"
