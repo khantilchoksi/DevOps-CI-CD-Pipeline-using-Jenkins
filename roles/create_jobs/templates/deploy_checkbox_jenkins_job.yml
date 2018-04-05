@@ -1,0 +1,41 @@
+- job:
+    name: "{{checkbox_deploy_job_name}}"
+    scm: 
+      - git: 
+          url: https://github.com/khantilchoksi/checkbox.io.git
+          branches: 
+            - origin/master
+    triggers:
+      - github:
+    builders:
+      - shell: 'cd /var/lib/jenkins/workspace/{{checkbox_deploy_job_name}}/server-side/site && sudo npm install'
+
+    publishers:
+    #   - jacoco:
+    #       exec-pattern: '**/**.exec'
+    #       #class-pattern: '**/EmailUtil.class'
+    #       class-pattern: '**/classes'
+    #       source-pattern: '**/src'
+    #       update-build-status: true
+    #       exclusion-pattern: '**/*Test*.class'
+     - postbuildscript:
+         builders:
+             - role: BOTH
+               build-on:
+                   - SUCCESS
+                   - FAILURE
+               build-steps:
+                   - shell: 'echo CHECKBOX DEPLOYMENT STARTS'
+                   #- shell: 'pwd && cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=checkboxio" -vvv && sleep 30s && sudo chmod 400 ~/keys/checkboxio.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt -vvv'
+                   #- shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/ && sudo rm -rf /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/'
+
+      # - ansible-playbook:
+      #     playbook: "/home/ubuntu/itrust_fuzzer_builder.yml"
+      #     inventory-type: "path"
+      #     inventory:
+      #       path: "/home/ubuntu/local_inventory" 
+      #     additional-parameters: "-vvv"
+
+#java -jar jenkins-cli.jar -s http://localhost:8080/ build itrust_job --username {{ jenkins_username }} --password {{ jenkins_password }}
+
+
