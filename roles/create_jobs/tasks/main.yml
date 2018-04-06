@@ -16,6 +16,12 @@
 #    path: "/home/ubuntu/jobs"
 #    state: directory
 
+- name: Create .ssh folder if it doesn't exit
+  file:
+    path: "/var/lib/jenkins/.ssh"
+    state: directory
+  become: true
+
 - name: Copy private SSH Key for GitHub to var lib jenkins
   copy:
     src: ~/.ssh/git_rsa

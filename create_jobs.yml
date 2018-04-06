@@ -1,4 +1,21 @@
 ---
+- hosts: localhost
+  vars:
+    - GIT_PERSONAL_ACCESS_TOKEN: $ANSIBLE_VAULT;1.1;AES256
+                                66653534343064666431653732303230343561626664653639396266383239333339376662336531
+                                3336393431383136653030393232376231333533623865320a376462316537396632366631306632
+                                65346138313463383236363164633537386536393431353235323632353830323661316638353236
+                                6464313639643965320a653062626435653631316462346464316437343637323963326166386432
+                                63333235633539326462646363393232653763383264326135653365383934373935396133356636
+                                3061396362393035363235616161343362633733303234623132
+  tasks:
+     - github_hooks:
+          action: create
+          hookurl: http://34.210.70.136:8090/github-webhook/
+          user: khantilchoksi
+          oauthkey: "{{GIT_PERSONAL_ACCESS_TOKEN}}"
+          repo: https://api.github.com/repos/khantilchoksi/checkbox.io 
+
 - hosts: jenkins
   vars:
   - itrust_job_name: "itrust_job"
@@ -12,3 +29,13 @@
   roles:
     - create_jobs
 #    - build_jobs
+  tasks:
+    - name: GET AWS Credentials
+      shell: cat /var/lib/jenkins/.aws/credentials
+      become: true
+      register: aws_credentials
+    
+    - name: SETTING up variable
+      shell: "echo {{item.split("=")}}"
+      with_items: cat /var/lib/jenkins/.aws/credentials
+                                                                   

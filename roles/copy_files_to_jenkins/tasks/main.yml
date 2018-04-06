@@ -15,8 +15,8 @@
   copy:
     src: "{{ project_directory }}/app_deploy/"
     dest: /var/lib/jenkins/
-    owner: ubuntu
-    group: ubuntu
+    owner: jenkins
+    group: jenkins
     mode: 0666
   become: true
 
@@ -32,8 +32,8 @@
   copy:
     src: "{{ project_directory }}/provision_ec2.yml"
     dest: /var/lib/jenkins/provision_ec2.yml
-    owner: ubuntu
-    group: ubuntu
+    owner: jenkins
+    group: jenkins
     mode: 0666
   become: true
 
@@ -41,8 +41,8 @@
   copy:
     src: ~/.aws/
     dest: /var/lib/jenkins/.aws/
-    owner: ubuntu
-    group: ubuntu
+    owner: jenkins
+    group: jenkins
     mode: 0400
   become: true
 
