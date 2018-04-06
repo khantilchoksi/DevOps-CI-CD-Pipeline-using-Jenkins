@@ -1,13 +1,14 @@
 ---
 - hosts: localhost
   vars:
-    - GIT_PERSONAL_ACCESS_TOKEN: $ANSIBLE_VAULT;1.1;AES256
-                                66653534343064666431653732303230343561626664653639396266383239333339376662336531
-                                3336393431383136653030393232376231333533623865320a376462316537396632366631306632
-                                65346138313463383236363164633537386536393431353235323632353830323661316638353236
-                                6464313639643965320a653062626435653631316462346464316437343637323963326166386432
-                                63333235633539326462646363393232653763383264326135653365383934373935396133356636
-                                3061396362393035363235616161343362633733303234623132
+    GIT_PERSONAL_ACCESS_TOKEN: !vault | 
+          $ANSIBLE_VAULT;1.1;AES256
+          37623834653562306332313739373166616631386233393237616564343534316437643063636238
+          6366393232353562313063653231636633393030326662320a313837636663373365646463626636
+          36653035343038363664643638626666653331613362336433363830323733663033376663643837
+          3361663836386235310a313833303631616430633131353831643663383563653635396235336630
+          32636133333234306663636465343535356461313662666335326630323035383330343831343964
+          6361383531653833656466613235383664636130363938313032
   tasks:
      - github_hooks:
           action: create
@@ -17,24 +18,14 @@
           repo: https://api.github.com/repos/khantilchoksi/checkbox.io 
 
 - hosts: jenkins
-  vars:
-  - itrust_job_name: "itrust_job"
-  - checkbox_job_name: "checkbox_job"
-
-      
-  # vars_prompt:
-  # - name: jenkins_password
-  #   prompt: "Enter Jenkins Password for admin"
-
   roles:
     - create_jobs
-#    - build_jobs
   tasks:
     - name: "Create EC2 instance for Checkbox.io Deployment"
       shell: 'ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_checkboxio" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_checkboxio.pem'
       become: true
+      become_user: jenkins
     #when: ec2 instance for checkbox.io not exists
-    - 
     # - name: GET AWS Credentials
     #   shell: cat /var/lib/jenkins/.aws/credentials
     #   become: true
