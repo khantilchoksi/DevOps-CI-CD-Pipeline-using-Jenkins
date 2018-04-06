@@ -23,9 +23,9 @@
              - role: BOTH
                build-on:
                    - SUCCESS
-                   - FAILURE
                build-steps:
                    - shell: 'echo CHECKBOX DEPLOYMENT STARTS'
+                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "variable_host=deploy_checkboxio" -vvv'
                    #- shell: 'pwd && cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=checkboxio" -vvv && sleep 30s && sudo chmod 400 ~/keys/checkboxio.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt -vvv'
                    #- shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/ && sudo rm -rf /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/'
 

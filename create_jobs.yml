@@ -30,12 +30,17 @@
     - create_jobs
 #    - build_jobs
   tasks:
-    - name: GET AWS Credentials
-      shell: cat /var/lib/jenkins/.aws/credentials
+    - name: "Create EC2 instance for Checkbox.io Deployment"
+      shell: 'ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_checkboxio" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_checkboxio.pem'
       become: true
-      register: aws_credentials
+    #when: ec2 instance for checkbox.io not exists
+    - 
+    # - name: GET AWS Credentials
+    #   shell: cat /var/lib/jenkins/.aws/credentials
+    #   become: true
+    #   register: aws_credentials
     
-    - name: SETTING up variable
-      shell: "echo {{item.split("=")}}"
-      with_items: cat /var/lib/jenkins/.aws/credentials
+    # - name: SETTING up variable
+    #   shell: "echo {{item.split("=")}}"
+    #   with_items: cat /var/lib/jenkins/.aws/credentials
                                                                    
