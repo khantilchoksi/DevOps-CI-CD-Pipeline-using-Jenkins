@@ -5,6 +5,7 @@
           url: https://github.com/khantilchoksi/checkbox.io.git
           branches: 
             - origin/master
+          wipe-workspace: false
     triggers:
       - github:
     builders:
