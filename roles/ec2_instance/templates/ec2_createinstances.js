@@ -123,18 +123,18 @@ var publicDNS=null;
       }
       instanceId = data.Instances[0].InstanceId;
       //publicDNS = data.Instances[0].PublicDNS;
-      // console.log("Created instance", instanceId);
-      // // Add tags to the instance
-      // params = {Resources: [instanceId], Tags: [
-      //    {
-      //       Key: 'HW1 Instance',
-      //       Value: 'HW1 AWS Instance'
-      //    }
-      // ]};
+      console.log("Created instance", instanceId);
+      // Add tags to the instance
+      params = {Resources: [instanceId], Tags: [
+          {
+             Key: 'Name',
+             Value: process.argv[2]
+          }
+       ]};
 
-      // ec2.createTags(params, function(err) {
-      //    console.log("Tagging instance", err ? "failure" : "success");
-      // });
+       ec2.createTags(params, function(err) {
+         console.log("Tagging instance", err ? "failure" : "success");
+       });
   
       // call EC2 to start the selected instances
       params = {
@@ -167,18 +167,6 @@ var publicDNS=null;
   };
 
 
-  console.log("Created instance", instanceId);
-  // Add tags to the instance
-  params = {Resources: [instanceId], Tags: [
-     {
-        Key: process.argv[2],
-        Value: process.argv[2]+"value"
-     }
-  ]};
-
-  ec2.createTags(params, function(err) {
-     console.log("Tagging instance", err ? "failure" : "success");
-  });
 
   ec2.describeInstances(params, function(err, data) {
     if (err) console.log(err, err.stack); // an error occurred
