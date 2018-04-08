@@ -75,7 +75,7 @@ DevOps Project Spring 2018 NC State University
      ```ansible-playbook -i ~/inventory jenkins.yml ```
 
 4. **[Create Jobs](./create_jobs.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/create_jobs) role which has all the jobs that are to be created. At this point all iTrust_Fuzzer_Job is also created and will be notified on each commit of the master branch of iTrust_Fuzzer (forked repo).   
-     ```ansible-playbook -i ~/inventory create_jobs.yml ```  
+     ```ansible-playbook -i ~/inventory create_jobs.yml --vault-password-file ~/.vault_pass.txt ```  
      
 ### Tasks Performed:   
 * Here, first EC2 (t2.medium) instance is created for Jenkins and required Jenkins plugins as well as ansible scripts, roles are being copied from repo to Jenkins server.  
