@@ -62,6 +62,9 @@ DevOps Project Spring 2018 NC State University
    
 ## DEPLOYMENT  
 
+### Architecture Diagram: 
+![img](/Architecture.png)  
+
 ### Implementation:
 1. Clone this repo and make sure you have your AWS Credentials and GithHub credentials as described in the next section.  
 
