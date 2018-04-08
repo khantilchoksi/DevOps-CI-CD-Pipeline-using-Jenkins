@@ -20,6 +20,8 @@
   file:
     path: "/var/lib/jenkins/.ssh"
     state: directory
+    owner: jenkins
+    group: jenkins
   become: true
 
 - name: Copy private SSH Key for GitHub to var lib jenkins
@@ -59,11 +61,11 @@
     mode: 0666
   become: true
 
-#Job Builder Playbook for iTrust Fuzzing
-- name: Copy builder playbook for iTrust Fuzzer
+#Job Builder Playbook for iTrust Setup
+- name: Copy builder playbook for iTrust Setup like properites and pom-data
   copy:
     src: "{{ project_directory }}/roles/create_jobs/templates/setup_itrust.yml"
-    dest: /var/lib/jenkins/builder_itrust_fuzzer.yml
+    dest: /var/lib/jenkins/setup_itrust.yml
     owner: jenkins
     group: jenkins
     mode: 0666

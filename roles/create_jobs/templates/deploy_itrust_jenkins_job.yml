@@ -10,7 +10,7 @@
       - github:
     builders:
       - ansible-playbook:
-            playbook: "/var/lib/jenkins/builder_itrust_fuzzer.yml"
+            playbook: "/var/lib/jenkins/setup_itrust.yml"
             inventory-type: "path"
             inventory:
               path: "~/local_inventory"
