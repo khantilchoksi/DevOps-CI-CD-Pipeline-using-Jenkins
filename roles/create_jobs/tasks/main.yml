@@ -62,7 +62,7 @@
 #Job Builder Playbook for iTrust Fuzzing
 - name: Copy builder playbook for iTrust Fuzzer
   copy:
-    src: "{{ project_directory }}/roles/create_jobs/templates/builder_itrust_fuzzer.yml"
+    src: "{{ project_directory }}/roles/create_jobs/templates/setup_itrust.yml"
     dest: /var/lib/jenkins/builder_itrust_fuzzer.yml
     owner: jenkins
     group: jenkins

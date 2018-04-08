@@ -9,14 +9,17 @@
           3361663836386235310a313833303631616430633131353831643663383563653635396235336630
           32636133333234306663636465343535356461313662666335326630323035383330343831343964
           6361383531653833656466613235383664636130363938313032
-      GIT_NCSU_PERSONAL_ACCESS_TOKEN: !vault | 
-          $ANSIBLE_VAULT;1.1;AES256
-          61373962353532316365396634326163323462623136646465353533616130383438393663353530
-          6632366630663631656538336165303466636364306434320a653561656166383135643132363165
-          35666639363339636432663737613632326462653438646537616462366539366633313033626636
-          3130346665363733390a386665633265393736613835363365376131336332393936376632376565
-          61383564616138626261613266623731373036366136373735393939316366326164656638356332
-          3364373235366165313337643936313965623037373062376536 
+
+      GIT_NCSU_PERSONAL_ACCESS_TOKEN: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            33316232313762623032326433633665356533633761616437663334313635626561633830333535
+            3261363962313534663735313631343065616261663333390a353739333731356539316336343366
+            66646366373636666161633532336435656630303430363162353732376463316439646434346263
+            3736386239323633610a393731396333613937383934363662363438343835303566313362646263
+            34653431313336623039306163383735663335316138393135643937303539306165626465393466
+            3635396437363664366666646139393739316531616339643537
+
+ 
   tasks: 
 
      - name: display multiple file contents
@@ -75,16 +78,10 @@
           oauthkey: "{{GIT_PERSONAL_ACCESS_TOKEN}}"
           repo: https://api.github.com/repos/khantilchoksi/checkbox.io
 
-     - github_hooks:
-          action: create
-          hookurl: "http://{{ec2_jenkins_ip}}:8090/github-webhook/"
-          user: khchoksi
-          oauthkey: "{{GIT_NCSU_PERSONAL_ACCESS_TOKEN}}"
-          repo: https://api.github.com/repos/khantilchoksi/checkbox.io
 
      - github_hooks:
           action: create
-          hookurl: "http://34.210.70.136:8090/github-webhook/"
+          hookurl: "http://{{ec2_jenkins_ip}}:8090/github-webhook/"
           user: khchoksi
           oauthkey: "{{GIT_NCSU_PERSONAL_ACCESS_TOKEN}}"
           repo: https://github.ncsu.edu/api/v3/repos/khchoksi/iTrust2-v2
@@ -137,6 +134,24 @@
           ec2_deploy_checkbox__ip: "{{ec2_deploy_checkbox.instances[0].public_ip_address}}"
        when: ec2_deploy_checkbox.instances | length>0
     
+     - name: Checking iTrust EC2 Instance Exists
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+             "tag:Name": deploy_itrust
+             "instance-state-code": "16"
+       register: ec2_deploy_itrust
 
 
-                                                                   
+     - name: "Create EC2 instance for iTrust Deployment"
+       shell: 'ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_itrust" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_itrust.pem'
+       become: true
+       become_user: jenkins
+       when: ec2_deploy_itrust.instances | length==0
+
+     - name: Get Public IP for itrust instance
+       set_fact:
+          ec2_deploy_itrust__ip: "{{ec2_deploy_itrust.instances[0].public_ip_address}}"
+       when: ec2_deploy_itrust.instances | length>0                                                           
