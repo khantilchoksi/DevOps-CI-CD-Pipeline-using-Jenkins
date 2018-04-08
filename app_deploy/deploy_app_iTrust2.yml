@@ -1,11 +1,8 @@
 ---
-- hosts: iTrust2
+- hosts: "{{ var_host | default('iTrust2')}}"
   sudo: yes
   remote_user: root
   gather_facts: false
-#  pre_tasks:
-#    - name: install python 2
-#      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
 
   roles:
    - java
@@ -53,7 +50,7 @@
        path: /home/vagrant
 
    - name: Cloning Git Repo
-     git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/engr-csc326-staff/iTrust2-v2.git dest=/home/vagrant/tmp
+     git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/khchoksi/iTrust2-v2.git dest=/home/vagrant/tmp
 
    - name: copy 2 files
      shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties

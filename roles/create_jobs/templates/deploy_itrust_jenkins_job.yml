@@ -25,6 +25,7 @@
                build-on:
                    - SUCCESS
                build-steps:
-                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt'
+                   - shell: 'echo iTrust DEPLOYMENT STARTS'
+                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=deploy_itrust" -vvv'
 
 
