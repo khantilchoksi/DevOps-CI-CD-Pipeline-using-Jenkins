@@ -92,6 +92,12 @@
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/deploy_checkbox_jenkins_job.yml"
     dest: ~/jobs/deploy_checkbox_jenkins_job.yml
+
+# iTrustv2 job for deployment which will run after every push to repo
+- name: Copy iTrustv2 Deployment jenkins job script
+  template:
+    src: "{{ project_directory }}/roles/create_jobs/templates/deploy_itrust_jenkins_job.yml"
+    dest: ~/jobs/deploy_itrust_jenkins_job.yml
   
 - name: create jobs
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'

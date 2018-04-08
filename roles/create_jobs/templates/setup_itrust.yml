@@ -1,6 +1,6 @@
 - hosts: localhost
   vars:
-    itrust_fuzzer_job_name: "itrust_fuzzer_job"
+    job_name: "{{itrust_job_name | default('itrust_job') }}"
     email_password: !vault |
             $ANSIBLE_VAULT;1.1;AES256
             36663366333664393539643265643538316662326463353964366261303866326565326264306564
@@ -11,22 +11,22 @@
   tasks:
   - name: Copy Hibernate Properties
     copy:
-      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/resources/hibernate.properties
+      src: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/resources/hibernate.properties.template
+      dest: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/resources/hibernate.properties
 
   - name: Copy DB Properties
     copy:
-      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/db.properties
+      src: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/java/db.properties.template
+      dest: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/java/db.properties
 
   - name: Copy Email Properties
     copy:
-      src: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties.template
-      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties
+      src: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/java/email.properties.template
+      dest: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/java/email.properties
 
   - name: Set email properties
     lineinfile:
-      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/src/main/java/email.properties
+      dest: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/src/main/java/email.properties
       regexp: "{{ item.regexp }}"
       line: "{{ item.line }}"
     with_items:
@@ -38,7 +38,7 @@
   - name: Copy pom-data.xml to jenkins workspace
     copy:
       src: /var/lib/jenkins/pom-data.xml
-      dest: /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/pom-data.xml
+      dest: /var/lib/jenkins/workspace/{{job_name}}/iTrust2/pom-data.xml
 
 #  - name: Running process-test-classes and checkstyle
 #    shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'

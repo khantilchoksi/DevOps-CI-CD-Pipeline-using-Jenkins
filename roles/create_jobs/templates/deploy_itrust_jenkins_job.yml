@@ -1,0 +1,30 @@
+- job:
+    name: "{{itrust_deploy_job_name}}"
+    scm: 
+      - git: 
+          url: git@github.ncsu.edu:khchoksi/iTrust2-v2.git
+          branches: 
+            - origin/master
+          wipe-workspace: false
+    triggers:
+      - github:
+    builders:
+      - ansible-playbook:
+            playbook: "/var/lib/jenkins/builder_itrust_fuzzer.yml"
+            inventory-type: "path"
+            inventory:
+              path: "~/local_inventory"
+            additional-parameters: '--vault-password-file ~/.vault_pass.txt --extra-vars "itrust_job_name={{itrust_deploy_job_name}}"'
+      - shell: 'sleep 20s && cd /var/lib/jenkins/workspace/{{itrust_deploy_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_deploy_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+
+    publishers:
+     - postbuildscript:
+         builders:
+             - role: BOTH
+               build-on:
+                   - SUCCESS
+               build-steps:
+                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt'
+
+

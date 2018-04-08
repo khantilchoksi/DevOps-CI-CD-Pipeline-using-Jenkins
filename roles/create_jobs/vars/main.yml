@@ -6,6 +6,7 @@ jenkins_password: "admin"
 itrust_job_name: "itrust_job"
 itrust_fuzzer_job_name: "itrust_fuzzer_job"
 checkbox_deploy_job_name: "deploy_checkbox_job"
+itrust_deploy_job_name: "deploy_itrust_job"
 checkbox_job_name: "checkbox_job"
 itrust_dir: "iTrust2-v2"
 project_directory: ~/DevOps-Project
