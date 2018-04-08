@@ -25,6 +25,7 @@
      - name: display multiple file contents
        set_fact:
           content: "{{item}}"
+       no_log: true
        with_file:
            - "/home/vagrant/.aws/credentials"
        become: true
