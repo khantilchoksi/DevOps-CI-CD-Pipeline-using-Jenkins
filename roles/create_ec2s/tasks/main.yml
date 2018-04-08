@@ -1,0 +1,63 @@
+---
+- name: display multiple file contents
+  set_fact:
+    content: "{{item}}"
+  with_file:
+      - "/home/vagrant/.aws/credentials"
+  become: true
+
+- name: Set AWS Access Key Variable
+  set_fact:
+    aws_access_key: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+- name: Set AWS Secret Key Variable
+  set_fact:
+    aws_secret_key: "{{ content.split('=')[2] | trim }}"
+
+- pip:
+    name: boto3
+  become: true
+
+- name: Checking CheckboxIO EC2 Instance Exists
+  ec2_instance_facts:
+    aws_access_key: "{{aws_access_key}}"
+    aws_secret_key: "{{aws_secret_key}}"
+    region: "us-west-2"
+    filters:
+        "tag:Name": deploy_checkboxio
+        "instance-state-code": "16"
+  register: ec2_deploy_checkbox
+
+
+- name: "Create EC2 instance for Checkbox.io Deployment"
+  shell: 'ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_checkboxio" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_checkboxio.pem'
+  become: true
+  become_user: jenkins
+  when: ec2_deploy_checkbox.instances | length==0
+
+- name: Get Public IP for  checkbox instance
+  set_fact: 
+    ec2_deploy_checkbox__ip: "{{ec2_deploy_checkbox.instances[0].public_ip_address}}"
+  when: ec2_deploy_checkbox.instances | length>0
+
+- name: Checking iTrust EC2 Instance Exists
+  ec2_instance_facts:
+    aws_access_key: "{{aws_access_key}}"
+    aws_secret_key: "{{aws_secret_key}}"
+    region: "us-west-2"
+    filters:
+        "tag:Name": deploy_itrust
+        "instance-state-code": "16"
+  register: ec2_deploy_itrust
+
+
+- name: "Create EC2 instance for iTrust Deployment"
+  shell: 'ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_itrust" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_itrust.pem'
+  become: true
+  become_user: jenkins
+  when: ec2_deploy_itrust.instances | length==0
+
+- name: Get Public IP for itrust instance
+  set_fact:
+    ec2_deploy_itrust__ip: "{{ec2_deploy_itrust.instances[0].public_ip_address}}"
+  when: ec2_deploy_itrust.instances | length>0   
