@@ -1,7 +1,8 @@
 ---
-- name: display multiple file contents
+- name: Fetch AWS Credentials form File
   set_fact:
     content: "{{item}}"
+  no_log: true
   with_file:
       - "/home/vagrant/.aws/credentials"
   become: true
@@ -14,9 +15,6 @@
   set_fact:
     aws_secret_key: "{{ content.split('=')[2] | trim }}"
 
-- pip:
-    name: boto3
-  become: true
 
 - name: Checking CheckboxIO EC2 Instance Exists
   ec2_instance_facts:

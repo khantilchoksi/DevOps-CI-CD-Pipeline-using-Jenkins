@@ -150,7 +150,11 @@
   become: true
 
 - pip:
-    name: jenkins-job-builder
+    name: "{{item}}"
+  with_items: 
+    - boto
+    - boto3 
+    - jenkins-job-builder
   become: true
 
 # - name: Restarting Jenkins

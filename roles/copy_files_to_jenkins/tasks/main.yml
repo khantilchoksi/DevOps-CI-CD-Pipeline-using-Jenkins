@@ -3,13 +3,16 @@
   synchronize: 
     src: "{{project_directory}}/roles"
     dest: /var/lib/jenkins/
-    owner: no
-    group: no
+   # group: no
+   # owner: no
     rsync_opts:
       - "--exclude=node_modules"
   become: true
-  become_user: jenkins
+  #become_user: jenkins
 
+- name: Change OWNER and GROUP of all roles to jenkins
+  shell: 'sudo su && chown -R jenkins:jenkins /var/lib/jenkins/roles/'
+  become: true
 
 - name: copy files necessary to deploy itrust and checkbox 
   copy:

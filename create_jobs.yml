@@ -90,7 +90,7 @@
 
 - hosts: jenkins
   roles:
-    - create_ec2s
+#    - create_ec2s
     - create_jobs
 
                                                         

@@ -51,6 +51,26 @@
     mode: 0666
   become: true
 
+#Playbook to create EC2 instance for DEPLOY_CHECKBOXIO
+- name: Copy playbook for creating ec2 instance for deploy_checkboxio
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/files/provision_ec2_checkboxio.yml"
+    dest: /var/lib/jenkins/provision_ec2_checkboxio.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
+#Playbook to create EC2 instance for DEPLOY_ITRUST
+- name: Copy playbook for creating ec2 instance for deploy_checkboxio
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/files/provision_ec2_itrust.yml"
+    dest: /var/lib/jenkins/provision_ec2_itrust.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
 #Job Builder Playbook for iTrust Test
 - name: Copy builder playbook for iTrust
   copy:
@@ -105,13 +125,13 @@
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
   #become: true
 
-- name: Initial Deployment of Checkbox.io
-  shell: 'java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ checkbox_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
-  become: true
+#- name: Initial Deployment of Checkbox.io
+#  shell: 'java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ checkbox_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
+#  become: true
 
-- name: Initial Deployment of iTrust2
-  shell: 'sleep 30s & java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ itrust_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
-  become: true
+#- name: Initial Deployment of iTrust2
+#  shell: 'sleep 30s & java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ itrust_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
+#  become: true
 
 # New
 - name: Creating new directory for test_reports
