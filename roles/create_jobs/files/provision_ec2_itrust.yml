@@ -31,7 +31,7 @@
 
 
      - name: Create EC2 instance for deploy_itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_itrust.yml --extra-vars="param=deploy_itrust" -vvv  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_itrust.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_itrust.yml --extra-vars="param=deploy_itrust" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_itrust.pem'
        become: true
        when: ec2_deploy_itrust.instances | length==0
 
