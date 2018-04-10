@@ -26,6 +26,6 @@
                    - SUCCESS
                build-steps:
                    - shell: 'echo iTrust DEPLOYMENT STARTS'
-                   - shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_itrust.yml -e "ansible_python_interpreter=/usr/bin/python3" -vvv  && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=deploy_itrust" -vvv'
+                   - shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_itrust.yml -e "ansible_python_interpreter=/usr/bin/python3"  && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=deploy_itrust" -vvv'
 
 
