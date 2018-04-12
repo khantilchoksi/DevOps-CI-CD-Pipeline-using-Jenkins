@@ -31,7 +31,7 @@
 
 
      - name: Create EC2 instance for deploy_checkboxio deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_checkboxio.yml --extra-vars="param=deploy_checkboxio" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_checkboxio.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=deploy_checkboxio" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/deploy_checkboxio.pem'
        become: true
        when: ec2_deploy_checkboxio.instances | length==0
 
