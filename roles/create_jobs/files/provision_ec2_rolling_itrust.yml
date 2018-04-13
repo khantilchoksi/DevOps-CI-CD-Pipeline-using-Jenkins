@@ -21,8 +21,8 @@
 
      - name: Fetching EC2 instance details of Jenkins
        ec2_instance_facts:
-          aws_access_key: "{{aws_access}}"
-          aws_secret_key: "{{aws_secret}}"
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
           region: "us-west-2"
           filters:
              "tag:Name": jenkins
