@@ -36,11 +36,11 @@
        become: true
        when: ec2_deploy_itrust.instances | length==0
        with_items:
-        - 'iTrust1'
-        - 'iTrust2'
-        - 'iTrust3'
-        - 'iTrust4'
-        - 'iTrust5'
+        - 'itrust1'
+        - 'itrust2'
+        - 'itrust3'
+        - 'itrust4'
+        - 'itrust5'
 
      - name: "Get Public IP for first rolling itrust instance"
        set_fact:
