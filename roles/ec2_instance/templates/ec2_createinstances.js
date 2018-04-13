@@ -105,7 +105,7 @@ var publicDNS=null;
 
  params = {
     ImageId: 'ami-79873901',
-    InstanceType: 't2.medium',
+    InstanceType: 't2.micro',
     MinCount: 1,
     MaxCount: 1,
     KeyName: keyPairName,
