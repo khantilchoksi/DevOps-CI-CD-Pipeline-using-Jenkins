@@ -1,0 +1,36 @@
+- name: Create security group
+  ec2_group:
+    name: iTrust-deploy-group
+    description: "A Security for iTrust group"
+    region: "{{aws_region}}"
+    aws_access_key: "{{aws_access_key}}"
+    aws_secret_key: "{{aws_secret_key}}"
+    rules:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  register: basic_firewall
+
+- name: Launch Instances for iTrust deployment
+  ec2:
+    key_name: "{{ key_pair }}"
+    aws_access_key: "{{aws_access_key}}"
+    aws_secret_key: "{{aws_secret_key}}"
+    instance_type: "{{ instance_type }}"
+    group_id: "{{basic_firewall.group_id}}"
+    image: "{{ ami_id }}"
+    wait: true
+    region: "{{ aws_region }}"
+    count: 1
+    instance_tags:
+      Name: iTrust
+  register: new_instances
+  when: ec2_iTrust.instances | length!=5
+  with_items: 
+    - tags: ['Name', 'iTrust1']
+    - tags: ['Name', 'iTrust2']
+    - tags: ['Name', 'iTrust3']
+    - tags: ['Name', 'iTrust4']
+    - tags: ['Name', 'iTrust5']
