@@ -11,9 +11,10 @@
   #     become: true
 
   roles:
-  #  - java8
-  #  - jenkins
-  #  - ansible
+    - java8
+    - jenkins
+    - ansible
     - copy_files_to_jenkins  
-  #  - nodejs  
+    - setup_mysql
+    - nodejs  
 

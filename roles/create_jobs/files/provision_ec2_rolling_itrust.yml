@@ -19,6 +19,21 @@
        set_fact:
           aws_secret_key: "{{ content.split('=')[2] | trim }}"
 
+     - name: Fetching EC2 instance details of Jenkins
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access}}"
+          aws_secret_key: "{{aws_secret}}"
+          region: "us-west-2"
+          filters:
+             "tag:Name": jenkins
+             "instance-state-code": "16"
+       register: ec2_jenkins
+
+     - name: Get Public IP for Jenkins EC2  instance
+       set_fact:
+          ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
+       when: ec2_jenkins.instances | length>0
+
      - name: "Checking first iTrust EC2 Instance Exist or not"
        ec2_instance_facts:
           aws_access_key: "{{aws_access_key}}"
