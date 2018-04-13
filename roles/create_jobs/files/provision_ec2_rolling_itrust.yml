@@ -121,7 +121,7 @@
 
      - name: Waiting for EC2 instance to spinup
        shell: "sleep 30s"
-       when: ec2_deploy_itrust.instances | length==0
+       when: ec2_deploy_itrust1.instances | length==0
 
 
 
