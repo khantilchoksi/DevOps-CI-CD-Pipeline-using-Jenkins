@@ -71,6 +71,16 @@
     mode: 0666
   become: true
 
+#Playbook to create five EC2 instances for rolling DEPLOY_ITRUST
+- name: Copy playbook for creating five ec2 instances for rolling itrust
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/files/provision_ec2_rolling_itrust.yml"
+    dest: /var/lib/jenkins/provision_ec2_rolling_itrust.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
 #Job Builder Playbook for iTrust Test
 - name: Copy builder playbook for iTrust
   copy:
@@ -120,6 +130,12 @@
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/deploy_itrust_jenkins_job.yml"
     dest: ~/jobs/deploy_itrust_jenkins_job.yml
+
+# iTrustv2 rolling update job for deployment which will run after every push to repo
+- name: Copy iTrustv2 rolling Deployment jenkins job script
+  template:
+    src: "{{ project_directory }}/roles/create_jobs/templates/itrust_rolling_jenkins_job.yml"
+    dest: ~/jobs/itrust_rolling_jenkins_job.yml
   
 - name: create jobs
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
