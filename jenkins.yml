@@ -15,5 +15,6 @@
     - jenkins
     - ansible
     - copy_files_to_jenkins  
+    - setup_mysql
     - nodejs  
 

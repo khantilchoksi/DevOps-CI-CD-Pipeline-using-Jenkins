@@ -1,0 +1,51 @@
+---
+- name: Set MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}' vtype='password'
+  become: true
+
+- name: Confirm MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
+  become: true
+
+- name: Install mysql server
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - mysql-server
+  register: last_result
+  become: yes
+  
+- name: Install client and libs
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - mysql-client
+    - python-mysqldb
+  become: yes
+
+- name: Insert skip grant tables in my.cnf
+  lineinfile: 
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    insertafter: 'skip-external-locking'
+    line: 'skip-grant-tables'
+  become: true
+
+- name: Restarting mysql
+  service:
+    name: mysql
+    enabled: yes
+    state: restarted
+  become: yes
+
+- name: Waiting for SQL to restart
+  shell: "sleep 10s"
+
+- name: Allow access from all IPs
+  shell: "mysql -u root -e \"USE mysql; GRANT ALL PRIVILEGES ON *.* TO \'root\'@\'%\' identified by \'root\'; GRANT ALL PRIVILEGES ON *.* TO \'root\'@\'%\' identified by \'\' WITH GRANT OPTION; GRANT ALL PRIVILEGES ON *.* TO \'root\'@\'%\' WITH GRANT OPTION; FLUSH PRIVILEGES;\""
+  become: true
+  
+- name: "Restart mysql service"
+  service: name=mysql state=restarted
+  become: yes
