@@ -240,3 +240,10 @@
   file:
     path: ~/jobs
     state: directory
+
+- name: Change StrictHostKeyChecking to no
+  lineinfile: 
+     path: /etc/ssh/ssh_config
+     regexp: '#   StrictHostKeyChecking ask'
+     line: '   StrictHostKeyChecking no'
+  become: true
