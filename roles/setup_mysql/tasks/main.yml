@@ -1,29 +1,39 @@
 ---
-- name: Set MySQL root password before installing
-  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}' vtype='password'
-  become: true
+#- name: Set MySQL root password before installing
+#  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}' vtype='password'
+#  become: true
 
-- name: Confirm MySQL root password before installing
-  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
-  become: true
+#- name: Confirm MySQL root password before installing
+#  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
+#  become: true
 
-- name: Install mysql server
-  apt:
-    pkg: "{{ item }}"
-    state: installed
-  with_items:
-    - mysql-server
-  register: last_result
+#- name: Install mysql server
+#  apt:
+#    pkg: "{{ item }}"
+#    state: installed
+#  with_items:
+#    - mysql-server
+#  register: last_result
+#  become: yes
+
+- name: "Installing mysql"
+  apt: package="mysql-server" state="present"
+  environment:
+    DEBIAN_FRONTEND=noninteractive
   become: yes
+
+- name: Changing mySQL plugin to use password
+  shell: "mysql -u root -e \"USE mysql; UPDATE user SET plugin=\'mysql_native_password\' WHERE User=\'root\'; FLUSH PRIVILEGES;\""
+  become: true
   
-- name: Install client and libs
-  apt:
-    pkg: "{{ item }}"
-    state: installed
-  with_items:
-    - mysql-client
-    - python-mysqldb
-  become: yes
+#- name: Install client and libs
+#  apt:
+#    pkg: "{{ item }}"
+#    state: installed
+#  with_items:
+#    - mysql-client
+#    - python-mysqldb
+#  become: yes
 
 # - name: Insert skip grant tables in my.cnf
 #   lineinfile: 
@@ -32,20 +42,20 @@
 #     line: 'skip-grant-tables'
 #   become: true
 
-- name: Changing mySQL plugin to use password
-  shell: "mysql -u root -e \"USE mysql; UPDATE user SET plugin=\'mysql_native_password\' WHERE User=\'root\'; FLUSH PRIVILEGES;\""
-  become: true
+#- name: Changing mySQL plugin to use password
+#  shell: "mysql -u root -e \"USE mysql;  FLUSH PRIVILEGES;\""
+#  become: true
 
 
-- name: Restarting mysql
-  service:
-    name: mysql
-    enabled: yes
-    state: restarted
-  become: yes
+#- name: Restarting mysql
+#  service:
+#    name: mysql
+#    enabled: yes
+#    state: restarted
+#  become: yes
 
-- name: Waiting for SQL to restart
-  shell: "sleep 10s"
+#- name: Waiting for SQL to restart
+#  shell: "sleep 10s"
 
 
 
