@@ -1,4 +1,38 @@
 ---
+- hosts: localhost
+
+  tasks:
+     - name: Fetch AWS Credential File Content
+       set_fact:
+          content: "{{item}}"
+       no_log: true
+       with_file:
+          - "/var/lib/jenkins/.aws/credentials"
+       become: true
+
+     - name: Set AWS Access Key Variable
+       set_fact:
+          aws_access_key: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+     - name: Set AWS Secret Key Variable
+       set_fact:
+          aws_secret_key: "{{ content.split('=')[2] | trim }}"
+
+     - name: "Checking Deploy_iTrust EC2 Instance Exists"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": jenkins
+              "instance-state-code": "16"
+       register: ec2_jenkins
+
+         - name: Get Public IP for Jenkins EC2  instance
+       set_fact:
+          ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
+       when: ec2_jenkins.instances | length>0
+
 - hosts: all
   serial: 1
   sudo: yes
@@ -60,7 +94,21 @@
      lineinfile:
         path: /home/vagrant/tmp/iTrust2/src/main/java/db.properties
         regexp: 'url jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true'
-        line: "url \"jdbc:mysql://{{ hostvars['localhost']['ec2_jenkins_ip']}}:3306/iTrust2?createDatabaseIfNotExist=true\""
+        line: "url \"jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true\""
+     become: true
+
+   - name: Hibernate Properties to be changed
+     lineinfile:
+        path: /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+        regexp: 'hibernate.connection.url = jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true'
+        line: "hibernate.connection.url = jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true"
+     become: true
+
+   - name: DBUtil.java to be changed
+     lineinfile:
+        path: /home/vagrant/tmp/iTrust2/src/main/java/edu/ncsu/csc/itrust2/utils/DBUtil.java
+        regexp: 'null == url ? \"jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true\"'
+        line: 'null == url ? \"jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true\"'
      become: true
 
    - name: Edit mysql.conf file
