@@ -46,7 +46,7 @@ ec2.createSecurityGroup(paramsSecurityGroup, function(err, data) {
 });
 
 
-var keyPairName=process.argv[2];
+var keyPairName='rolling_itrust';
 var params = {
    KeyName: keyPairName
 };
