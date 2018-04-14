@@ -26,11 +26,6 @@
                    - SUCCESS
                build-steps:
                    - shell: 'echo iTrust rolling deployment'
-                   - shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_rolling_itrust.yml -e "ansible_python_interpreter=/usr/bin/python3"  && sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=itrust1" -vvv'
-                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=itrust2" -vvv'
-                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=itrust3" -vvv'
-                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=itrust4" -vvv'
-                   - shell: 'sudo ansible-playbook -i ~/inventory ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=itrust5" -vvv'
-
+                   - shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_rolling_itrust.yml -e "ansible_python_interpreter=/usr/bin/python3"  && sudo ansible-playbook -i ~/inventory_itrust ~/deploy_app_iTrust2_sql.yml -s --vault-password-file ~/.vault_pass.txt  -vvv'
 
 

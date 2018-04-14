@@ -1,5 +1,6 @@
 ---
-- hosts: "{{ var_host | default('iTrust2')}}"
+- hosts: all
+  serial: 1
   sudo: yes
   remote_user: root
   gather_facts: false
