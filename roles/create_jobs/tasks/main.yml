@@ -136,6 +136,16 @@
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/itrust_rolling_jenkins_job.yml"
     dest: ~/jobs/itrust_rolling_jenkins_job.yml
+
+#Ansible playbook to create iTrust instances in different ansible playbook
+- name: Copy Ansible playbook to create iTrust instances in different ansible playbook
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/files/create_ec2_itrust.yml"
+    dest: /var/lib/jenkins/create_ec2_itrust.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
   
 - name: create jobs
   shell: 'cd  && jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'

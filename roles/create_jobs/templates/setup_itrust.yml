@@ -34,6 +34,7 @@
       - { regexp: '^username', line: 'username devopskkpn' }
       - { regexp: '^password', line: 'password {{email_password}}' }
     register: value
+    no_log: true
 
   - name: Copy pom-data.xml to jenkins workspace
     copy:
