@@ -91,35 +91,38 @@
      shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
 
    - name: DB Properties to be changed
-     lineinfile:
+     replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/db.properties
-        regexp: 'url jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true'
-        line: "url \"jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true\""
+        regexp: 'localhost:3306'
+        line: '54.218.57.249:3306'
+        backup: yes
      become: true
 
    - name: Hibernate Properties to be changed
-     lineinfile:
+     replace:
         path: /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
-        regexp: 'hibernate.connection.url = jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true'
-        line: "hibernate.connection.url = jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true"
+        regexp: 'localhost:3306'
+        replace: '54.218.57.249:3306'
+        backup: yes
      become: true
 
    - name: DBUtil.java to be changed
-     lineinfile:
+     replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/edu/ncsu/csc/itrust2/utils/DBUtil.java
-        regexp: 'null == url ? \"jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true\"'
-        line: 'null == url ? \"jdbc:mysql://{{ec2_jenkins_ip}}:3306/iTrust2?createDatabaseIfNotExist=true\"'
+        regexp: 'localhost:3306'
+        replace: '54.218.57.249:3306'
+        backup: yes
      become: true
 
    - name: Edit mysql.conf file
-     lineinfile:
+     replcace:
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
         line: skip-grant-tables
         insertafter: skip-external-locking
 
    - name: Restarting mysql service
      shell: sudo service mysql restart
-   #
+   
    - name: Cleaning Repo & building mvn
      shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean && mvn process-test-classes
 
