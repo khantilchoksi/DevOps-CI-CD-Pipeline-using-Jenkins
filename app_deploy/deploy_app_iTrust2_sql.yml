@@ -28,7 +28,7 @@
               "instance-state-code": "16"
        register: ec2_jenkins
 
-         - name: Get Public IP for Jenkins EC2  instance
+     - name: Get Public IP for Jenkins EC2  instance
        set_fact:
           ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
        when: ec2_jenkins.instances | length>0
