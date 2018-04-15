@@ -15,9 +15,11 @@ canary_url = 'http://localhost:9001';
 
 http.createServer(function(req,res){
 	if(Math.random()>0.75 && !alert){
+		console.log("Canary server serving request!");
 		proxy.web(req,res,{target: canary_url});
 	}
 	else{
+		console.log("Stable server serving request!");
 		proxy.web(req,res,{target: prod_url});
 	}
 }).listen(3000);
