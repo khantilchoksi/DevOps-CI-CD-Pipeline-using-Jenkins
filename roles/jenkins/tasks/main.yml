@@ -128,9 +128,8 @@
     url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
     dest: "~/"
     mode: 0755
-  become: true
   when: groovy_dir.changed
-
+# become: true
 # #Khelan comment
 # - name: Wait while re-starting Jenkins
 #   wait_for: 

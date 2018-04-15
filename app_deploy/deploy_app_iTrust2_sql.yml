@@ -32,6 +32,11 @@
        set_fact:
           ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
        when: ec2_jenkins.instances | length>0
+     
+     - name: Echo Jenkins IP
+       command: /bin/echo "{{ec2_jenkins_ip}}"
+       register: jenkins_ip
+       become: true
 
 - hosts: all
   serial: 1
@@ -94,7 +99,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/db.properties
         regexp: 'localhost:3306'
-        line: '54.218.57.249:3306'
+        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
         backup: yes
      become: true
 
@@ -102,7 +107,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
         regexp: 'localhost:3306'
-        replace: '54.218.57.249:3306'
+        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
         backup: yes
      become: true
 
@@ -110,7 +115,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/edu/ncsu/csc/itrust2/utils/DBUtil.java
         regexp: 'localhost:3306'
-        replace: '54.218.57.249:3306'
+        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
         backup: yes
      become: true
 

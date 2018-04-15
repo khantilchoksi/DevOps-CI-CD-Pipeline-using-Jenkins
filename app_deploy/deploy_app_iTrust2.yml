@@ -54,7 +54,17 @@
 
    - name: copy 2 files
      shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+   
+   - name: Copy pom-date.xml to cloned repo
+     copy:
+        src: /var/lib/jenkins/pom-data.xml
+        dest: /home/vagrant/tmp/iTrust2/pom-data.xml
+        owner: ubuntu
+        group: ubuntu
+        mode: 0666
+     become: true
 
+ 
    - name: Edit mysql.conf file
      lineinfile:
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -63,9 +73,12 @@
 
    - name: Restarting mysql service
      shell: sudo service mysql restart
-   #
+  
    - name: Cleaning Repo & building mvn
-     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean && mvn process-test-classes
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean
+
+   - name: Process Test Classes
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn -f pom-data.xml process-test-classes
 
    - name: Run the equivalent of "apt-get update" as a separate step
      apt: update_cache=yes
