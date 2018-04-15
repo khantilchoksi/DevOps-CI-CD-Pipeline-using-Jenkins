@@ -14,9 +14,6 @@ prod_url = 'http://localhost:9000';
 canary_url = 'http://localhost:9001';
 
 http.createServer(function(req,res){
-	//count++;
-	//if(count==4)
-	//	count=0;
 	if(Math.random()>0.75 && !alert){
 		proxy.web(req,res,{target: canary_url});
 	}
@@ -44,10 +41,10 @@ var heartbeatTimer = setInterval( function ()
 			if(count!=Number.MAX_VALUE)
 				count++;
 		}
-		if(count>5){
+		if(count>=4){
 			console.log("Alert!!! Canary server is not reachable!");
 			alert = true;
 		}
 			
 	});
-}, 2000);
+}, 500);
