@@ -46,8 +46,8 @@
 
   roles:
    - java
-   - mysql
    - maven
+   #- mysql
 
   vars:
     git_username: piyer3
@@ -58,7 +58,6 @@
           36616330616461346162376230323933326639383037643836653539366164393563636463393937
           3965353033666239330a313435396666373334636362373266333230353365623762663537366335
           3666
-    mysql_password: ''
 
   tasks:
    - name: Install git
@@ -119,18 +118,18 @@
         backup: yes
      become: true
 
-   - name: Edit mysql.conf file
-     lineinfile:
-        path: /etc/mysql/mysql.conf.d/mysqld.cnf
-        line: skip-grant-tables
-        insertafter: skip-external-locking
+  #  - name: Edit mysql.conf file
+  #    lineinfile:
+  #       path: /etc/mysql/mysql.conf.d/mysqld.cnf
+  #       line: skip-grant-tables
+  #       insertafter: skip-external-locking
 
-   - name: Restarting mysql service
-     shell: sudo service mysql restart
+  #  - name: Restarting mysql service
+  #    shell: sudo service mysql restart
    
    - name: Cleaning Repo & building mvn
-     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean && mvn process-test-classes
-
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean 
+#&& mvn process-test-classes
    - name: Run the equivalent of "apt-get update" as a separate step
      apt: update_cache=yes
 
