@@ -85,27 +85,27 @@
        register: ec2_deploy_itrust5
 
      - name: Create first EC2 instances for rolling itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust1" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/itrust1.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust1" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/rolling_itrust.pem'
        become: true
        when: ec2_deploy_itrust1.instances | length==0
        
      - name: Create second EC2 instances for rolling itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust2" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/itrust2.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust2" -e "ansible_python_interpreter=/usr/bin/python3" '
        become: true
        when: ec2_deploy_itrust2.instances | length==0
 
      - name: Create third EC2 instances for rolling itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust3" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/itrust3.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust3" -e "ansible_python_interpreter=/usr/bin/python3" '
        become: true
        when: ec2_deploy_itrust3.instances | length==0
 
      - name: Create fourth EC2 instances for rolling itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust4" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/itrust4.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust4" -e "ansible_python_interpreter=/usr/bin/python3" '
        become: true
        when: ec2_deploy_itrust4.instances | length==0
 
      - name: Create fifth EC2 instances for rolling itrust deployment
-       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust5" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/itrust5.pem'
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust5" -e "ansible_python_interpreter=/usr/bin/python3" '
        become: true
        when: ec2_deploy_itrust5.instances | length==0
 
