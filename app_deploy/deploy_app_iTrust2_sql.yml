@@ -98,7 +98,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/db.properties
         regexp: 'localhost:3306'
-        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
         backup: yes
      become: true
 
@@ -106,7 +106,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
         regexp: 'localhost:3306'
-        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
         backup: yes
      become: true
 
@@ -114,7 +114,7 @@
      replace:
         path: /home/vagrant/tmp/iTrust2/src/main/java/edu/ncsu/csc/itrust2/utils/DBUtil.java
         regexp: 'localhost:3306'
-        replace: "{{hostvars ['localhost']['jenkins_ip']}}:3306"
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
         backup: yes
      become: true
 
