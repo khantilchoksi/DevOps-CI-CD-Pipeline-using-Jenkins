@@ -115,7 +115,7 @@
      become: true
 
    - name: Edit mysql.conf file
-     replcace:
+     lineinfile:
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
         line: skip-grant-tables
         insertafter: skip-external-locking
