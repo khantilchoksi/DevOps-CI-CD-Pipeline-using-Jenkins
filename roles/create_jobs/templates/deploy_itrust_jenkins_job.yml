@@ -14,6 +14,8 @@
             inventory-type: "path"
             inventory:
               path: "~/local_inventory"
+            sudo: true
+            sudo-user: ''
             additional-parameters: '--vault-password-file ~/.vault_pass.txt --extra-vars "itrust_job_name={{itrust_deploy_job_name}}"'
       - shell: 'sleep 20s && cd /var/lib/jenkins/workspace/{{itrust_deploy_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
       - shell: 'cd /var/lib/jenkins/workspace/{{itrust_deploy_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
