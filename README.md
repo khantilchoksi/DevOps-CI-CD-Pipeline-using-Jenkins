@@ -30,7 +30,7 @@ DevOps Project Spring 2018 NC State University
 ## Screencasts
 * [Deployment](https://youtu.be/sxkNuhQBr7Y) 
 * [Infrastructure Upgrade]() 
-* [Canary Release]()
+* [Canary Release](https://youtu.be/5eMD2TXjQpY)
 * [Rolling Updates]()
 
 -------------------------------------------------  
