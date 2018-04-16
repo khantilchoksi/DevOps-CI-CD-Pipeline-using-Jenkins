@@ -61,6 +61,16 @@
     mode: 0666
   become: true
 
+#Playbook to create EC2 instance for canary DEPLOY_CHECKBOXIO
+- name: Copy playbook for creating ec2 instance for deploy_checkboxio
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/files/provision_ec2_checkboxio_canary.yml"
+    dest: /var/lib/jenkins/provision_ec2_checkboxio_canary.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
 #Playbook to create EC2 instance for DEPLOY_ITRUST
 - name: Copy playbook for creating ec2 instance for deploy_checkboxio
   copy:
@@ -101,6 +111,16 @@
     mode: 0666
   become: true
 
+#Job Builder Playbook for iTrust Setup
+- name: Copy builder playbook for checkbox Setup like mongodb
+  copy:
+    src: "{{ project_directory }}/roles/create_jobs/templates/setup_checkbox_mongodb.yml"
+    dest: /var/lib/jenkins/setup_checkbox_mongodb.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
 
 - name: Copy iTrust jenkins job  script
   template:
@@ -124,6 +144,12 @@
   template:
     src: "{{ project_directory }}/roles/create_jobs/templates/deploy_checkbox_jenkins_job.yml"
     dest: ~/jobs/deploy_checkbox_jenkins_job.yml
+
+# Checkbox.io job for canary release which will run after every push to repo on canary branch
+- name: Copy Checkbox.io canary jenkins job script
+  template:
+    src: "{{ project_directory }}/roles/create_jobs/templates/checkboxio_canary_jenkins_job.yml"
+    dest: ~/jobs/checkboxio_canary_jenkins_job.yml
 
 # iTrustv2 job for deployment which will run after every push to repo
 - name: Copy iTrustv2 Deployment jenkins job script

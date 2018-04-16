@@ -9,24 +9,12 @@
   shell: sudo apt-add-repository "deb https://deb.nodesource.com/node_7.x $(lsb_release -sc) main"
   become: yes
 
-- name: Import MongoDB public GPG Key from ubuntu keyserver
-  become: yes
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-
-- name: Add repository for MongoDB
-  shell: sudo apt-add-repository "deb [ arch=$(dpkg --print-architecture) ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -sc)/mongodb-org/3.6 multiverse"
-  become: yes
-
-
 - name: Install latest package
   become: yes
   with_items:
     - nodejs
     - nginx
     - git
-    - mongodb
     - python-pip
     - python3-setuptools
   apt:
@@ -37,25 +25,6 @@
 
 - name: Install pip3
   shell: 'easy_install3 pip'
-  become: true
-
-- name: Install pymongo
-  become: yes
-  pip:
-    name: pymongo
-    state: latest
-
-- name: Create a new database and user in MongoDB
-  mongodb_user: 
-    database: '{{database_name}}'
-    name: '{{database_user}}'
-    password: '{{database_password}}'
-    roles: readWrite,dbAdmin,userAdmin
-
-- name: Remove directory for checkbox
-  file:
-    path: "{{ lookup('env','HOME') }}/checkbox"
-    state: absent
   become: true
 
 - name: Creates directory for checkbox

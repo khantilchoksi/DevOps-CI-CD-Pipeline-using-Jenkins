@@ -30,8 +30,8 @@ DevOps Project Spring 2018 NC State University
 ## Screencasts
 * [Deployment](https://youtu.be/sxkNuhQBr7Y) 
 * [Infrastructure Upgrade]() 
-* [Canary Release]()
-* [Rolling Updates]()
+* [Canary Release](https://youtu.be/5eMD2TXjQpY)
+* [Rolling Updates](https://youtu.be/CfXutM3H-lc)
 
 -------------------------------------------------  
 ## Project Environment Setup AND Managing GitHub & AWS Credetials:  
@@ -96,7 +96,13 @@ DevOps Project Spring 2018 NC State University
    
 ## CANARY RELEASE
 
+### Implementation:
+1. The ip of the stable server and canary server has to be configured in the stableServer and canaryServer files.
+2. proxy.js runs a proxy server in the jenkins instance, which recieves all request for checkbox.io on 3000 port and redirects traffic to stable instance 75% times and to canary server 25% of the times. 
+3. Alert message gets generated when canary instance goes down and the traffic always redirects to stable server till canary server comes up.
+4. Web-hook for canary branch of checkbox.io is configured so that the commits to canary branch gets pushed to the canary server.
 
+### [Canary Release Screencast](https://youtu.be/5eMD2TXjQpY) 
 ---------------------------------------------------------  
 ---------------------------------------------------------
    
@@ -125,7 +131,7 @@ Below is the screenshot of how slack notification messages looks like.
 ![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%203.06.11%20PM.png)  
 
 
-### [Rolling Updates Screencast]()
+### [Rolling Updates Screencast](https://youtu.be/CfXutM3H-lc)
 
 ---------------------------------------------------------
 
@@ -134,5 +140,8 @@ Below is the screenshot of how slack notification messages looks like.
 ## References  
    * https://stackoverflow.com/questions/33939834/how-to-correct-system-clock-in-vagrant-automatically
    * Great answer: MySQL root access from all hosts https://stackoverflow.com/a/11225588/5492086
+   * https://code.tutsplus.com/tutorials/managing-cron-jobs-using-python--cms-28231
+   * https://stackoverflow.com/questions/9766014/connect-to-mysql-on-amazon-ec2-from-a-remote-server
+   * https://stackoverflow.com/c/ncsu/questions/205
 
 

@@ -1,0 +1,55 @@
+- hosts: localhost
+  vars:
+#    job_name: "{{checkbox_job_name | default('checkbox_job') }}"
+    database_name: admin
+    database_user: admin
+    database_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39653639343163303661396538383330343165323163633530303939386562653638353235396464
+          3433353636306138353530306562356131633339383936320a363866376135646362626361653430
+          66323263636533346333633032353634363262373564393061666131353764313238656465623936
+          6131666336353763340a323530656133316435656237363335303665623730383166656132366564
+          65626461656436393937353535316536633564636333386230366431646432646538
+
+  tasks:
+     - name: Import MongoDB public GPG Key from ubuntu keyserver
+       become: yes
+       apt_key:
+         keyserver: keyserver.ubuntu.com
+         id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+     
+     - name: Add repository for MongoDB
+       shell: sudo apt-add-repository "deb [ arch=$(dpkg --print-architecture) ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -sc)/mongodb-org/3.6 multiverse"
+       become: yes
+     
+     
+     - name: Install latest package
+       become: yes
+       with_items:
+         - mongodb
+         - python-pip
+         - python3-setuptools
+       apt:
+         name: '{{item}}'
+         state: latest
+         update_cache: yes
+         force: yes
+     
+     - name: Install pip3
+       shell: 'easy_install3 pip'
+       become: true
+     
+     - name: Install pymongo
+       become: yes
+       pip:
+         name: pymongo
+         state: latest
+     
+     - name: Create a new database and user in MongoDB
+       mongodb_user: 
+         database: '{{database_name}}'
+         name: '{{database_user}}'
+         password: '{{database_password}}'
+         roles: readWrite,dbAdmin,userAdmin
+     
+     

@@ -1,0 +1,29 @@
+- job:
+    name: "{{checkbox_canary_job_name}}"
+    scm: 
+      - git: 
+          url: https://github.com/pavy/checkbox.io.git
+          branches: 
+            - origin/canary
+          wipe-workspace: false
+    triggers:
+      - github:
+    builders:
+#      - shell: 'cd /var/lib/jenkins/workspace/{{checkbox_canary_job_name}}/server-side/site && sudo npm install'
+      - ansible-playbook:
+            playbook: "/var/lib/jenkins/setup_checkbox_mongodb.yml"
+            inventory-type: "path"
+            inventory:
+              path: "~/local_inventory"
+            additional-parameters: '--vault-password-file ~/.vault_pass.txt --extra-vars "checkbox_job_name={{checkbox_canary_job_name}}"'
+
+
+    publishers:
+     - postbuildscript:
+         builders:
+             - role: BOTH
+               build-on:
+                   - SUCCESS
+               build-steps:
+                   - shell: 'echo CHECKBOX CANARY DEPLOYMENT STARTS'
+                   - shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2_checkboxio_canary.yml -e "ansible_python_interpreter=/usr/bin/python3"  && sudo ansible-playbook -i ~/inventory_checkboxio ~/deploy_app_checkboxio_mongodb.yml -s --vault-password-file ~/.vault_pass.txt --extra-vars "var_host=deploy_checkboxio" -vvv'
