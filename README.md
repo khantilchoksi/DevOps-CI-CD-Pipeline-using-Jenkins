@@ -116,7 +116,10 @@ DevOps Project Spring 2018 NC State University
      
 5. **[Monitoring](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/monitor.py): (Write descirption and command here)**  We have created a Python program that periodically (every 20 seconds) pings all the iTrust2 EC2 instances and checks for the status code. Then we have integrated it with our Slack channel using Slack API Token. Using that, we get the notification messages on our slack channel regarding on which iTrust2 instance the update is currently going.
 
-Below is the screenshot of it looks like.
+To Execute this python file command is : *python monitor.py <aws_secret_key> <aws_access_key>*
+You can also set AWS secret key and access key as an environment variables and pass them as [arg1], [arg2] to the command.
+
+Below is the screenshot of how slack notification messages looks like.
 
 ### Monitoring notification: 
 ![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%203.06.11%20PM.png)  
