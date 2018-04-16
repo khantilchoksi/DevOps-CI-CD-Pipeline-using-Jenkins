@@ -134,5 +134,7 @@ Below is the screenshot of how slack notification messages looks like.
 ## References  
    * https://stackoverflow.com/questions/33939834/how-to-correct-system-clock-in-vagrant-automatically
    * Great answer: MySQL root access from all hosts https://stackoverflow.com/a/11225588/5492086
+   * https://code.tutsplus.com/tutorials/managing-cron-jobs-using-python--cms-28231
+   * https://stackoverflow.com/questions/9766014/connect-to-mysql-on-amazon-ec2-from-a-remote-server
 
 
