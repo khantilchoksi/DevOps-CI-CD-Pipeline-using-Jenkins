@@ -119,7 +119,7 @@ DevOps Project Spring 2018 NC State University
 Below is the screenshot of it looks like.
 
 ### Monitoring notification: 
-![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%202.58.01%20PM.png)  
+![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%203.06.11%20PM.png)  
 
 
 ### [Rolling Updates Screencast]()
