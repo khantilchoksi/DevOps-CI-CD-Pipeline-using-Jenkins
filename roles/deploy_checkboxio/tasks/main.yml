@@ -52,6 +52,12 @@
     password: '{{database_password}}'
     roles: readWrite,dbAdmin,userAdmin
 
+- name: Remove directory for checkbox
+  file:
+    path: "{{ lookup('env','HOME') }}/checkbox"
+    state: absent
+  become: true
+
 - name: Creates directory for checkbox
   file:
     path: "{{ lookup('env','HOME') }}/checkbox"
@@ -61,9 +67,9 @@
 
 - name: Clone checkbox.io
   git:
-    repo: 'https://github.com/chrisparnin/checkbox.io.git'
+    repo: 'https://github.com/khantilchoksi/checkbox.io.git'
     dest: "{{ lookup('env','HOME') }}/checkbox"
-    update: no
+    update: yes
 
 - name: Install forever package using npm
   become: yes
