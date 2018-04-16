@@ -96,7 +96,13 @@ DevOps Project Spring 2018 NC State University
    
 ## CANARY RELEASE
 
+### Implementation:
+1. The ip of the stable server and canary server has to be configured in the stableServer and canaryServer files.
+2. proxy.js runs a proxy server in the jenkins instance, which recieves all request for checkbox.io on 3000 port and redirects traffic to stable instance 75% times and to canary server 25% of the times. 
+3. Alert message gets generated when canary instance goes down and the traffic always redirects to stable server till canary server comes up.
+4. Web-hook for canary branch of checkbox.io is configured so that the commits to canary branch gets pushed to the canary server.
 
+### [Canary Release Screencast](https://youtu.be/5eMD2TXjQpY) 
 ---------------------------------------------------------  
 ---------------------------------------------------------
    
