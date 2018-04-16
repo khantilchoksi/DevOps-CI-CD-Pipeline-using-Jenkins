@@ -1,0 +1,40 @@
+- name: restart kube-apiserver
+  service:
+    name: kube-apiserver.service
+    state: restarted
+  when: kube_node_type == "master"
+
+- name: restart kube-controller-manager
+  service:
+    name: kube-controller-manager.service
+    state: restarted
+  when: kube_node_type == "master"
+
+- name: restart kube-scheduler
+  service:
+    name: kube-scheduler.service
+    state: restarted
+  when: kube_node_type == "master"
+
+- name: restart kubelet
+  service:
+    name: kubelet.service
+    state: restarted
+  when: kube_node_type == "minion"
+
+- name: restart kube-proxy
+  service:
+    name: kube-proxy.service
+    state: restarted
+  when: kube_node_type == "minion"
+
+- name: restart etcd
+  service:
+    name: etcd.service
+    state: restarted
+  when: kube_node_type == "master"
+
+- name: restart flanneld
+  service:
+    name: flanneld
+    state: restarted

@@ -36,9 +36,9 @@
 
 - name: Clone checkbox.io
   git:
-    repo: 'https://github.com/chrisparnin/checkbox.io.git'
+    repo: 'https://github.com/khantilchoksi/checkbox.io.git'
     dest: "{{ lookup('env','HOME') }}/checkbox"
-    update: no
+    update: yes
 
 - name: Install forever package using npm
   become: yes

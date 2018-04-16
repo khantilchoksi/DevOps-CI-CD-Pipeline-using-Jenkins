@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+###
+# kubernetes system config
+#
+# The following values are used to configure the kube-apiserver
+#
+
+# The address on the local server to listen to.
+KUBE_API_ADDRESS="{{ kubernetes_apiserver_config_api_address }}"
+
+# The port on the local server to listen on.
+KUBE_API_PORT="{{ kubernetes_apiserver_config_api_port }}"
+
+# Port minions listen on
+KUBELET_PORT="{{ kubernetes_apiserver_config_kubelet_port }}"
+
+# Comma separated list of nodes in the etcd cluster
+KUBE_ETCD_SERVERS="{{ kubernetes_apiserver_config_etcd_servers }}"
+
+# Address range to use for services
+KUBE_SERVICE_ADDRESSES="{{ kubernetes_apiserver_config_service_addresses }}"
+
+# default admission control policies
+KUBE_ADMISSION_CONTROL="{{ kubernetes_apiserver_config_admission_control }}"
+
+# Add your own!
+KUBE_API_ARGS="{{ kubernetes_apiserver_config_api_args }}"

@@ -1,0 +1,26 @@
+- name: copy the file containing command to add nodes 
+  template:
+    src: /home/init_cluster_command
+    dest: "~/init_cluster_command.sh"
+    owner: root
+    group: root
+    mode: 0555    
+  become: true
+
+- name: add the shell command line
+  lineinfile:
+    dest: ~/init_cluster_command.sh
+    regexp: '^#/'
+    line: "#/bin/sh"
+    insertbefore: BOF
+  become: true    
+
+- name: add the node to the master cluster
+  shell: "sh /root/init_cluster_command.sh"
+  become: true
+
+- name: delete the file 
+  file:
+    state: absent
+    path: "~/init_cluster_command.sh"
+  become: true

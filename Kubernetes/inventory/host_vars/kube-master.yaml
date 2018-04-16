@@ -1,0 +1,55 @@
+ansible_ssh_user: centos
+ansible_ssh_private_key_file: /home/vagrant/kubernetes.pem
+#ansible_python_interpreter: /usr/bin/python3
+
+kube_node_type: master
+
+kubernetes_hostname: kube-master
+
+kube_regenerate_rsa_key: true
+
+kube_regenerate_certs: true
+
+kubernetes_kube_config_logtostderr: "true"
+kubernetes_kube_config_verbosity: 0
+kubernetes_kube_config_allow_priv: "false"
+kubernetes_kube_config_kube_master_endpoint: "http://kube-master:8080"
+kubernetes_kube_config_etcd_servers: "http://kube-master:2379"
+
+kubernetes_etcd_config_etcd_name: default
+kubernetes_etcd_config_etcd_data_dir: /var/lib/etcd/default.etcd
+kubernetes_etcd_config_listen_client_urls: http://0.0.0.0:2379
+kubernetes_etcd_config_adv_client_urls: http://0.0.0.0:2379
+
+kubernetes_flanneld_config_etcd_endpoints: "http://172.31.19.188:2379"
+kubernetes_flanneld_config_etcd_key: "/kube-centos/network"
+kubernetes_flanneld_options: ""
+
+kubernetes_service_account_key_file_path: "/etc/pki/tls/private/serviceaccount.key"
+
+kubernetes_apiserver_config_api_address: >-
+  --bind-address=0.0.0.0
+  --insecure-bind-address=127.0.0.1
+kubernetes_apiserver_config_req_cn: 192.168.2.90
+kubernetes_apiserver_config_altname: "IP:192.168.2.90,IP:10.254.0.1,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local"
+kubernetes_apiserver_config_api_port: >-
+  --secure-port=6443
+  --insecure-port=8080
+kubernetes_apiserver_config_kubelet_port: "--kubelet-port=10250"
+kubernetes_apiserver_config_etcd_servers: "--etcd-servers=http://127.0.0.1:2379"
+kubernetes_apiserver_config_service_addresses: "--service-cluster-ip-range=10.254.0.0/16"
+kubernetes_apiserver_config_admission_control: "--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
+kubernetes_apiserver_config_api_args: >-
+  --kubelet-https=true
+  --client-ca-file=/srv/kubernetes/pki/ca.crt
+  --tls-cert-file=/srv/kubernetes/pki/issued/kubernetes-master.crt
+  --tls-private-key-file=/srv/kubernetes/pki/private/kubernetes-master.key
+
+#  --token_auth_file=/srv/kubernetes/known_tokens.csv
+
+kubernetes_controller_manager_args: >-
+  --root-ca-file=/srv/kubernetes/pki/ca.crt
+  --service-account-private-key-file=/srv/kubernetes/pki/private/kubernetes-master.key
+  --node-monitor-grace-period=20s
+  --pod-eviction-timeout=20s
+

@@ -1,0 +1,10 @@
+- hosts:
+    - kube-masters
+  
+  vars:
+    - pubkey: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+
+  roles:
+    - { role: docker_kubelet, become: true }
+    - { role: setup_cluster, become: true }
+#    - { role: kubernetes, become: true }

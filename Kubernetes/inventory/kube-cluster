@@ -1,0 +1,9 @@
+# If you change the group names, the roles need to be updated too. Best not to change.
+
+[kube-masters]
+kube-master ansible_host=ec2-54-201-227-4.us-west-2.compute.amazonaws.com
+
+[kube-minions]
+kube-minion-1 ansible_host=ec2-52-37-75-174.us-west-2.compute.amazonaws.com
+kube-minion-2 ansible_host=ec2-52-41-181-1.us-west-2.compute.amazonaws.com
+

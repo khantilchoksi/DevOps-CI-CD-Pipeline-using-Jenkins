@@ -1,0 +1,20 @@
+###
+# kubernetes kubelet (minion) config
+
+# The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
+KUBELET_ADDRESS="{{ kubernetes_kubelet_config_address }}"
+
+# The port for the info server to serve on
+KUBELET_PORT="{{ kubernetes_kubelet_config_port }}"
+
+# You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME="{{ kubernetes_kubelet_config_hostname }}"
+
+# location of the api-server
+KUBELET_API_SERVER="{{ kubernetes_kubelet_config_apiserver }}"
+
+# pod infrastructure container
+KUBELET_POD_INFRA_CONTAINER="{{ kubernetes_kubelet_config_podinfra }}"
+
+# Add your own!
+KUBELET_ARGS="{{ kubernetes_kubelet_args }}"

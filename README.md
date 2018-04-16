@@ -28,7 +28,7 @@ DevOps Project Spring 2018 NC State University
 
 --------------------------------------------  
 ## Screencasts
-* [Deployment]() 
+* [Deployment](https://youtu.be/sxkNuhQBr7Y) 
 * [Infrastructure Upgrade]() 
 * [Canary Release]()
 * [Rolling Updates]()
@@ -82,6 +82,7 @@ DevOps Project Spring 2018 NC State University
 * Now, when ```create_jobs.yml``` ansible playbook is run, it first adds github-webhook to Checkbox.io repo and iTrust2-v2 repo. Then, checks if EC2 instance for both the applications are already exists or not and if not, it will create Ec2 (t2.micro) instances. Then, creates job for jenkins with GIT SCM and Triggers and as part of post build script, it will deploy the application.
 * Now, whenever there is commit to this remote repo, it will trigger respective jenkins job and deploy on the currently running EC2 instances.
 
+### [Deployment Screencast](https://youtu.be/sxkNuhQBr7Y) 
 ---------------------------------------------------------
 
 -------------------------------------------------------------
@@ -101,6 +102,30 @@ DevOps Project Spring 2018 NC State University
    
 ## ROLLING UPDATES
 
+### Implementation:
+1. Clone this repo and make sure you have your AWS Credentials and GithHub credentials as described in the next section.  
+
+2. **[Provision Jenkins Server](./provision_ec2.yml)** Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to the remote instance.    
+     ```ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```  
+
+3. **[Configure Jenkins Server](./jenkins.yml)** Once we have the instance running on the remote server, we configure it using jenkins.yml script. This installs Jenkins Server along with all the dependencies, creates the user, and starts the Jenkins server. We can test it on our browser at the remote instances' URL and port 8090.    
+     ```ansible-playbook -i ~/inventory jenkins.yml ```
+
+4. **[Create Job for rolling iTrust](./build_rolling_job.yml)**  Now we build the job for iTrust rolling. This is will run `mvn process-test-classes on pom-data.xml`, then if all the test cases are pass, populate data on mysql server(which in our case is deployed on jenkins server only) and then first check whether we have five instances for itrust1, itrust2, itrust3, itrust4 and itrust5. If not, ansible-script will create these five ec2 instances and using `serial: 1` it will deploy itrust on each on these instances one by one. 
+     ```ansible-playbook -i ~/inventory build_rolling_job.yml ```
+     
+5. **[Monitoring](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/monitor.py): **  We have created a Python program that periodically (every 20 seconds) pings all the iTrust2 EC2 instances and checks for the status code. Then we have integrated it with our Slack channel using Slack API Token. Using that, we get the notification messages on our slack channel regarding on which iTrust2 instance the update is currently going.
+
+To Execute this python file command is : *python monitor.py <aws_secret_key> <aws_access_key>*
+You can also set AWS secret key and access key as an environment variables and pass them as [arg1], [arg2] to the command.
+
+Below is the screenshot of how slack notification messages looks like.
+
+### Monitoring notification: 
+![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%203.06.11%20PM.png)  
+
+
+### [Rolling Updates Screencast]()
 
 ---------------------------------------------------------
 
@@ -108,5 +133,8 @@ DevOps Project Spring 2018 NC State University
 
 ## References  
    * https://stackoverflow.com/questions/33939834/how-to-correct-system-clock-in-vagrant-automatically
+   * Great answer: MySQL root access from all hosts https://stackoverflow.com/a/11225588/5492086
+   * https://code.tutsplus.com/tutorials/managing-cron-jobs-using-python--cms-28231
+   * https://stackoverflow.com/questions/9766014/connect-to-mysql-on-amazon-ec2-from-a-remote-server
 
 
