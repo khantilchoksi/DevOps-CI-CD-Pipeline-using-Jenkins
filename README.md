@@ -114,11 +114,12 @@ DevOps Project Spring 2018 NC State University
 4. **[Create Job for rolling iTrust](./build_rolling_job.yml)**  Now we build the job for iTrust rolling. This is will run `mvn process-test-classes on pom-data.xml`, then if all the test cases are pass, populate data on mysql server(which in our case is deployed on jenkins server only) and then first check whether we have five instances for itrust1, itrust2, itrust3, itrust4 and itrust5. If not, ansible-script will create these five ec2 instances and using `serial: 1` it will deploy itrust on each on these instances one by one. 
      ```ansible-playbook -i ~/inventory build_rolling_job.yml ```
      
-5. [Monitoring](): (Write descirption and command here)**  We have created a Python program that periodically (every 20 seconds) pings all the iTrust2 EC2 instances and checks for the status code. Then we have integrated it with our Slack channel using Slack API Token. Using that, we get the notification messages on our slack channel regarding on which iTrust2 instance the update is currently going.
+5. ** [Monitoring](): (Write descirption and command here)**  We have created a Python program that periodically (every 20 seconds) pings all the iTrust2 EC2 instances and checks for the status code. Then we have integrated it with our Slack channel using Slack API Token. Using that, we get the notification messages on our slack channel regarding on which iTrust2 instance the update is currently going.
 
 Below is the screenshot of it looks like.
 
-
+### Monitoring notification: 
+![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%202.58.01%20PM.png)  
 
 
 ### [Rolling Updates Screencast]()
