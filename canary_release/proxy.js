@@ -2,17 +2,18 @@ var http = require('http');
 var httpProxy = require('http-proxy');
 var request = require('request');
 var exec = require('child_process').exec;
+var fs = require('fs');
 
-var proxy = httpProxy.createProxyServer({});
 let count=0;
 let alert = false;
 
-exec("node prod-env.js");
-exec("node canary-env.js");
+var proxy = httpProxy.createProxyServer({});
 
-prod_url = 'http://localhost:9000';
-canary_url = 'http://localhost:9001';
+prod_url = fs.readFileSync('stableServer').toString();
+canary_url = fs.readFileSync('canaryServer').toString();
 
+/** The server running at 3000 port acts as a loadbalancer which sends 
+75% of traffic to Stable server and 25% of traffice to canary server*/
 http.createServer(function(req,res){
 	if(Math.random()>0.75 && !alert){
 		console.log("Canary server serving request!");
@@ -25,6 +26,8 @@ http.createServer(function(req,res){
 }).listen(3000);
 
 
+/* Checks health of the canary server every 500ms and raises 'Alert' message
+when it cannot reach canary server atleast 4 times */
 var heartbeatTimer = setInterval( function () 
 {
 	var options = 
