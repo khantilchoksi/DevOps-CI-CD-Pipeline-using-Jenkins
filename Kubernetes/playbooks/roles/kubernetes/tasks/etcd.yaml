@@ -1,0 +1,49 @@
+### etcd
+
+- block:
+
+  - name: configure etcd server
+    template:
+      src: etc.etcd.etcd.conf.j2
+      dest: /etc/etcd/etcd.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart etcd
+
+  - name: flush etcd
+    meta: flush_handlers
+
+  - name: ensure etcd is running
+    service:
+      name: etcd
+      state: started
+      enabled: yes
+
+  - name: check if network overlay config is in place
+    shell: /usr/bin/etcdctl get /kube-centos/network/config
+    register: etcd_check_network_overlay_config
+    ignore_errors: yes
+
+  - block:
+
+    - name: deploy etcd network overlay settings init script
+      copy:
+        src: init_etcd_network_overlay.sh
+        dest: /root/init_etcd_network_overlay.sh
+        owner: root
+        group: root
+        mode: 0700
+
+    - name: initialize network overlay settings in etcd
+      shell: /bin/sh /root/init_etcd_network_overlay.sh
+
+    when: etcd_check_network_overlay_config.rc != 0
+
+  - name: remove etcd network overlay settings init script
+    file:
+      path: /root/init_etcd_network_overlay.sh
+      state: absent
+
+  when: kube_node_type == "master"

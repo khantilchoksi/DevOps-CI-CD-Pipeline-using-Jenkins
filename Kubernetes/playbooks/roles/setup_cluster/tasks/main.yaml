@@ -1,0 +1,49 @@
+- name: update all packages
+  yum:
+    name: "*"
+    state: latest
+
+- name: Initialize Kubernetes cluster
+  shell: kubeadm reset && kubeadm init 
+  register: init_cluster
+  become: true
+
+- debug: var=init_cluster.stdout
+
+- name: Create Kubernetes config directory
+  become: true
+  file: path="~/.kube/" state=directory
+ 
+- name: Change permissions of .kube/config
+  file: path=/etc/kubernetes/admin.conf mode=0775
+  become: true
+
+- name: Copy admin.conf to Home directory
+  when: init_cluster
+  become: true
+  copy:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "~/.kube/config"
+    owner: root
+    group: root
+    mode: 0755
+    remote_src: True
+
+    
+- name: Echo my_env_var
+  shell: "echo $KUBECONFIG"
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  become: true
+
+- local_action: copy content={{ init_cluster.stdout }} dest="/home/init_cluster_content"
+
+- local_action: file state=absent path=/home/init_cluster_command
+  
+- local_action: shell tail -n 1 /home/init_cluster_content >> /home/init_cluster_command && sudo rm /home/init_cluster_content
+
+
+- name: Installing pod network
+#  shell: sysctl net.bridge.bridge-nf-call-iptables=1 && kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+  shell: sysctl net.bridge.bridge-nf-call-iptables=1 && export kubever=$(kubectl version | base64 | tr -d '\n') && kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+  become: true

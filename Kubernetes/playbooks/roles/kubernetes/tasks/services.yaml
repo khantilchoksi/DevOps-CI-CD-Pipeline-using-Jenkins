@@ -1,0 +1,33 @@
+### services
+
+- name: enable master services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items: ["etcd", "kube-apiserver", "kube-controller-manager", "kube-scheduler", "flanneld", "docker"]
+  when: kube_node_type == "master"
+
+#- name: disable master services
+ # service:
+#    name: "{{ item }}"
+#    enabled: no
+#    state: stopped
+#  with_items: ["docker", "kubelet", "kube-proxy"]
+#  when: kube_node_type == "master"
+
+- name: enable minion services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items: ["kube-proxy", "kubelet", "flanneld", "docker"]
+  when: kube_node_type == "minion"
+
+#- name: disable minion services
+#  service:
+#    name: "{{ item }}"
+#    enabled: no
+#    state: stopped
+#  with_items: ["etcd", "kube-apiserver", "kube-controller-manager", "kube-scheduler"]
+#  when: kube_node_type == "minion"

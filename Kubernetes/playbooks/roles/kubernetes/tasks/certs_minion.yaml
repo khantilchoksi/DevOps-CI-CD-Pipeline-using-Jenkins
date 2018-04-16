@@ -1,0 +1,5 @@
+- name: restart affected services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items: ["kube-proxy", "kubelet"]

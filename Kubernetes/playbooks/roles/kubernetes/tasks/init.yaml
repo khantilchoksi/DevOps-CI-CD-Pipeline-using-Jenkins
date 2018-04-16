@@ -1,0 +1,64 @@
+### turn off selinux
+- name: ensure selinux is disabled
+  selinux:
+    state: disabled
+
+### turn off firewall, let docker manage
+
+- name: ensure iptables and firewalld are off, let docker manage it
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items: ["iptables.service", "firewalld"]
+  ignore_errors: yes
+
+### docker
+
+#- name: rpm install docker package
+ # yum:
+  #  name: http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+   # state: present
+
+- name: remove previously installed docker-ce
+  yum:
+    name: docker-ce
+    state: absent
+  ignore_errors: yes
+
+- name: check if docker is installed
+  command: docker version
+  register: is_installed
+  ignore_errors: yes
+
+- debug: var=is_installed.msg
+
+- name: install docker if not exist
+  yum:
+    name: docker
+    state: latest
+  when:  (is_installed.msg is defined) and ((is_installed.msg.find('command not found') != -1) or (is_installed.msg.find('No such file or directory') != -1) )
+
+#- name: ensure docker is installed
+ # yum:
+  #  name: docker
+   # state: present
+
+### yum repo
+
+
+- name: install centos 7 virt common repo
+  yum_repository:
+    name: virt7-docker-common-release
+    description: virt7-docker-common-release
+    baseurl: http://cbs.centos.org/repos/virt7-docker-common-release/x86_64/os/
+    gpgcheck: no
+    enabled: yes
+
+### kubernetes packages
+
+
+- name: ensure kubernetes, etcd, and flanneld are installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: ["kubernetes", "etcd", "flannel"]

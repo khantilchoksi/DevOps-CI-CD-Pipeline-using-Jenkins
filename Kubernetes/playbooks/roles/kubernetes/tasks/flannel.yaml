@@ -1,0 +1,13 @@
+### flannel
+- name: configure flanneld
+  template:
+    src: etc.sysconfig.flanneld.j2
+    dest: /etc/sysconfig/flanneld
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart flanneld
+
+- name: flush flanneld
+  meta: flush_handlers

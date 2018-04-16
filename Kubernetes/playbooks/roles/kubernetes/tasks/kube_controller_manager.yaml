@@ -1,0 +1,12 @@
+### kubernetes controller manager
+
+- name: configure kubernetes controller manager
+  template:
+    src: etc.kubernetes.controller-manager.j2
+    dest: /etc/kubernetes/controller-manager
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart kube-controller-manager
+  when: kube_node_type == "master"

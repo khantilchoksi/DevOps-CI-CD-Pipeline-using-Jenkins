@@ -1,0 +1,12 @@
+### kubernetes api server
+
+- name: configure kubernetes api server
+  template:
+    src: etc.kubernetes.apiserver.j2
+    dest: /etc/kubernetes/apiserver
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart kube-apiserver
+  when: kube_node_type == "master"

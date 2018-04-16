@@ -1,0 +1,51 @@
+- name: clone checkbox repo
+  git:
+    repo: 'https://github.com/chrisparnin/checkbox.io.git'
+    dest: "~/checkbox"
+    update: no
+
+- name: copy docker-compose file
+  template:
+    src: docker-compose.yaml
+    dest: "~/checkbox/docker-compose.yaml"
+
+- name: install npm
+  yum:
+    name: npm
+    state: present
+  become: true
+
+- name: Install dependencies npm
+  npm:
+    path: "~/checkbox/server-side/site"
+
+- name: Replace the server root in the "default" file
+  replace:
+    dest: "~/checkbox/local-conf/default"
+    regexp: "root (.)+;"
+    replace: "root /usr/share/nginx/html/;"
+
+- name: copy service file
+  template:
+    src: checkbox_service.yml
+    dest: ~/checkbox_service.yml
+  become: true
+
+- name: copy deployment file
+  template:
+    src: checkbox_deployment.yml
+    dest: ~/checkbox_deployment.yml
+  become: true
+
+- name: create deployment and service
+  shell: kubectl create -f checkbox_deployment.yml && kubectl create -f checkbox_service.yml
+  args:
+    chdir: ~/
+  become: true
+
+- name: get the port address
+  shell: kubectl get services
+  become: true
+  register: port
+
+- debug: var=port

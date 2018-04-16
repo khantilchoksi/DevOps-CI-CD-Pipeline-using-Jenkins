@@ -1,0 +1,5 @@
+- hosts:
+    - kube-minions
+  roles:
+    - { role: docker_kubelet, become: true }
+    - { role: node, become: true }

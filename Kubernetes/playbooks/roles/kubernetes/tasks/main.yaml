@@ -1,0 +1,26 @@
+- include: init.yaml
+
+- include: passwordless_ssh.yaml
+  when: kube_regenerate_rsa_key is defined and kube_regenerate_rsa_key
+
+#- include: service_account_key.yaml
+
+- include: certs_master.yaml
+  when: kube_node_type == "master" and kube_regenerate_certs is defined and kube_regenerate_certs
+
+- include: certs_master.yaml
+  when: kube_node_type == "minion" and kube_regenerate_certs is defined and kube_regenerate_certs
+
+- include: etcd.yaml
+
+- include: flannel.yaml
+
+- include: kube_config.yaml
+
+- include: kube_apiserver.yaml
+
+- include: kube_controller_manager.yaml
+
+- include: kubelet.yaml
+
+- include: services.yaml

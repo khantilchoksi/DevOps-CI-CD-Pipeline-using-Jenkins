@@ -1,0 +1,7 @@
+# - debug:
+#     msg: "node is {{ hostvars[item]['inventory_hostname'] }}"
+#   with_items: "{{ hostvars }}"
+
+- debug:
+    msg: "{{ hostvars[item] }}"
+  with_items: "{{ groups['kube-minions'] }}"

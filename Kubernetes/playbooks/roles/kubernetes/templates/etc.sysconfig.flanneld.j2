@@ -1,0 +1,11 @@
+# Flanneld configuration options
+
+# etcd url location.  Point this to the server where etcd runs
+FLANNEL_ETCD_ENDPOINTS="{{ kubernetes_flanneld_config_etcd_endpoints }}"
+
+# etcd config key.  This is the configuration key that flannel queries
+# For address range assignment
+FLANNEL_ETCD_PREFIX="{{ kubernetes_flanneld_config_etcd_key}}"
+
+# Any additional options that you want to pass
+FLANNEL_OPTIONS="{{ kubernetes_flanneld_options }}"
