@@ -87,6 +87,10 @@
      file:
        state: absent
        path: /home/vagrant
+   
+   - name: wait for monitoring
+     shell: 'sleep 10s'
+     beome: true
 
    - name: Cloning Git Repo
      git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/khchoksi/iTrust2-v2.git dest=/home/vagrant/tmp
