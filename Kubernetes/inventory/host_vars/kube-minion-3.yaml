@@ -1,5 +1,5 @@
-ansible_ssh_user: root
-ansible_ssh_pass: i need coffee
+#ansible_ssh_user: root
+#ansible_ssh_pass: i need coffee
 
 kube_node_type: minion
 

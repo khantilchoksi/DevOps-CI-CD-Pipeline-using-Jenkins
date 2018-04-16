@@ -1,9 +1,12 @@
 
 [kube-masters]
-kube-master ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2.pem ansible_host=ec2-34-209-156-107.us-west-2.compute.amazonaws.com
+kube-master ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2.pem ansible_host=ec2-35-165-245-34.us-west-2.compute.amazonaws.com
 
 [kube-minions]
-kube-minion-1 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_1.pem ansible_host=ec2-54-69-255-65.us-west-2.compute.amazonaws.com
+kube-minion-1 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_1.pem ansible_host=ec2-54-149-255-49.us-west-2.compute.amazonaws.com
 
 [kube-minions]
-kube-minion-2 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_2.pem ansible_host=ec2-54-214-119-195.us-west-2.compute.amazonaws.com
+kube-minion-2 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_2.pem ansible_host=ec2-54-218-106-133.us-west-2.compute.amazonaws.com
+
+[kube-minions]
+kube-minion-3 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_3.pem ansible_host=ec2-54-191-236-204.us-west-2.compute.amazonaws.com
