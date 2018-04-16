@@ -1,9 +1,9 @@
-# If you change the group names, the roles need to be updated too. Best not to change.
 
 [kube-masters]
-kube-master ansible_host=ec2-54-201-227-4.us-west-2.compute.amazonaws.com
+kube-master ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2.pem ansible_host=ec2-34-209-156-107.us-west-2.compute.amazonaws.com
 
 [kube-minions]
-kube-minion-1 ansible_host=ec2-52-37-75-174.us-west-2.compute.amazonaws.com
-kube-minion-2 ansible_host=ec2-52-41-181-1.us-west-2.compute.amazonaws.com
+kube-minion-1 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_1.pem ansible_host=ec2-54-69-255-65.us-west-2.compute.amazonaws.com
 
+[kube-minions]
+kube-minion-2 ansible_ssh_user=centos ansible_ssh_private_key_file=~/keys/kube-ec2_2.pem ansible_host=ec2-54-214-119-195.us-west-2.compute.amazonaws.com

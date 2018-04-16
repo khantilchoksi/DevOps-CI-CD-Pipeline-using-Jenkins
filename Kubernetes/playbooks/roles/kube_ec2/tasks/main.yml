@@ -1,0 +1,25 @@
+---
+- name: Install dependencies
+  shell: 'npm install'
+  args:
+    chdir: "./roles/kube_ec2/templates"
+
+- name: Create EC2 instance
+  shell: 'node ec2_infra_createinstances.js kube-ec2'
+  args:
+    chdir: "./roles/kube_ec2/templates"
+
+- name: Create EC2 instance minion1
+  shell: 'node ec2_infra_createinstances_1.js kube-ec2_1'
+  args:
+    chdir: "./roles/kube_ec2/templates"
+
+- name: Create EC2 instance minion2
+  shell: 'node ec2_infra_createinstances_2.js kube-ec2_2'
+  args:
+    chdir: "./roles/kube_ec2/templates"
+
+#- name: Create EC2 instance minion3
+#  shell: 'node ec2_infra_createinstances_3.js kube-ec2_3'
+#  args:
+#    chdir: "./roles/kube_ec2/templates"
