@@ -152,13 +152,14 @@
   #become: true
 
 #Following tasks are for first time deployment on checkbox io & iTrust on deployment environment 
-#- name: Initial Deployment of Checkbox.io
-#  shell: 'java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ checkbox_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
-#  become: true
+# - name: Initial Deployment of Checkbox.io
+#   shell: 'java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ checkbox_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
 
-#- name: Initial Deployment of iTrust2
-#  shell: 'sleep 60s & java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ itrust_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
-#  become: true
+
+# - name: Initial Deployment of iTrust2
+#   shell: 'sleep 60s & java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ itrust_deploy_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
+
+
 
 # New
 - name: Creating new directory for test_reports
