@@ -31,7 +31,7 @@ DevOps Project Spring 2018 NC State University
 * [Deployment](https://youtu.be/sxkNuhQBr7Y) 
 * [Infrastructure Upgrade]() 
 * [Canary Release](https://youtu.be/5eMD2TXjQpY)
-* [Rolling Updates]()
+* [Rolling Updates](https://youtu.be/CfXutM3H-lc)
 
 -------------------------------------------------  
 ## Project Environment Setup AND Managing GitHub & AWS Credetials:  
@@ -131,7 +131,7 @@ Below is the screenshot of how slack notification messages looks like.
 ![img](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/Screen%20Shot%202018-04-16%20at%203.06.11%20PM.png)  
 
 
-### [Rolling Updates Screencast]()
+### [Rolling Updates Screencast](https://youtu.be/CfXutM3H-lc)
 
 ---------------------------------------------------------
 
