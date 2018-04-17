@@ -103,16 +103,22 @@ Edit the `inventory/kube-cluster` file and adjust the IP addresses of the machin
 
 The playbook and the roles were tested using Ansible (v2.1.2.0) Fedora 25 workstation.
 
+Setup one master and three client EC2 instances using Centos image:
+
+```
+$ ansible-playbook -i "localhost," -c local kube-ec2.yaml --extra-vars="param=kube"
+```
+
 Setup the master node:
 
 ```
-$ ansible-playbook -i inventory/kube-cluster playbooks/kube-masters.yaml
+$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-masters.yaml
 ```
 
 Setup the minion nodes:
 
 ```
-$ ansible-playbook -i inventory/kube-cluster playbooks/kube-minions.yaml
+$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
 ```
 
 Watch until all the tasks finished.
