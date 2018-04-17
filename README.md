@@ -114,8 +114,10 @@ Setup the minion nodes:
 
 ```
 $ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
-```
+``` 
+![img](/kubectl_cluster.png) 
 
+### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
 ---------------------------------------------------------
 
 ---------------------------------------------------------
