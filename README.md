@@ -89,7 +89,33 @@ DevOps Project Spring 2018 NC State University
    
 ## INFRASTRUCTURE UPGRADE
 
+The hostnames of the machines are:
+- `kube-master`
+- `kube-minion-1`
+- `kube-minion-2`
+- `kube-minion-3`
 
+All of these hostnames need to be resolved via DNS. Change the inventory file and host vars if you wish the use different hostnames.
+
+Edit the `inventory/kube-cluster` file and adjust the IP addresses of the machines.
+
+# Run the playbook
+
+The playbook and the roles were tested using Ansible (v2.1.2.0) Fedora 25 workstation.
+
+Setup the master node:
+
+```
+$ ansible-playbook -i inventory/kube-cluster playbooks/kube-masters.yaml
+```
+
+Setup the minion nodes:
+
+```
+$ ansible-playbook -i inventory/kube-cluster playbooks/kube-minions.yaml
+```
+
+Watch until all the tasks finished.
 ---------------------------------------------------------
 
 ---------------------------------------------------------
