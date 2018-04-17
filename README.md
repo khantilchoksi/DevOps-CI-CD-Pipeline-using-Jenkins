@@ -95,15 +95,10 @@ The hostnames of the machines are:
 - `kube-minion-2`
 - `kube-minion-3`
 
-All of these hostnames need to be resolved via DNS. Change the inventory file and host vars if you wish the use different hostnames.
 
-Edit the `inventory/kube-cluster` file and adjust the IP addresses of the machines.
+### Run the playbook
 
-# Run the playbook
-
-The playbook and the roles were tested using Ansible (v2.1.2.0) Fedora 25 workstation.
-
-Setup one master and three client EC2 instances using Centos image:
+Setup one master and three client EC2 instances using Centos image: Below command will help to create 4 nodes (1 master + 3 clients) and will create `inventory/kube-cluster` file with the IP addresses of the machines
 
 ```
 $ ansible-playbook -i "localhost," -c local kube-ec2.yaml --extra-vars="param=kube"
@@ -121,7 +116,6 @@ Setup the minion nodes:
 $ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
 ```
 
-Watch until all the tasks finished.
 ---------------------------------------------------------
 
 ---------------------------------------------------------
