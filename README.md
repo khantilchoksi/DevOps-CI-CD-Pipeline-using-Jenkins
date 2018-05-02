@@ -89,7 +89,35 @@ DevOps Project Spring 2018 NC State University
    
 ## INFRASTRUCTURE UPGRADE
 
+The hostnames of the machines are:
+- `kube-master`
+- `kube-minion-1`
+- `kube-minion-2`
+- `kube-minion-3`
 
+
+### Run the playbook
+
+Setup one master and three client EC2 instances using Centos image: Below command will help to create 4 nodes (1 master + 3 clients) and will create `inventory/kube-cluster` file with the IP addresses of the machines
+
+```
+$ ansible-playbook -i "localhost," -c local kube-ec2.yaml --extra-vars="param=kube"
+```
+
+Setup the master node:
+
+```
+$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-masters.yaml
+```
+
+Setup the minion nodes:
+
+```
+$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
+``` 
+![img](/kubectl_cluster.png) 
+
+### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
 ---------------------------------------------------------
 
 ---------------------------------------------------------
