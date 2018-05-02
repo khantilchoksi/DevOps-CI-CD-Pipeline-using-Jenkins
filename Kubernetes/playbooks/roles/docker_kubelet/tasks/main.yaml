@@ -8,7 +8,7 @@
   yum:
     name: "{{ item }}"
     state: present
-  with_items: ["telnet", "wget", "curl", "git", "net-tools", "bind-utils", "libselinux-python"]
+  with_items: ["telnet", "wget", "curl", "git", "net-tools", "bind-utils", "libselinux-python", "nodejs"]
 
 - name: ensure selinux is disabled
   selinux:
@@ -80,3 +80,19 @@
   notify:
     - restart kubelet
 
+- name: Clone checkbox.io
+  git:
+    repo: 'https://github.com/chrisparnin/checkbox.io.git'
+    dest: "/home/centos/checkbox.io"
+    update: yes
+
+- name: Install dependencies npm
+  npm:
+    path: "/home/centos/checkbox.io/server-side/site"
+
+- name: Replace the server root in the "default" file
+  lineinfile: 
+    dest: /home/centos/checkbox.io/local-conf/default 
+    regexp: '.*root (.)+;.*' 
+    line: 'root /usr/share/nginx/html ;'
+    backrefs: yes
