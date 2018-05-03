@@ -1,3 +1,0 @@
-- hosts: localhost
-  roles:
-    - { name: test, become: true }
