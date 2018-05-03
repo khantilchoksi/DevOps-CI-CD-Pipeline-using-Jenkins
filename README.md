@@ -21,15 +21,15 @@ DevOps Project Spring 2018 NC State University
 ---------------------------------------------------------------------------
 
 ## Contribution 
-   * *Deployment:*  Khantil 
-   * *Infrastructure Upgrade:* Navjot
+   * *Deployment:*  Khantil & Navjot
+   * *Infrastructure Upgrade:* Navjot & Khantil  
    * *Canary Release:* Pavithra 
    * *Rolling Updates:* Khelan
 
 --------------------------------------------  
 ## Screencasts
 * [Deployment](https://youtu.be/sxkNuhQBr7Y) 
-* [Infrastructure Upgrade]() 
+* Infrastructure Upgrade [Cluster Setup](https://youtu.be/GOy05kUxSwA)  [Dockerized app deployment](https://youtu.be/dXtHPR8mTDs)  [Redis Feature Flag Implementation](https://youtu.be/CxH4R4yvhzI) 
 * [Canary Release](https://youtu.be/5eMD2TXjQpY)
 * [Rolling Updates](https://youtu.be/CfXutM3H-lc)
 
@@ -130,8 +130,10 @@ Deploy the app on the Kubernetes:
 $ sudo ansible-playbook -i ../inventory/kube-cluster kube-deploy.yaml
 ```
 
-
-### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
+### Screencast Links:
+#### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)  
+#### [Dockerized app deployment](https://youtu.be/dXtHPR8mTDs)      
+#### [Redis Feature Flag Implementation](https://youtu.be/CxH4R4yvhzI)
 ---------------------------------------------------------
 
 ---------------------------------------------------------
