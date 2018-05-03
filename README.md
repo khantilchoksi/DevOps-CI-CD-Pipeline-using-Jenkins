@@ -117,6 +117,13 @@ $ sudo ansible-playbook -i ../inventory/kube-cluster kube-minions.yaml
 ``` 
 ![img](/kubectl_cluster.png) 
 
+Install the Redis master and slave:
+
+```
+$ sudo ansible-playbook -i ../inventory/kube-cluster kube-redis.yaml
+```
+
+
 Deploy the app on the Kubernetes:
 
 ```
