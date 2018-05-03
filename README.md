@@ -29,7 +29,7 @@ DevOps Project Spring 2018 NC State University
 --------------------------------------------  
 ## Screencasts
 * [Deployment](https://youtu.be/sxkNuhQBr7Y) 
-* Infrastructure Upgrade [Cluster Setup](https://youtu.be/GOy05kUxSwA)  [Dockerized app deployment](https://youtu.be/dXtHPR8mTDs)  [Redis Feature Flag Implementation](https://youtu.be/CxH4R4yvhzI) 
+* Infrastructure Upgrade [Cluster Setup](https://youtu.be/GOy05kUxSwA) || [Dockerized app deployment](https://youtu.be/dXtHPR8mTDs) || [Redis Feature Flag Implementation](https://youtu.be/CxH4R4yvhzI) 
 * [Canary Release](https://youtu.be/5eMD2TXjQpY)
 * [Rolling Updates](https://youtu.be/CfXutM3H-lc)
 
