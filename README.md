@@ -123,11 +123,6 @@ Deploy the app on the Kubernetes:
 $ sudo ansible-playbook -i ../inventory/kube-cluster kube-deploy.yaml
 ```
 
-Deploy Redis feature flag option
-
-```
-$ sudo ansible-playbook -i ../inventory/kube-cluster kube-redis.yaml
-```
 
 ### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
 ---------------------------------------------------------
