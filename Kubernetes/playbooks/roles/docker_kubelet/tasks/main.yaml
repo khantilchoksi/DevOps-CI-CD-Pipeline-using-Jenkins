@@ -92,27 +92,21 @@
   template:
     src: server.js
     dest: /home/centos/checkbox.io/server-side/site/routes/server.js
-    force: yes
 
 - name: Copy create.js with updated redis flag code with redi flag feature
   template:
     src: create.js.j2
     dest: /home/centos/checkbox.io/server-side/site/routes/create.js
-    force: yes
 
 - name: Copy redis.js with required functions
   template:
     src: redis.js.j2
     dest: /home/centos/checkbox.io/server-side/site/routes/redis.js
-    force: yes
 
 - name: Copy package.json to include dependency of redis
   template:
     src: package.json
     dest: /home/centos/checkbox.io/server-side/site/package.json
-    force: yes
-- name: Redis backend routes code using templates
-
 
 
 - name: Install dependencies npm
