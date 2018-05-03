@@ -1,0 +1,53 @@
+---
+- name: install redis deps
+  yum: name={{item}} state=present
+  with_items:
+  - make
+  - gcc
+  - wget
+  tags: redis
+
+- name: Download Redis
+  get_url:
+    url: "http://download.redis.io/redis-stable.tar.gz"
+    dest: "{{ansible_env.HOME}}/"
+
+- name: Unarchive
+  unarchive:
+    src: "{{ansible_env.HOME}}/redis-stable.tar.gz"
+    dest: "{{ansible_env.HOME}}/"
+    remote_src: yes
+
+- name: Install binaries
+  command: make install
+  args:
+    chdir: "{{ansible_env.HOME}}/redis-stable/"
+  become: yes
+
+# - name: Ensure Installation is successful
+#   command: make test
+#   args:
+#     chdir: "{{ansible_env.HOME}}/redis-stable/"
+#   ignore_errors: yes
+
+- name: Comment out Bind IP in redis.conf file
+  replace:
+    dest: "{{ansible_env.HOME}}/redis-stable/redis.conf"
+    regexp: '^bind'
+    replace: '#bind'
+
+- name: Comment out Protected yes in redis.conf file
+  replace:
+    dest: "{{ansible_env.HOME}}/redis-stable/redis.conf"
+    regexp: '^protected-mode'
+    replace: '#protected-mode'
+
+- name: Insert protected-mode no in redis.conf file
+  lineinfile:
+    path: "{{ansible_env.HOME}}/redis-stable/redis.conf"
+    insertafter: '^#protected-mode'
+    line: 'protected-mode no'
+
+- name: Ensure Redis is started 
+  shell: "{{ansible_env.HOME}}/redis-stable/src/redis-server {{ansible_env.HOME}}/redis-stable/redis.conf &"
+...
