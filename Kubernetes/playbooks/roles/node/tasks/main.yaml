@@ -16,7 +16,7 @@
   become: true    
 
 - name: add the node to the master cluster
-  shell: "sh /root/init_cluster_command.sh"
+  shell: "echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables && sh /root/init_cluster_command.sh"
   become: true
 
 - name: delete the file 

@@ -85,23 +85,23 @@
     repo: 'https://github.com/chrisparnin/checkbox.io.git'
     dest: "/home/centos/checkbox.io"
     update: yes
-
+    force: yes
 #Copy redis files and redis routes
 
 - name: Copy server.js with updated routes for redis
   template:
     src: server.js
-    dest: /home/centos/checkbox.io/server-side/site/routes/server.js
+    dest: /home/centos/checkbox.io/server-side/site/server.js
 
 - name: Copy create.js with updated redis flag code with redi flag feature
   template:
     src: create.js.j2
     dest: /home/centos/checkbox.io/server-side/site/routes/create.js
 
-- name: Copy redis.js with required functions
+- name: Copy myredis.js with required functions
   template:
-    src: redis.js.j2
-    dest: /home/centos/checkbox.io/server-side/site/routes/redis.js
+    src: myredis.js.j2
+    dest: /home/centos/checkbox.io/server-side/site/routes/myredis.js
 
 - name: Copy package.json to include dependency of redis
   template:

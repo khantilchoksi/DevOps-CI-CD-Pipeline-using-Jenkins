@@ -1,8 +1,7 @@
 var _ = require('underscore');
 var redis = require('redis');
 
-var client = redis.createClient(6379, {{hostvars['kube-master'].ansible_host}}, {})
-//{{}}
+var client = redis.createClient(6379, '{{hostvars['kube-master'].ansible_host}}', {});
 
 exports.checkStatus = function(req, res) {
 
@@ -16,7 +15,7 @@ exports.checkStatus = function(req, res) {
 	
 };
 
-function setInitialRedisFlagStatus(){
+exports.setInitialRedisFlagStatus = function(req,res){
 
 	client.set("redisflag","true");
 	
@@ -59,4 +58,3 @@ exports.toggleFlag = function(req, res) {
 
 };
 
-moduel.exports = setInitialRedisFlagStatus;

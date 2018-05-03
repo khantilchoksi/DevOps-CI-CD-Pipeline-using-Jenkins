@@ -4,7 +4,7 @@
     state: latest
 
 - name: Initialize Kubernetes cluster
-  shell: kubeadm reset && kubeadm init 
+  shell: "echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables && kubeadm reset && kubeadm init" 
   register: init_cluster
   become: true
 

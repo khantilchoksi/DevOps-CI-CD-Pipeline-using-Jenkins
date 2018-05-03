@@ -4,8 +4,7 @@ var emailjs = require('emailjs/email');
 var models = require('./studyModel.js');
 var redis = require('redis');
 
-var client = redis.createClient(6379, {{hostvars['kube-master'].ansible_host}}, {})
-//{{}}
+var client = redis.createClient(6379, "{{hostvars['kube-master'].ansible_host}}", {});
 
 var Server = mongo.Server,
     Db = mongo.Db,

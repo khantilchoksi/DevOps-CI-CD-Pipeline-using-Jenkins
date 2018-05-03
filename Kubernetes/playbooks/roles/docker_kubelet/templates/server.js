@@ -7,7 +7,7 @@ var express = require('express'),
 	create = require('./routes/create.js'),
 	study = require('./routes/study.js'),
     admin = require('./routes/admin.js'),
-    redis = require('./routes/redis.js');
+    redis = require('./routes/myredis.js');
 
 var app = express();
 
