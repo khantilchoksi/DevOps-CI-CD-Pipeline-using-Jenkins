@@ -107,21 +107,27 @@ $ ansible-playbook -i "localhost," -c local kube-ec2.yaml --extra-vars="param=ku
 Setup the master node:
 
 ```
-$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-masters.yaml
+$ sudo ansible-playbook -i ../inventory/kube-cluster kube-masters.yaml
 ```
 
 Setup the minion nodes:
 
 ```
-$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
+$ sudo ansible-playbook -i ../inventory/kube-cluster kube-minions.yaml
 ``` 
 ![img](/kubectl_cluster.png) 
 
 Deploy the app on the Kubernetes:
 
 ```
-$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-deploy.yaml
-``` 
+$ sudo ansible-playbook -i ../inventory/kube-cluster kube-deploy.yaml
+```
+
+Deploy Redis feature flag option
+
+```
+$ sudo ansible-playbook -i ../inventory/kube-cluster kube-redis.yaml
+```
 
 ### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
 ---------------------------------------------------------
