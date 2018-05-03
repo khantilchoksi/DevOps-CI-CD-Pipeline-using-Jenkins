@@ -98,7 +98,7 @@ The hostnames of the machines are:
 
 ### Run the playbook
 
-Setup one master and three client EC2 instances using Centos image: Below command will help to create 4 nodes (1 master + 3 clients) and will create `inventory/kube-cluster` file with the IP addresses of the machines
+Setup one master and three client EC2 instances using Centos image: Below command will help to create 4 nodes (1 master + 3 clients) and will create `inventory/kube-cluster` file with the IP addresses of the machines. After cloning the  repo, change into `Kubernetes` and then `playbooks` folder and run the following commands:
 
 ```
 $ ansible-playbook -i "localhost," -c local kube-ec2.yaml --extra-vars="param=kube"
@@ -116,6 +116,12 @@ Setup the minion nodes:
 $ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-minions.yaml
 ``` 
 ![img](/kubectl_cluster.png) 
+
+Deploy the app on the Kubernetes:
+
+```
+$ sudo ansible-playbook -i /home/vagrant/DevOps-Project/Kubernetes/inventory/kube-cluster kube-deploy.yaml
+``` 
 
 ### [Cluster setup Screencast](https://youtu.be/GOy05kUxSwA)
 ---------------------------------------------------------
