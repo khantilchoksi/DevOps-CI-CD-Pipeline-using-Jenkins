@@ -1,5 +1,5 @@
 # DevOps-Project:  
-Milestone 4 SPECIAL - Kubernetes Cluster Monitoring
+# Milestone 4 SPECIAL - Kubernetes Cluster Monitoring
 DevOps Project Spring 2018 NC State University
 
 ----------------------------------------   
@@ -66,33 +66,33 @@ DevOps Project Spring 2018 NC State University
     ```kubectl create -f ./monitoring/service-account/service_account.yaml ```
 
 4. **Create Cluster Role Binding:**  
-  After provisioning our cluster using `kubeadm`,  `admin` Role already exists in the cluster. We can use it and create only `RoleBinding` for our `ServiceAccount` using [cluster_role_binding.yaml](./monitoring/service-account/service_account.yaml):  
+    * After provisioning our cluster using `kubeadm`,  `admin` Role already exists in the cluster. We can use it and create only `RoleBinding` for our `ServiceAccount` using [cluster_role_binding.yaml](./monitoring/service-account/service_account.yaml):  
   ```kubectl create -f ./monitoring/service-account/cluster_role_binding.yaml ```   
      
 5. **Bearer Token:**  
-  To find token to log in into Kubernetes Dashboard; execute following command:  
+    * To find token to log in into Kubernetes Dashboard; execute following command:  
   ```kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')```  
   
 6. **Deploy Dasboard:**  
-  To deploy Dashboard, execute following command:
-    ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml```  
-    To access Dashboard from local workstation; create a secure channel to Kubernetes cluster's master node. Run the following command:  
+    * To deploy Dashboard, execute following command:  
+      ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml```  
+    * To access Dashboard from local workstation; create a secure channel to Kubernetes cluster's master node. Run the following command:  
     ```kubectl proxy```
     
 7. **Accessing Dashboard:**  
-    We can now access dashboard:      
+      * We can now access dashboard:      
     ```http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/```  
-    Here as of now, the deployment of Dashboard to public is not possbile due to their api concerns; so here I am using the SOCKS proxy to access the locally hosted Kubernetes Dashboard webpage inside the Kubernetes cluster's master node. To do this,  
+      * Here as of now, the deployment of Dashboard to public is not possbile due to their api concerns; so here I am using the SOCKS proxy to access the locally hosted Kubernetes Dashboard webpage inside the Kubernetes cluster's master node. To do this,  
     `ssh -D 8080 -i "kube-ec2.pem" centos@ec2-18-237-77-230.us-west-2.compute.amazonaws.com`.
     
-
+-------------------------------------------------------------------------  
 ## Kubernetes Dashboard: 
 ![img](./monitoring/dashboard1.png)
 ![img](./monitoring/dashboard2.png)
 ![img](./monitoring/dashboard3.png)
 ![img](./monitoring/dashboard4.png)  
 
-  * After running [shell script](./monitoring/chaos_cpu.sh) by using command: `sh chaos_cpu.sh` to increase the CPU usage of one of our node, following CPU usage graph in real-time is obtained.
+  * *Chaos Experiment:* After running [shell script](./monitoring/chaos_cpu.sh) by using command: `sh chaos_cpu.sh` to increase the CPU usage of one of our node, following CPU usage graph in real-time is obtained.
 ![img](./monitoring/dashboard5.png)
 
 ---------------------------------------------------------
