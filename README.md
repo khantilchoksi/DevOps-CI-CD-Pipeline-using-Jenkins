@@ -23,7 +23,7 @@ DevOps Project Spring 2018 NC State University
 ---------------------------------------------------------------------------
 
 ## Contribution 
-   * *Kubernetes Dashboard:*  Khantil & Navjot
+   * *Kubernetes Clustor Monitoring Dashboard:*  Khantil & Navjot
    * *Jenkins Slackbot Integration:* Khelan & Pavithra
    * *Screencast:* Navjot, Khantil, Khelan, Pavithra  
    
@@ -86,7 +86,7 @@ DevOps Project Spring 2018 NC State University
     `ssh -D 8080 -i "kube-ec2.pem" centos@ec2-18-237-77-230.us-west-2.compute.amazonaws.com`.
     
 -------------------------------------------------------------------------  
-## Kubernetes Dashboard: 
+## Kubernetes Cluster Moniroting Dashboard: 
 ![img](./monitoring/dashboard1.png)
 ![img](./monitoring/dashboard2.png)
 ![img](./monitoring/dashboard3.png)
