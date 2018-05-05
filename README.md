@@ -47,23 +47,41 @@ DevOps Project Spring 2018 NC State University
   --------------------------------------------------------------------------
 
 ### Implementation:
-1. Kubernetes cluster is already setup or see instructions (https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone3).  
+1. Kubernetes cluster is already setup or see instructions [here](https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone3).  
 
-2. **[Provision Jenkins Server](./provision_ec2.yml)** Starting with the below following command lets you provision a Jenkins Server. It will create the inventory file and the keys folder with the private key required to ssh to the remote instance.    
-     ```ansible-playbook -i "localhost," -c local provision_ec2.yml  --extra-vars="param=jenkins" ```  
-
-3. **[Configure Jenkins Server](./jenkins.yml)** Once we have the instance running on the remote server, we configure it using jenkins.yml script. This installs Jenkins Server along with all the dependencies, creates the user, and starts the Jenkins server. We can test it on our browser at the remote instances' URL and port 8090.    
-     ```ansible-playbook -i ~/inventory jenkins.yml ```
-
-4. **[Create Jobs](./create_jobs.yml)**  Now we create the jobs. We create a template under the [create_jobs](./roles/create_jobs) role which has all the jobs that are to be created. At this point all iTrust_Fuzzer_Job is also created and will be notified on each commit of the master branch of iTrust_Fuzzer (forked repo).   
-     ```ansible-playbook -i ~/inventory create_jobs.yml --vault-password-file ~/.vault_pass.txt ```  
+2. **Heapster, InfluxDB and Grafana Running:**  
+  Heapster has to be running in the cluster for the metrics and graphs to be available. For the integration of Heapster with backend DB InfluxDB and supporting graphs to be shown in Kubernetes Dashboard using Grafana, following yamls should be created to start and deploy services for influx, grafana and heapster.
+  
+     ```config
+     kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml  
+     kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml  
      
-### Tasks Performed:   
-* Here, first EC2 (t2.medium) instance is created for Jenkins and required Jenkins plugins as well as ansible scripts, roles are being copied from repo to Jenkins server.  
-* Now, when ```create_jobs.yml``` ansible playbook is run, it first adds github-webhook to Checkbox.io repo and iTrust2-v2 repo. Then, checks if EC2 instance for both the applications are already exists or not and if not, it will create Ec2 (t2.micro) instances. Then, creates job for jenkins with GIT SCM and Triggers and as part of post build script, it will deploy the application.
-* Now, whenever there is commit to this remote repo, it will trigger respective jenkins job and deploy on the currently running EC2 instances.
+     kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml  
+     ```  
 
-### [Deployment Screencast](https://youtu.be/sxkNuhQBr7Y) 
+3. **Creating Sample User to access Kubernetes Dashboard:**   
+    * Creating Service Account with name `admin-user` in namespace `kube-system` first using [service_account.yaml](./monitoring/service-account/service_account.yaml):
+     ```kubectl create -f ./monitoring/service-account/service_account.yaml ```
+
+4. **Create Cluster Role Binding:**  
+  After provisioning our cluster using `kubeadm`,  `admin` Role already exists in the cluster. We can use it and create only `RoleBinding` for our `ServiceAccount` using [cluster_role_binding.yaml](./monitoring/service-account/service_account.yaml).
+     ```kubectl create -f ./monitoring/service-account/cluster_role_binding.yaml ```   
+     
+5. **Bearer Token:**  
+  To find token to log in into Kubernetes Dashboard; execute following command:  
+  ```kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')```  
+  
+6. **Deploy Dasboard:**  
+  To deploy Dashboard, execute following command:
+    ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml```  
+    To access Dashboard from local workstation; create a secure channel to Kubernetes cluster's master node. Run the following command:  
+    ```kubectl proxy```
+    
+7. **Accessing Dashboard:**  
+    We can now access dashboard:   
+    ```http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/```
+    Here as of now, the deployment of Dashboard to public is not possbile due to their api concerns; so here I am using the SOCKS proxy to access the locally hosted Kubernetes Dashboard webpage inside the Kubernetes cluster's master node. To do this, `ssh -D 8080 -i "kube-ec2.pem" centos@ec2-18-237-77-230.us-west-2.compute.amazonaws.com`.
+    
 
 
 ---------------------------------------------------------
