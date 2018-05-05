@@ -41,7 +41,7 @@ DevOps Project Spring 2018 NC State University
 * By using proper tools, we can have good visibility into our containerized infrastructure and its orchestration. 
 ![img](./monitoring/basics_monitoring.png)    
 
-* *Heapster: Kubernetes’ own metrics collector:*   
+* **Heapster: Kubernetes’ own metrics collector:**   
     * Heapster is for now the go-to source for basic resource utilization metrics and events from our Kubernetes cluster.   
     * On each node, **cAdvisor** collects data about running containers that Heapster then queries through the kubelet of the node. The following solution to collect Kubernetes metrics, will give you more details on how Heapster works and how to configure it for with Grafana and Kubernetes dashboard.  
     ![img](./monitoring/monitoring_diagram.png)    
@@ -92,7 +92,7 @@ DevOps Project Spring 2018 NC State University
 ![img](./monitoring/dashboard3.png)
 ![img](./monitoring/dashboard4.png)  
 
-  * *Chaos Experiment:* After running [shell script](./monitoring/chaos_cpu.sh) by using command: `sh chaos_cpu.sh` to increase the CPU usage of one of our node, following CPU usage graph in real-time is obtained.
+  * **Chaos Experiment:** After running [shell script](./monitoring/chaos_cpu.sh) by using command: `sh chaos_cpu.sh` to increase the CPU usage of one of our node, following CPU usage graph in real-time is obtained.
 ![img](./monitoring/dashboard5.png)
 
 ---------------------------------------------------------
