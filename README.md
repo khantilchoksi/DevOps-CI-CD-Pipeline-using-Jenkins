@@ -1,4 +1,4 @@
-# DevOps-Project:Milestone 3 DEPLOYMENT
+# DevOps-Project:Milestone 4 SPECIAL - Kubernetes Cluster Monitoring
 DevOps Project Spring 2018 NC State University
 
 ----------------------------------------   
@@ -15,23 +15,19 @@ DevOps Project Spring 2018 NC State University
 ## Milestones
 
 * [Milestone1](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone1/README.md)  
-* [Milestone2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/README.md)  
+* [Milestone2](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone2/README.md)    
+* [Milestone3](https://github.ncsu.edu/khchoksi/DevOps-Project/blob/milestone3/README.md)  
 
 
 ---------------------------------------------------------------------------
 
 ## Contribution 
-   * *Deployment:*  Khantil & Navjot
-   * *Infrastructure Upgrade:* Navjot & Khantil  
-   * *Canary Release:* Pavithra 
-   * *Rolling Updates:* Khelan
-
+   * *Kubernetes Dashboard:*  Khantil & Navjot
+   * *Infrastructure Upgrade:* Navjot ,Khantil, Khelan, Pavithra  
+   
 --------------------------------------------  
 ## Screencasts
-* [Deployment](https://youtu.be/sxkNuhQBr7Y) 
-* Infrastructure Upgrade [Cluster Setup](https://youtu.be/GOy05kUxSwA) || [Dockerized app deployment](https://youtu.be/dXtHPR8mTDs) || [Redis Feature Flag Implementation](https://youtu.be/CxH4R4yvhzI) 
-* [Canary Release](https://youtu.be/5eMD2TXjQpY)
-* [Rolling Updates](https://youtu.be/CfXutM3H-lc)
+* [Product Screencast]() 
 
 -------------------------------------------------  
 ## Project Environment Setup AND Managing GitHub & AWS Credetials:  
