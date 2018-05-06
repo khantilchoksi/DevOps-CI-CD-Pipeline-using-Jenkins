@@ -48,7 +48,7 @@ DevOps Project Spring 2018 NC State University
   --------------------------------------------------------------------------
 
 ### Implementation:  
-  We have created new role [`setup_dashboard`](./Kubernetes/roles/setup_dashboard) which will handle following tasks exaplained and you just have to follow steps 6,7, and 8 as instructed below in order to get the dashboard in your browser. 
+  We have created new role [`setup_dashboard`](./Kubernetes/playbooks/roles/setup_dashboard) which will handle following tasks exaplained and you just have to follow steps 6,7, and 8 as instructed below in order to get the dashboard in your browser. 
 
 1. Kubernetes cluster is already setup or see instructions [here](https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone3).  
 
