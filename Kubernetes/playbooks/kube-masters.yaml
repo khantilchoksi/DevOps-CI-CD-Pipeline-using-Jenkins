@@ -7,4 +7,5 @@
   roles:
     - { role: docker_kubelet, become: true }
     - { role: setup_cluster, become: true }
+    - { role: setup_dashboard, become: true }
 #    - { role: kubernetes, become: true }
