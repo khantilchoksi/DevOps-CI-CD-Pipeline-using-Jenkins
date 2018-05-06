@@ -98,8 +98,17 @@ DevOps Project Spring 2018 NC State University
   * **Chaos Experiment:** After running [shell script](./monitoring/chaos_cpu.sh) by using command: `sh chaos_cpu.sh` to increase the CPU usage of one of our node, following CPU usage graph in real-time is obtained.
 ![img](./monitoring/dashboard5.png)
 
----------------------------------------------------------
+---------------------------------------------------------  
+## Jenkins Slack Bot Integration:  
+  * Added Slack & jenkins integration which helps to Improve development team communication and workflow, which eventually results in higher team productivity.  
+  * To monitor Jenkins job builds, we have integrated Jenkins Slack Bot into our slack team.  
+  * This will help various teams to communicate easily while job builds are in-progress, successfully completed, and failed.  
+  * Teams no more have to keep looking at Jenkins web interface, while log Jenkins jobs are taking long time.  
+  
+  ![img](./monitoring/slack.png)
 
+
+----------------------------------------
 ---------------------------------  
 
 ## References  
