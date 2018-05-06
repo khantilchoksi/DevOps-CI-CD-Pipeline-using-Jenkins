@@ -47,7 +47,9 @@ DevOps Project Spring 2018 NC State University
     ![img](./monitoring/monitoring_diagram.png)    
   --------------------------------------------------------------------------
 
-### Implementation:
+### Implementation:  
+  We have created new role [`setup_dashboard`](./Kubernetes/playbooks/roles/setup_dashboard) which will handle following tasks exaplained and you just have to follow steps 6,7, and 8 as instructed below in order to get the dashboard in your browser. 
+
 1. Kubernetes cluster is already setup or see instructions [here](https://github.ncsu.edu/khchoksi/DevOps-Project/tree/milestone3).  
 
 2. **Heapster, InfluxDB and Grafana Running:**  
@@ -60,26 +62,27 @@ DevOps Project Spring 2018 NC State University
      
      kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml  
      ```  
-
-3. **Creating Sample User to access Kubernetes Dashboard:**   
+3. **Create and Kubernetes Dasboard Service:**  
+    * To deploy Dashboard, execute following command:  
+      ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml```   
+      
+4. **Creating Sample User to access Kubernetes Dashboard:**   
     * Creating Service Account with name `admin-user` in namespace `kube-system` first using [service_account.yaml](./monitoring/service-account/service_account.yaml):  
     ```kubectl create -f ./monitoring/service-account/service_account.yaml ```
 
-4. **Create Cluster Role Binding:**  
+5. **Create Cluster Role Binding:**  
     * After provisioning our cluster using `kubeadm`,  `admin` Role already exists in the cluster. We can use it and create only `RoleBinding` for our `ServiceAccount` using [cluster_role_binding.yaml](./monitoring/service-account/service_account.yaml):  
   ```kubectl create -f ./monitoring/service-account/cluster_role_binding.yaml ```   
      
-5. **Bearer Token:**  
+6. **Bearer Token:**  
     * To find token to log in into Kubernetes Dashboard; execute following command:  
   ```kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')```  
   
-6. **Deploy Dasboard:**  
-    * To deploy Dashboard, execute following command:  
-      ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml```  
+7. **Start proxy to see Dasboard:**   
     * To access Dashboard from local workstation; create a secure channel to Kubernetes cluster's master node. Run the following command:  
     ```kubectl proxy```
     
-7. **Accessing Dashboard:**  
+8. **Accessing Dashboard:**  
       * We can now access dashboard:      
     ```http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/```  
       * Here as of now, the deployment of Dashboard to public is not possbile due to their api concerns; so here I am using the SOCKS proxy to access the locally hosted Kubernetes Dashboard webpage inside the Kubernetes cluster's master node. To do this,  
