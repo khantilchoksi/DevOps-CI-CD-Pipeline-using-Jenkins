@@ -1,0 +1,89 @@
+---
+- hosts: "{{ var_host | default('iTrust2')}}"
+  sudo: yes
+  remote_user: root
+  gather_facts: false
+
+  roles:
+   - java
+   - mysql
+   - maven
+
+  vars:
+    git_username: piyer3
+    git_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34666361343930363337396137613562656539643632616433366430393136666331636362363064
+          3137633661663535333261626330623463396462666436360a666565383063663232653065343234
+          36616330616461346162376230323933326639383037643836653539366164393563636463393937
+          3965353033666239330a313435396666373334636362373266333230353365623762663537366335
+          3666
+    mysql_password: ''
+
+  tasks:
+   - name: Install git
+     apt: pkg=git state=present
+     become: yes
+   #
+   - name: Delete currently running jobs
+     shell: ps -ef | grep -v grep | grep -w "jetty" | awk '{print $2}'
+     register: running_processes
+   #
+   - name: Kill running processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ running_processes.stdout_lines }}"
+
+   - wait_for:
+       path: "/proc/{{ item }}/status"
+       state: absent
+     with_items: "{{ running_processes.stdout_lines }}"
+     ignore_errors: yes
+     register: killed_processes
+
+   - name: Force kill stuck processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+
+   - name: clean Repo
+     file:
+       state: absent
+       path: /home/vagrant
+
+   - name: Cloning Git Repo
+     git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/khchoksi/iTrust2-v2.git dest=/home/vagrant/tmp
+
+   - name: copy 2 files
+     shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+   
+   - name: Copy pom-date.xml to cloned repo
+     copy:
+        src: /var/lib/jenkins/pom-data.xml
+        dest: /home/vagrant/tmp/iTrust2/pom-data.xml
+        owner: ubuntu
+        group: ubuntu
+        mode: 0666
+     become: true
+
+ 
+   - name: Edit mysql.conf file
+     lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        line: skip-grant-tables
+        insertafter: skip-external-locking
+
+   - name: Restarting mysql service
+     shell: sudo service mysql restart
+  
+   - name: Cleaning Repo & building mvn
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean
+
+   - name: Process Test Classes
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn -f pom-data.xml process-test-classes
+
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt: update_cache=yes
+
+   - name: Running jetty (In background)
+     shell: cd /home/vagrant/tmp/iTrust2 && nohup sudo mvn jetty:run &
+
+#

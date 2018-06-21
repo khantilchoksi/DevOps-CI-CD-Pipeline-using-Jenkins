@@ -1,0 +1,141 @@
+---
+- hosts: localhost
+
+  tasks:
+     - name: Fetch AWS Credential File Content
+       set_fact:
+          content: "{{item}}"
+       no_log: true
+       with_file:
+          - "/var/lib/jenkins/.aws/credentials"
+       become: true
+
+     - name: Set AWS Access Key Variable
+       set_fact:
+          aws_access_key: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+     - name: Set AWS Secret Key Variable
+       set_fact:
+          aws_secret_key: "{{ content.split('=')[2] | trim }}"
+
+     - name: "Checking Deploy_iTrust EC2 Instance Exists"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": jenkins
+              "instance-state-code": "16"
+       register: ec2_jenkins
+
+     - name: Get Public IP for Jenkins EC2  instance
+       set_fact:
+          ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
+       when: ec2_jenkins.instances | length>0
+     
+     - name: Echo Jenkins IP
+       command: /bin/echo "{{ec2_jenkins_ip}}"
+       register: jenkins_ip
+       become: true
+
+- hosts: all
+  serial: 1
+  sudo: yes
+  remote_user: root
+  gather_facts: false
+
+  roles:
+   - java
+   - maven
+   #- mysql
+
+  vars:
+    git_username: piyer3
+    git_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34666361343930363337396137613562656539643632616433366430393136666331636362363064
+          3137633661663535333261626330623463396462666436360a666565383063663232653065343234
+          36616330616461346162376230323933326639383037643836653539366164393563636463393937
+          3965353033666239330a313435396666373334636362373266333230353365623762663537366335
+          3666
+
+  tasks:
+   - name: Install git
+     apt: pkg=git state=present
+     become: yes
+   #
+   - name: Delete currently running jobs
+     shell: ps -ef | grep -v grep | grep -w "jetty" | awk '{print $2}'
+     register: running_processes
+   #
+   - name: Kill running processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ running_processes.stdout_lines }}"
+
+   - wait_for:
+       path: "/proc/{{ item }}/status"
+       state: absent
+     with_items: "{{ running_processes.stdout_lines }}"
+     ignore_errors: yes
+     register: killed_processes
+
+   - name: Force kill stuck processes
+     shell: "kill -9 {{ item }}"
+     with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+
+   - name: clean Repo
+     file:
+       state: absent
+       path: /home/vagrant
+   
+   - name: wait for monitoring
+     shell: 'sleep 10s'
+     beome: true
+
+   - name: Cloning Git Repo
+     git: repo=https://{{ git_username|urlencode }}:{{ git_password|urlencode }}@github.ncsu.edu/khchoksi/iTrust2-v2.git dest=/home/vagrant/tmp
+
+   - name: copy 2 files
+     shell: sudo cp /home/vagrant/tmp/iTrust2/src/main/java/db.properties.template /home/vagrant/tmp/iTrust2/src/main/java/db.properties && sudo cp /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties.template /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+
+   - name: DB Properties to be changed
+     replace:
+        path: /home/vagrant/tmp/iTrust2/src/main/java/db.properties
+        regexp: 'localhost:3306'
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
+        backup: yes
+     become: true
+
+   - name: Hibernate Properties to be changed
+     replace:
+        path: /home/vagrant/tmp/iTrust2/src/main/resources/hibernate.properties
+        regexp: 'localhost:3306'
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
+        backup: yes
+     become: true
+
+   - name: DBUtil.java to be changed
+     replace:
+        path: /home/vagrant/tmp/iTrust2/src/main/java/edu/ncsu/csc/itrust2/utils/DBUtil.java
+        regexp: 'localhost:3306'
+        replace: "{{hostvars ['localhost']['ec2_jenkins_ip']}}:3306"
+        backup: yes
+     become: true
+
+  #  - name: Edit mysql.conf file
+  #    lineinfile:
+  #       path: /etc/mysql/mysql.conf.d/mysqld.cnf
+  #       line: skip-grant-tables
+  #       insertafter: skip-external-locking
+
+  #  - name: Restarting mysql service
+  #    shell: sudo service mysql restart
+   
+   - name: Cleaning Repo & building mvn
+     shell: cd /home/vagrant/tmp/iTrust2 && sudo mvn clean 
+#&& mvn process-test-classes
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt: update_cache=yes
+
+   - name: Running jetty (In background)
+     shell: cd /home/vagrant/tmp/iTrust2 && nohup sudo mvn jetty:run &

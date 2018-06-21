@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - kube_ec2

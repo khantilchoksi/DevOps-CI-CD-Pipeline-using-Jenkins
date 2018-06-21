@@ -1,0 +1,18 @@
+- job:
+    name: "{{checkbox_job_name}}"
+    description: 'automatically generated test'
+    project-type: freestyle
+    builders:
+      - shell: 'sudo git clone https://github.com/chrisparnin/checkbox.io.git'
+      - shell: 'cd /var/lib/jenkins/workspace/{{ checkbox_job_name }}/checkbox.io/server-side/site && sudo npm install'
+    publishers:
+      - postbuildscript:
+          builders:
+            - build-steps:
+              - shell: 'pwd && cd && sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param=checkboxio" -vvv && sleep 30s && sudo chmod 400 ~/keys/checkboxio.pem && sudo ansible-playbook -i ~/inventory ~/deploy_app_checkboxio.yml -s --vault-password-file ~/.vault_pass.txt -vvv'
+
+
+
+#java -jar jenkins-cli.jar -s http://localhost:8080/ build itrust_job --username {{ jenkins_username }} --password {{ jenkins_password }}
+
+

@@ -1,0 +1,11 @@
+---
+- name: Install dependencies
+  shell: 'npm install'
+  args:
+    chdir: "./roles/ec2_instance/templates"
+
+- name: Create EC2 instance
+  shell: 'node ec2_createinstances.js {{param}}' 
+  args:
+    chdir: "./roles/ec2_instance/templates"
+

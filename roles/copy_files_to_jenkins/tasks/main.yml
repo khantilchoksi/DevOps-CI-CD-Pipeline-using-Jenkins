@@ -1,0 +1,61 @@
+---
+- name: copy roles to jenkins
+  synchronize: 
+    src: "{{project_directory}}/roles"
+    dest: /var/lib/jenkins/
+   # group: no
+   # owner: no
+    rsync_opts:
+      - "--exclude=node_modules"
+  become: true
+  #become_user: jenkins
+
+- name: Change OWNER and GROUP of all roles to jenkins
+  shell: 'sudo su && chown -R jenkins:jenkins /var/lib/jenkins/roles/'
+  become: true
+
+- name: copy files necessary to deploy itrust and checkbox 
+  copy:
+    src: "{{ project_directory }}/app_deploy/"
+    dest: /var/lib/jenkins/
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
+#- name: copy files necessary to run ec2instance
+#  synchronize:
+#    src: ~/deploy_app_iTrust2.yml
+#    dest: ~/deploy_app_iTrust2.yml
+#    owner: ubuntu
+#    group: ubuntu
+#    mode: 0666
+
+- name: copying additional necessary files
+  copy:
+    src: "{{ project_directory }}/provision_ec2.yml"
+    dest: /var/lib/jenkins/provision_ec2.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: true
+
+- name: copy aws files
+  copy:
+    src: ~/.aws/
+    dest: /var/lib/jenkins/.aws/
+    owner: jenkins
+    group: jenkins
+    mode: 0400
+  become: true
+
+
+- name: copy vault
+  copy:
+    src: ~/.vault_pass.txt
+    dest: /var/lib/jenkins/.vault_pass.txt
+    owner: jenkins
+    group: jenkins
+    mode: 0664
+  become: true
+

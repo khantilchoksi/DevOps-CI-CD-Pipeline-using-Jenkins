@@ -1,0 +1,75 @@
+---
+- hosts: localhost
+
+  tasks:
+
+     - name: Fetch AWS Credential File Content
+       set_fact:
+          content: "{{item}}"
+       no_log: true
+       with_file:
+          - "/var/lib/jenkins/.aws/credentials"
+       become: true
+
+     - name: Set AWS Access Key Variable
+       set_fact:
+          aws_access_key: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+     - name: Set AWS Secret Key Variable
+       set_fact:
+          aws_secret_key: "{{ content.split('=')[2] | trim }}"
+
+     - name: "Checking five iTrust EC2 Instances Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust
+
+
+
+     - name: Create five EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/provision_ec2.yml --extra-vars="param={{item}}" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/{{item}}.pem'
+       become: true
+       when: ec2_deploy_itrust.instances | length==0
+       with_items:
+        - 'itrust1'
+        - 'itrust2'
+        - 'itrust3'
+        - 'itrust4'
+        - 'itrust5'
+
+     - name: "Get Public IP for first rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust.instances[0].public_ip_address"
+       when: ec2_deploy_itrust.instances | length>0
+
+     - name: "Get Public IP for second rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust.instances[1].public_ip_address"
+       when: ec2_deploy_itrust.instances | length>0
+     
+     - name: "Get Public IP for third rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust.instances[2].public_ip_address"
+       when: ec2_deploy_itrust.instances | length>0
+
+     - name: "Get Public IP for fourth rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust.instances[3].public_ip_address"
+       when: ec2_deploy_itrust.instances | length>0
+     
+     - name: "Get Public IP for fifth rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust.instances[4].public_ip_address"
+       when: ec2_deploy_itrust.instances | length>0
+
+     - name: Waiting for EC2 instance to spinup
+       shell: "sleep 30s"
+       when: ec2_deploy_itrust.instances | length==0
+
+
+

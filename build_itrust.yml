@@ -1,0 +1,14 @@
+---
+- hosts: jenkins
+  vars:
+  - itrust_job_name: "itrust_job"
+  - checkbox_job_name: "checkbox_job"
+
+      
+  # vars_prompt:
+  # - name: jenkins_password
+  #   prompt: "Enter Jenkins Password for admin"
+
+  roles:
+#    - create_jobs
+    - iTrust2_build_jobs

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for checkbox_test_generation\mock_routes\upload.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">checkbox_test_generation/mock_routes/</a> upload.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">49.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>29/59</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">15% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>29/58</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var fs = require("fs");
+var async = require("async");
+&nbsp;
+var mongo = require('mongodb');
+var check = require('validator').check;
+var _ = require('underscore');
+&nbsp;
+var archiver = require('archiver');
+&nbsp;
+&nbsp;
+var Server = mongo.Server,
+    Db = mongo.Db,
+    ObjectID = mongo.ObjectID;
+&nbsp;
+var MongoClient = mongo.MongoClient;
+var db = null;
+MongoClient.connect("mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASSWORD+"@"+process.env.MONGO_IP+":27017/site?authSource=admin", function(err, authdb) {
+  // Now you can use the database in the db variable
+  db = authdb;
+  console.log( err || <span class="branch-1 cbranch-no" title="branch not covered" >"connected!" </span>);
+});
+&nbsp;
+exports.uploadFiles = <span class="fstat-no" title="function not covered" >function(req, onReady)</span>
+{
+<span class="cstat-no" title="statement not covered" >	var files = req.files.files;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	async.map( files, uploadFile, <span class="fstat-no" title="function not covered" >function(err, results)</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		onReady( results );</span>
+	});
+};
+&nbsp;
+exports.readFiles = function(res, fileIds, onReady)
+{
+	console.log("36");
+    var archive = archiver('zip');
+&nbsp;
+    archive.on('error', <span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >  		throw err;</span>
+	});
+	console.log("42");
+&nbsp;
+    archive.pipe( res );
+	console.log("45");
+&nbsp;
+try{
+	async.map( fileIds.map(<span class="fstat-no" title="function not covered" >function(elem){</span> <span class="cstat-no" title="statement not covered" >return {fileId:elem,archive:archive} }</span>), readFileStream, function(err, results) 
+	{
+		console.log("49");
+	 	onReady(err, archive);	
+	 	console.log("51");
+&nbsp;
+	});	
+}
+catch(e){
+<span class="cstat-no" title="statement not covered" >	console.log(e);	</span>
+}
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function readFileStream(obj, onReady)</span>
+{
+<span class="cstat-no" title="statement not covered" >	var fileId = obj.fileId;</span>
+<span class="cstat-no" title="statement not covered" >	var archive = obj.archive;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	new mongo.GridStore(db, fileId, "r").open(<span class="fstat-no" title="function not covered" >function(err, gridStore)</span></span>
+    {
+<span class="cstat-no" title="statement not covered" >		var stream = gridStore.stream(true);</span>
+		//console.log("streaming: " + fileId );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        stream.on("data", <span class="fstat-no" title="function not covered" >function(item) {</span></span>
+            // Destroy the stream
+        	//stream.destroy();
+        	//console.log("data: " + fileId);
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        stream.on("end", <span class="fstat-no" title="function not covered" >function(item) {</span></span>
+        	//console.log("Stream end: " + fileId);
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        stream.on("close", <span class="fstat-no" title="function not covered" >function() {</span></span>
+        	//console.log("Stream closed: " + fileId);
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	 	archive.append( stream, { name: fileId + "-" + gridStore.filename }, <span class="fstat-no" title="function not covered" >function()</span></span>
+ 	 	{
+<span class="cstat-no" title="statement not covered" > 	 		console.log("appended: " + gridStore.filename);</span>
+ 	 	});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		onReady(err, fileId);</span>
+	});
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function readFile(fileId, onReady)</span>
+{
+	// Read back all the written content and verify the correctness
+<span class="cstat-no" title="statement not covered" >	mongo.GridStore.read(db, fileId, <span class="fstat-no" title="function not covered" >function(err, fileData) </span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		console.log( fileData.length );</span>
+<span class="cstat-no" title="statement not covered" >		onReady(err, {fileId:fileId, data: fileData});</span>
+	});
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function uploadFile(file, onReady)</span>
+{
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var fileId = new ObjectID();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var gs = new mongo.GridStore(db, fileId, file.name, "w", {</span>
+	    "content_type": file.type,
+	    "chunk_size": 1024*8
+	});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	gs.open(<span class="fstat-no" title="function not covered" >function(err, gs)</span></span>
+	{
+<span class="cstat-no" title="statement not covered" >		gs.writeFile(file.path, <span class="fstat-no" title="function not covered" >function(err, a) </span></span>
+		{
+<span class="cstat-no" title="statement not covered" >			console.log(err + ": wrote file");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			gs.close(<span class="fstat-no" title="function not covered" >function(err,result)</span></span>
+			{
+				// Read back all the written content and verify the correctness
+<span class="cstat-no" title="statement not covered" >				mongo.GridStore.read(db, fileId, <span class="fstat-no" title="function not covered" >function(err, fileData) {</span></span>
+<span class="cstat-no" title="statement not covered" >					console.log(err);</span>
+<span class="cstat-no" title="statement not covered" >					if( fileData )</span>
+<span class="cstat-no" title="statement not covered" >						console.log(fileData.length);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >					onReady(err, {fileId:fileId});</span>
+				});
+			});
+&nbsp;
+		});
+	});
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 21:08:46 GMT-0400 (Eastern Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

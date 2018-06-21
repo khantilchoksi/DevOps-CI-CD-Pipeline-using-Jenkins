@@ -1,0 +1,16 @@
+- hosts:
+    - kube-masters
+  
+  vars:
+    - redis: { version: 4.0.9 }
+
+  roles:
+    - { role: redis_master, become: true }
+
+- hosts:
+    - kube-minions
+  vars:
+    - redis: { version: 4.0.9 }
+
+  roles:
+    - { role: redis_slave, become: true }

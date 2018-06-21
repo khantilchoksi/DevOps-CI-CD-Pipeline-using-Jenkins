@@ -1,0 +1,33 @@
+- job:
+    name: "{{itrust_fuzzer_job_name}}"
+    scm: 
+      - git: 
+          url: git@github.ncsu.edu:khchoksi/iTrust2-v2.git
+          branches: 
+            - origin/fuzzer
+            - ${sha1}
+    triggers:
+      - pollscm:
+          cron: "" 
+    builders:
+      - ansible-playbook:
+            playbook: "/var/lib/jenkins/setup_itrust.yml"
+            inventory-type: "path"
+            inventory:
+              path: "~/local_inventory"
+            additional-parameters: '--vault-password-file ~/.vault_pass.txt --extra-vars "itrust_job_name={{itrust_fuzzer_job_name}}"'
+      - shell: 'sleep 20s && cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn -f pom-data.xml process-test-classes'
+      - shell: 'cd /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/ && sudo mvn clean test verify checkstyle:checkstyle'
+
+    publishers:
+     - postbuildscript:
+         builders:
+             - role: BOTH
+               build-on:
+                   - SUCCESS
+                   - FAILURE
+               build-steps:
+                   - shell: 'today=`date +%Y-%m-%d.%H:%M:%S` && sudo cp -R /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/iTrust2/target/surefire-reports /home/ubuntu/test_reports/$today/ && sudo rm -rf /var/lib/jenkins/workspace/{{itrust_fuzzer_job_name}}/'
+
+
+

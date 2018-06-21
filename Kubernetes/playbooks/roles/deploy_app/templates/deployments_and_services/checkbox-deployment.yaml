@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: checkbox
+  name: checkbox
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: checkbox
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        env:
+        - name: MAIL_PASSWORD
+          value: UsErPaSsWoRd
+        - name: MAIL_SMTP
+          value: smtp.gmail.com
+        - name: MAIL_USER
+          value: user@gmail.com
+        - name: MONGO_IP
+          value: mongo
+        - name: MONGO_PASSWORD
+          value: admin
+        - name: MONGO_PORT
+          value: "3002"
+        - name: MONGO_USER
+          value: admin
+        image: node:9
+        name: checkbox
+        ports:
+        - containerPort: 3002
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/app
+          name: checkbox-claim0
+        workingDir: /usr/src/app
+      restartPolicy: Always
+      volumes:
+      - name: checkbox-claim0
+        hostPath:
+          path: /home/centos/checkbox.io/server-side/site/
+          type: Directory
+#          claimName: checkbox-claim0
+status: {}        

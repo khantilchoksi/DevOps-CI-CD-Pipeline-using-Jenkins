@@ -1,0 +1,14 @@
+---
+- hosts: jenkins
+  vars:
+    itrust_rolling_job_name: "rolling_itrust_job"
+    jenkins_username: "admin"
+    jenkins_password: "admin"
+
+
+  tasks:
+    - name: Initial Deployment of rolling iTrust2 on five instances
+      shell: 'sleep 60s & java -jar jenkins-cli.jar -s http://localhost:8090/ build {{ itrust_rolling_job_name }} --username {{ jenkins_username }} --password {{ jenkins_password }}'
+
+
+    

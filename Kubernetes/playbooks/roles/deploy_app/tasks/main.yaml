@@ -1,0 +1,44 @@
+- name: copy files required to create the docker image
+  synchronize:
+    src: roles/deploy_app/templates/deployments_and_services/
+    dest: "/home/centos/checkbox.io"
+
+
+- name: create mongo deployment and service
+  shell: kubectl create -f mongo-deployment.yaml && kubectl create -f mongo-service.yaml
+  args:
+    chdir: /home/centos/checkbox.io
+  become: true
+
+- name: get the mongo service address
+  shell: kubectl get svc mongo | grep ClusterIP | cut -d ' ' -f9
+  become: true
+  register: mongo_ip
+
+- debug: var=mongo_ip
+
+- name: change the name of mongo ip in checkbox deployment file
+  shell: "sed -i 's/value: mongo/value: {{mongo_ip.stdout}}/' /home/centos/checkbox.io/checkbox-deployment.yaml"
+
+- name: create checkbox deployment and service
+  shell: kubectl create -f checkbox-deployment.yaml && kubectl create -f checkbox-service.yaml
+  args:
+    chdir: /home/centos/checkbox.io
+  become: true
+
+- name: create mongo deployment and service
+  shell: kubectl create -f nginx-deployment.yaml && kubectl create -f nginx-service.yaml
+  args:
+    chdir: /home/centos/checkbox.io
+  become: true
+
+- name: get the nginx service address
+  shell: kubectl get svc nginx | grep NodePort | cut -d ' ' -f20
+  become: true
+  register: nginx_port
+
+- debug: var=nginx_port
+
+ 
+
+

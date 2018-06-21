@@ -1,0 +1,112 @@
+---
+- hosts: localhost
+  vars:
+      GIT_PERSONAL_ACCESS_TOKEN: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37623834653562306332313739373166616631386233393237616564343534316437643063636238
+          6366393232353562313063653231636633393030326662320a313837636663373365646463626636
+          36653035343038363664643638626666653331613362336433363830323733663033376663643837
+          3361663836386235310a313833303631616430633131353831643663383563653635396235336630
+          32636133333234306663636465343535356461313662666335326630323035383330343831343964
+          6361383531653833656466613235383664636130363938313032
+
+      GIT_NCSU_PERSONAL_ACCESS_TOKEN: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            33316232313762623032326433633665356533633761616437663334313635626561633830333535
+            3261363962313534663735313631343065616261663333390a353739333731356539316336343366
+            66646366373636666161633532336435656630303430363162353732376463316439646434346263
+            3736386239323633610a393731396333613937383934363662363438343835303566313362646263
+            34653431313336623039306163383735663335316138393135643937303539306165626465393466
+            3635396437363664366666646139393739316531616339643537
+      
+      GIT_CANARY_PERSONAL_ACCESS_TOKEN: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            37666261336437656662646362626332633737363136353562613838633831346531393632303265
+            6633356565373761343633306432623865323566616235300a623062373531653464363566396636
+            33623833343065393038623364366435333237646331613161353533646266363530613835653330
+            3832366131613632380a633131353537396461343662373961393737623366616366316364386131
+            3366
+
+ 
+  tasks: 
+
+     - name: display multiple file contents
+       set_fact:
+          content: "{{item}}"
+       no_log: true
+       with_file:
+           - "/home/vagrant/.aws/credentials"
+       become: true
+
+     - name: Set AWS Access Key Variable
+       set_fact:
+          aws_access: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+     - name: Set AWS Secret Key Variable
+       set_fact:
+          aws_secret: "{{ content.split('=')[2] | trim }}"
+
+     - name: Install packages for node machine
+       apt: pkg="{{item}}" state=present update_cache=true
+       with_items:
+           - python-pip
+           - python3-pip
+           - python3-setuptools
+       become: true
+
+     - pip:
+         name: "{{item}}"
+       with_items:
+           - boto
+           - boto3
+       become: true
+          
+
+     - name: Fetching EC2 instance details of Jenkins
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access}}"
+          aws_secret_key: "{{aws_secret}}"
+          region: "us-west-2"
+          filters:
+             "tag:Name": jenkins
+             "instance-state-code": "16"
+       register: ec2_jenkins
+
+     - name: Get Public IP for Jenkins EC2  instance
+       set_fact:
+          ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
+       when: ec2_jenkins.instances | length>0
+
+     - name: Debug ec2 jenkins ip
+       debug:
+          var: ec2_jenkins_ip
+
+     - github_hooks:
+          action: create
+          hookurl: "http://{{ec2_jenkins_ip}}:8090/github-webhook/"
+          user: khantilchoksi
+          oauthkey: "{{GIT_PERSONAL_ACCESS_TOKEN}}"
+          repo: https://api.github.com/repos/khantilchoksi/checkbox.io
+
+     - github_hooks:
+          action: create
+          hookurl: "http://{{ec2_jenkins_ip}}:8090/github-webhook/"
+          user: pavy
+          oauthkey: "{{GIT_CANARY_PERSONAL_ACCESS_TOKEN}}"
+          repo: https://api.github.com/repos/pavy/checkbox.io
+
+
+     - github_hooks:
+          action: create
+          hookurl: "http://{{ec2_jenkins_ip}}:8090/github-webhook/"
+          user: khchoksi
+          oauthkey: "{{GIT_NCSU_PERSONAL_ACCESS_TOKEN}}"
+          repo: https://github.ncsu.edu/api/v3/repos/khchoksi/iTrust2-v2
+
+
+- hosts: jenkins
+  roles:
+#    - create_ec2s
+    - create_jobs
+
+                                                        

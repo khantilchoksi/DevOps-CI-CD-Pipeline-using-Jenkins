@@ -1,0 +1,24 @@
+ansible_ssh_user: centos
+#ansible_ssh_private_key_file: /home/vagrant/kubernetes.pem
+#ansible_python_interpreter: /usr/bin/python3
+
+kube_node_type: minion
+
+kubernetes_hostname: kube-minion-1
+
+kubernetes_flanneld_config_etcd_endpoints: "http://172.31.19.188:2379"
+kubernetes_flanneld_config_etcd_key: "/kube-centos/network"
+kubernetes_flanneld_options: ""
+
+kubernetes_kube_config_logtostderr: "true"
+kubernetes_kube_config_verbosity: 0
+kubernetes_kube_config_allow_priv: "false"
+kubernetes_kube_config_kube_master_endpoint: "http://172.31.19.188:8080"
+kubernetes_kube_config_etcd_servers: "http://172.31.19.188:2379"
+
+kubernetes_kubelet_config_address: "--address=0.0.0.0"
+kubernetes_kubelet_config_port: "--port=10250"
+kubernetes_kubelet_config_hostname: "--hostname-override=kube-minion-1"
+kubernetes_kubelet_config_apiserver: "--api-servers=http://172.31.19.188:8080"
+kubernetes_kubelet_config_podinfra: "--pod-infra-container-image=gcr.io/google_containers/pause:latest"
+kubernetes_kubelet_args: ""

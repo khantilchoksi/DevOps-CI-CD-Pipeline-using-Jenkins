@@ -1,0 +1,10 @@
+---
+- name: Install dependencies
+  shell: 'npm install'
+  args:
+    chdir: "./roles/kube_ec2/templates"
+
+ - name: Create EC2 instance
+   shell: 'node ec2_infra_createinstances.js kube-ec2'
+   args:
+     chdir: "./roles/kube_ec2/templates"

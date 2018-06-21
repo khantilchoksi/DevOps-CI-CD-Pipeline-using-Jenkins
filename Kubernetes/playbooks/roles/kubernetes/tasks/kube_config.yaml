@@ -1,0 +1,15 @@
+### kubernetes main config
+
+- name: configure kubernetes config file
+  template:
+    src: etc.kubernetes.config.j2
+    dest: /etc/kubernetes/config
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart kube-apiserver
+    - restart kube-controller-manager
+    - restart kube-scheduler
+    - restart kubelet
+    - restart kube-proxy

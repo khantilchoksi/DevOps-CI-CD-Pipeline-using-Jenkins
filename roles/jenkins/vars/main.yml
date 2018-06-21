@@ -1,0 +1,22 @@
+---
+project_directory: ~/DevOps-Project
+jenkins_path: /var/lib/jenkins
+jenkins_username: "admin"
+jenkins_password: "admin"
+jenkins_url: http://localhost:8080
+jenkins_params:
+  url_username: "admin"
+  url: "{{jenkins_url}}"
+  validate_certs: no
+mysql_password: "{{ mysql_root_pass }}"  
+packages:
+  - npm
+  - debconf-utils
+  - git
+  - gcc
+  - make
+  - python-dev
+  - python-pip
+  - python-setuptools
+  - python-lxml
+  - vim

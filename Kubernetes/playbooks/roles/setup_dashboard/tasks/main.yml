@@ -1,0 +1,71 @@
+- name: Create monitoring directory
+  file: 
+    path: ~/monitoring 
+    state: directory
+
+- name: Create kube-config directory
+  file: 
+    path: ~/monitoring/kube-config 
+    state: directory
+
+- name: Create influxdb directory
+  file: 
+    path: ~/monitoring/kube-config/influxdb 
+    state: directory
+
+- name: Create service-account directory
+  file: 
+    path: ~/monitoring/service-account
+    state: directory
+
+- name: Copy grafana yaml
+  copy:
+    src: "{{ role_path}}/files/kube-config/influxdb/grafana.yaml"
+    dest: ~/monitoring/kube-config/influxdb/grafana.yaml
+
+- name: Copy heapster yaml
+  copy:
+    src: "{{ role_path}}/files/kube-config/influxdb/heaspter.yaml"
+    dest: ~/monitoring/kube-config/influxdb/heaspter.yaml
+
+- name: Copy influxdb yaml
+  copy:
+    src: "{{ role_path}}/files/kube-config/influxdb/influx.yaml"
+    dest: ~/monitoring/kube-config/influxdb/influx.yaml
+
+
+- name: Create and start influxdb
+  shell: "sudo kubectl create -f /home/centos/monitoring/kube-config/influxdb/influxdb.yaml"
+  become: true
+
+- name: Create and start grafana
+  shell: "sudo kubectl create -f /home/centos/monitoring/kube-config/influxdb/grafana.yaml"
+  become: true
+
+- name: Create and start heaster
+  shell: "sudo kubectl create -f /home/centos/monitoring/kube-config/influxdb/heaster.yaml"
+  become: true
+
+- name: Create Dashboard and start service
+  shell: "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml"
+  become: true
+
+- name: Copy cluster_role_binding yaml
+  copy:
+    src: "{{ role_path}}/files/service-account/cluster_role_binding.yaml"
+    dest: ~/monitoring//service-account/cluster_role_binding.yaml
+
+- name: Copy service_account yaml
+  copy:
+    src: "{{ role_path}}/service-account/service_account.yaml"
+    dest: ~/monitoring/service-account/service_account.yaml
+
+- name: Create sample user admin-user to access dashboard
+  shell: "sudo kubectl create -f /home/centos/monitoring/service-account/service_account.yaml"
+  become: true
+
+- name: Create cluster role
+  shell: "sudo kubectl create -f /home/centos/monitoring/service-account/cluster_role_binding.yaml"
+  become: true
+
+

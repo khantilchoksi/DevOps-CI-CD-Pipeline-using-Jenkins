@@ -3,6 +3,12 @@ jenkins_ip: "localhost"
 jenkins_port: 8080
 jenkins_username: "admin"
 jenkins_password: "admin"
-github_username: "khchoksi"
 itrust_job_name: "itrust_job"
+itrust_fuzzer_job_name: "itrust_fuzzer_job"
+checkbox_deploy_job_name: "deploy_checkbox_job"
+itrust_deploy_job_name: "deploy_itrust_job"
+itrust_rolling_job_name: "rolling_itrust_job"
 checkbox_job_name: "checkbox_job"
+checkbox_canary_job_name: "canary_checkbox_job"
+itrust_dir: "iTrust2-v2"
+project_directory: ~/Desktop/DevOps/Project/Milestone3/DevOps-Project

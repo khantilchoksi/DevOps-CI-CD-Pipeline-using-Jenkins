@@ -1,0 +1,142 @@
+---
+- hosts: localhost
+
+  tasks:
+
+     - name: Fetch AWS Credential File Content
+       set_fact:
+          content: "{{item}}"
+       no_log: true
+       with_file:
+          - "/var/lib/jenkins/.aws/credentials"
+       become: true
+
+     - name: Set AWS Access Key Variable
+       set_fact:
+          aws_access_key: "{{ content.split('=')[1] | replace('\naws_secret_access_key', '') | trim }}"
+
+     - name: Set AWS Secret Key Variable
+       set_fact:
+          aws_secret_key: "{{ content.split('=')[2] | trim }}"
+
+     - name: Fetching EC2 instance details of Jenkins
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+             "tag:Name": jenkins
+             "instance-state-code": "16"
+       register: ec2_jenkins
+
+     - name: Get Public IP for Jenkins EC2  instance
+       set_fact:
+          ec2_jenkins_ip: "{{ec2_jenkins.instances[0].public_ip_address}}"
+       when: ec2_jenkins.instances | length>0
+
+     - name: "Checking first iTrust EC2 Instance Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust1
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust1
+
+     - name: "Checking second iTrust EC2 Instance Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust2
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust2
+
+     - name: "Checking third iTrust EC2 Instance Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust3
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust3
+
+     - name: "Checking fourth iTrust EC2 Instance Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust4
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust4
+
+     - name: "Checking fifth iTrust EC2 Instance Exist or not"
+       ec2_instance_facts:
+          aws_access_key: "{{aws_access_key}}"
+          aws_secret_key: "{{aws_secret_key}}"
+          region: "us-west-2"
+          filters:
+              "tag:Name": itrust5
+              "instance-state-code": "16"
+       register: ec2_deploy_itrust5
+
+     - name: Create first EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust1" -e "ansible_python_interpreter=/usr/bin/python3"  && sleep 30s && sudo chmod 400 /var/lib/jenkins/keys/rolling_itrust.pem'
+       become: true
+       when: ec2_deploy_itrust1.instances | length==0
+       
+     - name: Create second EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust2" -e "ansible_python_interpreter=/usr/bin/python3" '
+       become: true
+       when: ec2_deploy_itrust2.instances | length==0
+
+     - name: Create third EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust3" -e "ansible_python_interpreter=/usr/bin/python3" '
+       become: true
+       when: ec2_deploy_itrust3.instances | length==0
+
+     - name: Create fourth EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust4" -e "ansible_python_interpreter=/usr/bin/python3" '
+       become: true
+       when: ec2_deploy_itrust4.instances | length==0
+
+     - name: Create fifth EC2 instances for rolling itrust deployment
+       shell: 'sudo ansible-playbook -i "localhost," -c local ~/create_ec2_itrust.yml --extra-vars="param=itrust5" -e "ansible_python_interpreter=/usr/bin/python3" '
+       become: true
+       when: ec2_deploy_itrust5.instances | length==0
+
+     - name: "Get Public IP for first rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust1.instances[0].public_ip_address"
+       when: ec2_deploy_itrust1.instances | length>0
+
+     - name: "Get Public IP for second rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust2.instances[0].public_ip_address"
+       when: ec2_deploy_itrust2.instances | length>0
+     
+     - name: "Get Public IP for third rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust3.instances[0].public_ip_address"
+       when: ec2_deploy_itrust3.instances | length>0
+
+     - name: "Get Public IP for fourth rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust4.instances[0].public_ip_address"
+       when: ec2_deploy_itrust4.instances | length>0
+     
+     - name: "Get Public IP for fifth rolling itrust instance"
+       set_fact:
+          ec2_ip: "ec2_deploy_itrust5.instances[0].public_ip_address"
+       when: ec2_deploy_itrust5.instances | length>0
+
+     - name: Waiting for EC2 instance to spinup
+       shell: "sleep 30s"
+       when: ec2_deploy_itrust1.instances | length==0
+
+
+

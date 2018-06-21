@@ -1,0 +1,121 @@
+- name: update all packages
+  become: true
+  yum:
+    name: "*"
+    state: latest
+
+- name: basic packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: ["telnet", "wget", "curl", "git", "net-tools", "bind-utils", "libselinux-python", "nodejs"]
+
+- name: ensure selinux is disabled
+  selinux:
+    state: disabled
+
+- name: ensure iptables and firewalld are off, let docker manage it
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items: ["iptables.service", "firewalld"]
+  ignore_errors: yes
+
+- name: check if docker is installed
+  command: docker version
+  register: is_installed
+  ignore_errors: yes
+
+- debug: var=is_installed.msg
+
+- name: install docker if not exist
+  yum:
+    name: docker
+    state: latest
+  when:  (is_installed.msg is defined) and ((is_installed.msg.find('command not found') != -1) or (is_installed.msg.find('No such file or directory') != -1) )
+
+
+- name: ensure docker is running
+  service:
+    name: docker
+    state: started
+
+- name: copying kubeadm package files
+  template:
+    src: kubeadm.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+    owner: root
+    group: root
+
+- name: update all packages
+  become: true
+  yum:
+    name: "*"
+    state: latest
+   
+- name: installing
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: ["kubelet", "kubeadm", "kubectl"]
+  become: true
+
+- name: starting kubelet
+  service:
+    name: kubelet
+    state: started
+    enabled: yes
+
+- name: copy kubernetes conf file
+  template:
+    src: k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+    owner: root
+    group: root
+  notify:
+    - restart kubelet
+
+- name: configuring cgroup driver name
+  shell: sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf && systemctl daemon-reload
+  notify:
+    - restart kubelet
+
+- name: Clone checkbox.io
+  git:
+    repo: 'https://github.com/chrisparnin/checkbox.io.git'
+    dest: "/home/centos/checkbox.io"
+    update: yes
+    force: yes
+#Copy redis files and redis routes
+
+- name: Copy server.js with updated routes for redis
+  template:
+    src: server.js
+    dest: /home/centos/checkbox.io/server-side/site/server.js
+
+- name: Copy create.js with updated redis flag code with redi flag feature
+  template:
+    src: create.js.j2
+    dest: /home/centos/checkbox.io/server-side/site/routes/create.js
+
+- name: Copy myredis.js with required functions
+  template:
+    src: myredis.js.j2
+    dest: /home/centos/checkbox.io/server-side/site/routes/myredis.js
+
+- name: Copy package.json to include dependency of redis
+  template:
+    src: package.json
+    dest: /home/centos/checkbox.io/server-side/site/package.json
+
+
+- name: Install dependencies npm
+  npm:
+    path: "/home/centos/checkbox.io/server-side/site"
+
+- name: Replace the server root in the "default" file
+  lineinfile: 
+    dest: /home/centos/checkbox.io/local-conf/default 
+    regexp: '.*root (.)+;.*' 
+    line: 'root /usr/share/nginx/html ;'
+    backrefs: yes
